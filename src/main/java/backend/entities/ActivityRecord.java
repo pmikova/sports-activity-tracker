@@ -2,6 +2,8 @@ package backend.entities;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Class activity record represents finished and recorded activity.
@@ -15,6 +17,7 @@ public class ActivityRecord {
     private double averageSpeed;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private UUID id;
 
 
     /**
@@ -29,6 +32,7 @@ public class ActivityRecord {
         this.endTime = endTime;
         setDuration(startTime, endTime);
         setAverageSpeed(distance, this.duration);
+        this.id = UUID.randomUUID();
 
     }
 
@@ -60,4 +64,45 @@ public class ActivityRecord {
 
     }
 
+// generated code
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActivityRecord that = (ActivityRecord) o;
+        return distance == that.distance &&
+                Double.compare(that.averageSpeed, averageSpeed) == 0 &&
+                Objects.equals(duration, that.duration) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(endTime, that.endTime) &&
+                Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id);
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public double getAverageSpeed() {
+        return averageSpeed;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    // setters are and WILL NOT be present, as the ActivityRecord should not be editable
 }

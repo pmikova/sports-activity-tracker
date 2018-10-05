@@ -4,6 +4,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * This class represents a user in our system
@@ -16,6 +17,7 @@ public class User {
     private int weight;
     private Gender gender;
     private Date birthdate;
+    private UUID id;
 
 
     /**
@@ -32,7 +34,8 @@ public class User {
         this.weight = weight;
         this.gender = gender;
         this.birthdate = birthdate;
-// TODO: give each user a unique id
+        this.id = UUID.randomUUID();
+
     }
 
     /**
@@ -41,8 +44,6 @@ public class User {
     public enum Gender{ MALE, FEMALE};
 
 
-
-    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,13 +53,17 @@ public class User {
                 Objects.equals(name, user.name) &&
                 Objects.equals(surname, user.surname) &&
                 gender == user.gender &&
-                Objects.equals(birthdate, user.birthdate);
+                Objects.equals(birthdate, user.birthdate) &&
+                Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, weight, gender, birthdate);
+        return Objects.hash(name, surname, weight, gender, birthdate, id);
     }
+
+    // id will not have setter
+    public UUID getId(){return id;}
 
     public String getName() {
         return name;
@@ -76,7 +81,6 @@ public class User {
         this.surname = surname;
     }
 
-
     public void setWeight(int weight) {
         this.weight = weight;
     }
@@ -87,11 +91,6 @@ public class User {
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
-    }
-
-    //TODO age must be generated from date of birth
-    public int getAge() {
-        throw new NotImplementedException();
     }
 
     public int getWeight() {
@@ -105,4 +104,11 @@ public class User {
     public Date getBirthdate() {
         return birthdate;
     }
+
+    //TODO age must be generated from date of birth, will not have setter
+    public int getAge() {
+        throw new NotImplementedException();
+    }
+
+
 }
