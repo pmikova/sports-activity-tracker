@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class ActivityRecord {
 
-    //private Activity activityType
+    private SportActivity activityType;
     private Duration duration; //is computed
     private int distance; //
     private double averageSpeed;
@@ -26,10 +26,11 @@ public class ActivityRecord {
      * @param startTime start time of the activity
      * @param endTime end time of the activity
      */
-    public ActivityRecord(int distance, LocalDateTime startTime, LocalDateTime endTime){
+    public ActivityRecord(SportActivity activityType, int distance, LocalDateTime startTime, LocalDateTime endTime){
         this.distance = distance;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.activityType = activityType;
         setDuration(startTime, endTime);
         setAverageSpeed(distance, this.duration);
         this.id = UUID.randomUUID();
