@@ -10,6 +10,7 @@ import java.util.UUID;
  * This class represents a user in our system
  * @author pmikova
  */
+
 public class User {
 
     private String name;

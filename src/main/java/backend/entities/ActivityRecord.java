@@ -18,6 +18,8 @@ public class ActivityRecord {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private UUID id;
+    //TODO
+    private int burnedCalories;
 
 
     /**
