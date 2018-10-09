@@ -28,13 +28,14 @@ public class User {
     @NotNull
     private Date birthdate;
     @NotNull
+    private String email;
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    
+
     /**
      * Enum gender specifies user gender.
      */
@@ -51,12 +52,13 @@ public class User {
                 Objects.equals(surname, user.surname) &&
                 gender == user.gender &&
                 Objects.equals(birthdate, user.birthdate) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, weight, gender, birthdate, id);
+        return Objects.hash(name, surname, weight, gender, birthdate, email, id);
     }
 
     public Long getId() {
@@ -112,7 +114,7 @@ public class User {
         throw new NotImplementedException();
     }
 
-    //TODO should contain also encrypted password.
+    //TODO should contain also encrypted password and username
 
 
 }
