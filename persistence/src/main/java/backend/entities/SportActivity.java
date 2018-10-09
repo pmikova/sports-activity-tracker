@@ -3,7 +3,7 @@ package backend.entities;
 
 /**
  * This class represents a sports activity.
- * @author
+ * @author TODO
  */
 public class SportActivity {
 }

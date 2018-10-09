@@ -111,5 +111,7 @@ public class User {
         throw new NotImplementedException();
     }
 
+    //TODO should contain also encrypted password.
+
 
 }
