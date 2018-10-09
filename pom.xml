@@ -6,7 +6,52 @@
 
     <groupId>edu.muni.fi</groupId>
     <artifactId>sports-activity-tracker</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <name>Sports Activity Tracker</name>
 
+    <properties>
+        <java.version>8</java.version>
+    </properties>
+
+    <modules>
+        <module>persistence</module>
+    </modules>
+
+    <!-- this should be used as parent
+    see https://docs.spring.io/platform/docs/current/reference/html/getting-started-using-spring-io-platform.html
+    -->
+    <parent>
+            <groupId>io.spring.platform</groupId>
+            <artifactId>platform-bom</artifactId>
+            <version>2.0.3.RELEASE</version>
+    </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <!-- specifies versions not defined by the Spring platform-bom -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-api</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
