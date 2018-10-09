@@ -2,6 +2,8 @@ package backend.entities;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,34 +13,28 @@ import java.util.UUID;
  * @author pmikova
  */
 
+@Entity
+@Table(name = "Users")
 public class User {
 
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private int weight;
+    @NotNull
     private Gender gender;
+    @NotNull
     private Date birthdate;
-    private UUID id;
+    @NotNull
 
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    /**
-     * Constructor to create object user.
-     * @param name name of the user
-     * @param surname surname of the user
-     * @param birthdate date of birth
-     * @param weight weight
-     * @param gender gender
-     */
-    public User(String name, String surname, Date birthdate, int weight, Gender gender){
-        this.name = name;
-        this.surname = surname;
-        this.weight = weight;
-        this.gender = gender;
-        this.birthdate = birthdate;
-        this.id = UUID.randomUUID();
-
-    }
-
+    
     /**
      * Enum gender specifies user gender.
      */
@@ -63,8 +59,13 @@ public class User {
         return Objects.hash(name, surname, weight, gender, birthdate, id);
     }
 
-    // id will not have setter
-    public UUID getId(){return id;}
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
