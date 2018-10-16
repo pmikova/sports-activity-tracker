@@ -18,16 +18,20 @@ import java.util.UUID;
 public class User {
 
     @NotNull
+    @Column (length = 30, nullable = false)
     private String name;
     @NotNull
+    @Column (length = 30, nullable = false)
     private String surname;
     @NotNull
+    @Column (length = 5, nullable = false)
     private int weight;
     @NotNull
     private Gender gender;
     @NotNull
     private Date birthdate;
     @NotNull
+    @Column(length = 25, unique = true, nullable = false)
     private String email;
 
     @Id
@@ -58,7 +62,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, weight, gender, birthdate, email, id);
+        return Objects.hash(getEmail());
     }
 
     public Long getId() {
@@ -73,48 +77,52 @@ public class User {
         return name;
     }
 
-    public String getSurname() {
-        return surname;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public int getWeight() {
         return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
     public Gender getGender() {
         return gender;
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public Date getBirthdate() {
         return birthdate;
     }
 
-    //TODO age must be generated from date of birth, will not have setter
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email; }
+
+    //TODO age must be generated from date of birth, CONFIGURE setter accordingly
     public int getAge() {
         throw new NotImplementedException();
     }
 
-    //TODO should contain also encrypted password and username
+    //TODO should contain also encrypted password, username will be email
 
 
 }
