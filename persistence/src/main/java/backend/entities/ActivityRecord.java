@@ -1,73 +1,104 @@
 package backend.entities;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
+
 
 /**
  * Class activity record represents finished and recorded activity.
+ *
  * @author pmikova
  */
 public class ActivityRecord {
 
+    @NotNull
     private SportActivity activityType;
-    private Duration duration; //is computed
-    private int distance; //
+    @NotNull
+    private Duration duration;
+
+    private int distance; 
+    @NotNull
     private double averageSpeed;
+    @NotNull
     private LocalDateTime startTime;
+    @NotNull
     private LocalDateTime endTime;
-    private UUID id;
-    //TODO
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotNull
     private int burnedCalories;
 
+    public SportActivity getActivityType() {
+        return activityType;
+    }
 
-    /**
-     * Activity record constructor.
-     * @param distance distance of given activity in kilometers
-     * @param startTime start time of the activity
-     * @param endTime end time of the activity
-     */
-    public ActivityRecord(SportActivity activityType, int distance, LocalDateTime startTime, LocalDateTime endTime){
-        this.distance = distance;
-        this.startTime = startTime;
-        this.endTime = endTime;
+    public void setActivityType(SportActivity activityType) {
         this.activityType = activityType;
-        setDuration(startTime, endTime);
-        setAverageSpeed(distance, this.duration);
-        this.id = UUID.randomUUID();
-
     }
 
-    /**
-     * This method counts the duration from two parameters
-     * @param startTime start time of the activity
-     * @param endTime finish time of the activity
-     */
-    private void setDuration(LocalDateTime startTime, LocalDateTime endTime){
-        if (startTime == null || endTime == null){
-            duration = null;
-            //TODO decide if throw and exception or accept null as arg
-        }
-        else{
-        this.duration = Duration.between(startTime, endTime);}
+    public Duration getDuration() {
+        return duration;
     }
 
-    /**
-     * Counts the distance in kilometers per hour
-     * @param distance in kilometers
-     */
-    private void setAverageSpeed(int distance, Duration duration){
-        long seconds = duration.getSeconds();
-        long meters = distance * 1000;
-        int mph = (int) Long.divideUnsigned(meters, seconds);
-        double kph = mph * 3.6;
-        this.averageSpeed = kph;
-
-
+    public void setDuration(Duration duration) {
+        this.duration = duration;
     }
 
-// generated code
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
+    public double getAverageSpeed() {
+        return averageSpeed;
+    }
+
+    public void setAverageSpeed(double averageSpeed) {
+        this.averageSpeed = averageSpeed;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getBurnedCalories() {
+        return burnedCalories;
+    }
+
+    public void setBurnedCalories(int burnedCalories) {
+        this.burnedCalories = burnedCalories;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -76,6 +107,8 @@ public class ActivityRecord {
         ActivityRecord that = (ActivityRecord) o;
         return distance == that.distance &&
                 Double.compare(that.averageSpeed, averageSpeed) == 0 &&
+                burnedCalories == that.burnedCalories &&
+                Objects.equals(activityType, that.activityType) &&
                 Objects.equals(duration, that.duration) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
@@ -84,28 +117,6 @@ public class ActivityRecord {
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id);
+        return Objects.hash(activityType, duration, distance, averageSpeed, startTime, endTime, id, burnedCalories);
     }
-
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public double getAverageSpeed() {
-        return averageSpeed;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
-    }
-
-    // setters are and WILL NOT be present, as the ActivityRecord should not be editable
 }
