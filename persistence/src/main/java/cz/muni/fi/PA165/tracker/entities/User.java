@@ -1,4 +1,4 @@
-package backend.entities;
+package cz.muni.fi.PA165.tracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

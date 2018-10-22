@@ -1,5 +1,5 @@
-package backend.dao;
-import backend.entities.SportActivity;
+package cz.muni.fi.PA165.tracker.dao;
+import cz.muni.fi.PA165.tracker.entities.SportActivity;
 
 import java.util.List;
 

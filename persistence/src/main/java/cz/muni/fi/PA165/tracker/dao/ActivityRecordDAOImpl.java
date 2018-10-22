@@ -1,6 +1,6 @@
-package backend.dao;
+package cz.muni.fi.PA165.tracker.dao;
 
-import backend.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

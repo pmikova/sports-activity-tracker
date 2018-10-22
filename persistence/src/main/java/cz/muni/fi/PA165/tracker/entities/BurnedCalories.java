@@ -1,4 +1,4 @@
-package backend.entities;
+package cz.muni.fi.PA165.tracker.entities;
 
 /**
  * This class should represent the calories table.

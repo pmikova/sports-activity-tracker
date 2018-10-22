@@ -1,6 +1,6 @@
-package backend.dao;
+package cz.muni.fi.PA165.tracker.dao;
 
-import backend.entities.BurnedCalories;
+import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
 
 import java.util.List;
 

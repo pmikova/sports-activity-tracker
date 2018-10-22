@@ -1,4 +1,4 @@
-package backend.dao;
+package cz.muni.fi.PA165.tracker.dao;
 
 /**
  * Interface for Activity Record Data Access Object.
