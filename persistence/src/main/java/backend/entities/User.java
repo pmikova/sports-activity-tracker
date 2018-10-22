@@ -117,11 +117,6 @@ public class User {
 
     public void setEmail(String email) { this.email = email; }
 
-    //TODO age must be generated from date of birth, CONFIGURE setter accordingly
-    public int getAge() {
-        throw new NotImplementedException();
-    }
-
     //TODO should contain also encrypted password, username will be email
 
 
