@@ -3,7 +3,6 @@ package backend.dao;
 import backend.entities.User;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Interface for User Data Access Object.
@@ -22,7 +21,7 @@ public interface UserDAO {
      * @param id of the user
      * @return User object with given id
      */
-    User getById(UUID id);
+    User getById(Long id);
 
     /**
      * Get a user record by email.

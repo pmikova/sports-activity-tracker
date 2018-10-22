@@ -23,7 +23,7 @@ public interface BurnedCaloriesDAO {
      * @param id of the calories object
      * @return BurnedCalories object with given id
      */
-    BurnedCalories getById(UUID id);
+    BurnedCalories getById(Long id);
 
     /**
      * Get a list of all BurnedCalories objects.
