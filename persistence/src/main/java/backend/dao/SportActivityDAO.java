@@ -2,7 +2,6 @@ package backend.dao;
 import backend.entities.SportActivity;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Interface for Sport Activity Data Access Object.
@@ -21,7 +20,7 @@ public interface SportActivityDAO {
      * @param id of the activity
      * @return SportActivity object with given id
      */
-    SportActivity getById(UUID id);
+    SportActivity getById(Long id);
 
     /**
      * Get a list of all activities
