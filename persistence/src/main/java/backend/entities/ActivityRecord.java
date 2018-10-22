@@ -22,7 +22,7 @@ public class ActivityRecord {
     @NotNull
     private Duration duration;
 
-    private int distance; 
+    private int distance;
     @NotNull
     private double averageSpeed;
     @NotNull
