@@ -1,12 +1,9 @@
 package backend.entities;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * This class represents a user in our system
@@ -39,7 +36,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    //todo can enum be inside or should i put it out?
     /**
      * Enum gender specifies user gender.
      */
