@@ -44,7 +44,7 @@ public interface UserDAO {
 
     /**
      * Deletes user record.
-     * @param user
+     * @param user to delete
      */
     void delete(User user);
 
