@@ -2,6 +2,7 @@ package cz.muni.fi.PA165.tracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class User {
     @NotNull
     private Gender gender;
     @NotNull
-    private Date birthdate;
+    private Calendar birthdate;
     @NotNull
     @Column(length = 25, unique = true, nullable = false)
     private String email;
@@ -35,12 +36,6 @@ public class User {
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //todo can enum be inside or should i put it out?
-    /**
-     * Enum gender specifies user gender.
-     */
-    public enum Gender{ MALE, FEMALE};
 
 
     @Override
@@ -102,11 +97,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Date getBirthdate() {
+    public Calendar getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(Calendar birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -116,5 +111,9 @@ public class User {
 
     //TODO should contain also encrypted password, username will be email
 
-
+    //todo can enum be inside or should i put it out?
+    /**
+     * Enum gender specifies user gender.
+     */
+    public enum Gender{ MALE, FEMALE};
 }
