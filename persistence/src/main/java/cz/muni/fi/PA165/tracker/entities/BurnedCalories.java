@@ -26,6 +26,9 @@ public class BurnedCalories {
     @NotNull
     private int burnedCalories;
 
+    @NotNull
+    private double actualWeght;
+
     public Long getId() {
         return id;
     }
@@ -40,6 +43,14 @@ public class BurnedCalories {
 
     public int getBurnedCalories() {
         return burnedCalories;
+    }
+
+    public double getActualWeght() {
+        return actualWeght;
+    }
+
+    public void setActualWeght(double actualWeght) {
+        this.actualWeght = actualWeght;
     }
 
     public void setBurnedCalories(int burnedCalories) {
@@ -66,11 +77,12 @@ public class BurnedCalories {
         return burnedCalories == that.burnedCalories &&
                 Objects.equals(id, that.id) &&
                 Objects.equals(user, that.user) &&
-                Objects.equals(activityRecord, that.activityRecord);
+                Objects.equals(activityRecord, that.activityRecord) &&
+                Objects.equals(actualWeght, that.actualWeght);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, activityRecord, burnedCalories);
+        return Objects.hash(id, user, activityRecord, burnedCalories, actualWeght);
     }
 }
