@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "Users")
+@Table(name = "SportActivity")
 public class SportActivity {
 
 
@@ -29,14 +29,6 @@ public class SportActivity {
     private String activityName;
 
     @NotNull
-    private boolean hasDistance;
-
-    @NotNull
-    public boolean hasDistance() {
-        return hasDistance;
-    }
-
-    @NotNull
     public String getActivityName() {
         return activityName;
     }
@@ -46,13 +38,13 @@ public class SportActivity {
         if (this == o) return true;
         if (o == null || this.getClass() != o.getClass()) return false;
         SportActivity toCompare = (SportActivity) o;
-        return this.hasDistance == toCompare.hasDistance() &&
-               this.activityName == toCompare.getActivityName();
+        return this.activityName == toCompare.getActivityName();
     }
 
+    //TODO: possible changes
     @Override
     public int hashCode() {
-        return Objects.hash(this.activityName, this.hasDistance);
+        return Objects.hash(this.activityName);
     }
 
 
