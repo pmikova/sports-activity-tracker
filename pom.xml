@@ -35,9 +35,6 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <!-- specifies versions not defined by the Spring platform-bom -->
     <dependencyManagement>
         <dependencies>
             <dependency>
