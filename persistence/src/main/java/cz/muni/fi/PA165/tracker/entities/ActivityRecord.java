@@ -14,8 +14,7 @@ import java.util.Objects;
 
 /**
  * Class activity record represents finished and recorded activity.
- *
- * @author pmikova
+ * @author pmikova 433345
  */
 public class ActivityRecord {
 
