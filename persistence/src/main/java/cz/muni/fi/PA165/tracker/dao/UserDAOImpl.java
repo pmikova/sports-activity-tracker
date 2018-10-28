@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.dao;
 
 import cz.muni.fi.PA165.tracker.entities.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -12,15 +14,18 @@ import java.util.List;
  * Implementation of UserDAO interface.
  * @author Dominik-Bujna
  *  */
+
+@Repository
+@Transactional
 public class UserDAOImpl implements UserDAO{
 
     @PersistenceContext
     private EntityManager entityManager;
 
-
-    public void create(User user) throws IllegalAccessException {
+    @Override
+    public void create(User user){
         if(user == null){
-              throw new IllegalAccessException("User cannot be null");
+              throw new IllegalArgumentException("User cannot be null");
         }
         entityManager.persist(user);
     }
