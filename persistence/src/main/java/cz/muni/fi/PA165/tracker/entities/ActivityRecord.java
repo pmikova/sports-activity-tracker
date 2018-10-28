@@ -1,9 +1,6 @@
 package cz.muni.fi.PA165.tracker.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -16,12 +13,20 @@ import java.util.Objects;
  * Class activity record represents finished and recorded activity.
  * @author pmikova 433345
  */
+@Entity
+@Table(name = "activityrecord")
 public class ActivityRecord {
 
-    //@NotNull
-    //private SportActivity activityType;
     @NotNull
     private Duration duration;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    private SportActivity sportActivity;
 
     @Min(0)
     private int distance;

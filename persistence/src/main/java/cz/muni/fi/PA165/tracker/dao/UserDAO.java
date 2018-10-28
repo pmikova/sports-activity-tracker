@@ -14,7 +14,7 @@ public interface UserDAO {
      * Creates new user record.
      * @param user object to be added to the database
      */
-    void create(User user) throws IllegalAccessException;
+    void create(User user);
 
     /**
      * Get user by its ID.

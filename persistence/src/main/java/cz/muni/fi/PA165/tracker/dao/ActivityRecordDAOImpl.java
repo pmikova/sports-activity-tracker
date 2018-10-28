@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 // this marks class as DAO
@@ -35,7 +35,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
     }
 
     public List<ActivityRecord> getAll(){
-        return entityManager.createQuery("SELECT a FROM ActivityRecord a", ActivityRecord.class).getResultList(); }
+        return entityManager.createQuery("SELECT a FROM activityrecord a", ActivityRecord.class).getResultList(); }
 
 
     public void update(ActivityRecord activityRecord){

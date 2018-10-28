@@ -1,9 +1,7 @@
 package cz.muni.fi.PA165.tracker.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -24,6 +22,12 @@ public class SportActivity {
     some of the activities have different intensity levels or style of performing, which is expressed by the categories
 
      */
+
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotNull
     @Column(length = 30, nullable = false)
     private String activityName;
