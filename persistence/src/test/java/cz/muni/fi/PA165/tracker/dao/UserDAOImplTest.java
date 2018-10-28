@@ -1,12 +1,14 @@
 package cz.muni.fi.PA165.tracker.dao;
 
+import cz.muni.fi.PA165.tracker.PersistenceApplicationContext;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
+import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
@@ -22,13 +24,14 @@ import javax.inject.Inject;
  * @author pmikova 4333454
  */
 
-//@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@ContextConfiguration(classes = PersistenceApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class UserDAOImplTest {
+public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
 
     @Inject
     private UserDAO userDAO;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -90,22 +93,58 @@ public class UserDAOImplTest {
     }
     @Test
     public void testGetById(){
-
+        entityManager.persist(user1);
+        entityManager.flush();
+        User user = userDAO.getById(user1.getId());
+        Assert.assertEquals(user1, user);
 
     }
     @Test
     public void testGetByEmail(){
-
+        entityManager.persist(user2);
+        entityManager.flush();
+        User user = userDAO.getByEmail(user2.getEmail());
+        Assert.assertEquals(user2, user);
 
     }
     @Test
     public void testGetAll(){
+        Assert.assertEquals(userDAO.getAll().size(), 0);
         entityManager.persist(user3);
+        entityManager.flush();
+        Assert.assertEquals(userDAO.getAll().size(), 1);
         entityManager.persist(user4);
+        entityManager.flush();
+        Assert.assertEquals(userDAO.getAll().size(), 2);
         entityManager.persist(user1);
         entityManager.flush();
         Assert.assertEquals(userDAO.getAll().size(), 3);
     }
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testCreateNull(){
+        userDAO.create(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testRemoveNull(){
+        User user = new User();
+        userDAO.delete(user);
+    }
+/*
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testGetByEmailNull(){
+        userDAO.getByEmail(null);
+    }
+*/
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testUpdateNull(){
+        entityManager.persist(user2);
+        entityManager.flush();
+        userDAO.update(null);
+
+    }
+
+
     @Test
     public void testUpdate(){
         entityManager.persist(user2);
