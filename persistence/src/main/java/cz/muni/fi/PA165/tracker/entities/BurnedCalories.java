@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -18,15 +19,19 @@ public class BurnedCalories {
     private Long id;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
     private ActivityRecord activityRecord;
 
     @NotNull
+    @Min(0)
     private int burnedCalories;
 
     @NotNull
+    @Min(1)
     private double actualWeight;
 
     public Long getId() {

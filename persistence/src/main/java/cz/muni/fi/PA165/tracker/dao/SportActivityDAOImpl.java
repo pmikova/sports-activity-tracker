@@ -52,7 +52,6 @@ public class SportActivityDAOImpl implements SportActivityDAO {
         if (activity == null){
             throw new IllegalArgumentException("Activity can not be null!");
         }
-        // TODO change to use find when the SportActivity class have ID
-        entityManager.remove(entityManager.merge(activity));
+        entityManager.remove(entityManager.find(SportActivity.class, activity));
     }
 }
