@@ -3,7 +3,9 @@ package cz.muni.fi.PA165.tracker.entities;
 import cz.muni.fi.PA165.tracker.enums.Gender;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -13,23 +15,29 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class User {
 
     @NotNull
     @Column (length = 30, nullable = false)
     private String name;
+
     @NotNull
     @Column (length = 30, nullable = false)
     private String surname;
+
     @NotNull
-    @Column (length = 5, nullable = false)
+    @Min(1)
     private int weight;
-    @Enumerated()
+
+    @Enumerated
     @NotNull
     private Gender gender;
+
     @NotNull
+    @Past
     private LocalDate birthdate;
+
     @NotNull
     @Column(length = 25, unique = true, nullable = false)
     private String email;
@@ -110,9 +118,13 @@ public class User {
         this.birthdate = birthdate;
     }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPasswordHash() {
         return passwordHash;
@@ -121,7 +133,4 @@ public class User {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
-
-    //TODO should contain also encrypted password, username will be email
-
 }
