@@ -1,9 +1,10 @@
 package cz.muni.fi.PA165.tracker.entities;
 
+import cz.muni.fi.PA165.tracker.enums.Gender;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -24,13 +25,17 @@ public class User {
     @NotNull
     @Column (length = 5, nullable = false)
     private int weight;
+    @Enumerated()
     @NotNull
     private Gender gender;
     @NotNull
-    private Calendar birthdate;
+    private LocalDate birthdate;
     @NotNull
     @Column(length = 25, unique = true, nullable = false)
     private String email;
+
+    @NotNull
+    private String passwordHash;
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
@@ -97,11 +102,11 @@ public class User {
         this.gender = gender;
     }
 
-    public Calendar getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Calendar birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -109,11 +114,14 @@ public class User {
 
     public void setEmail(String email) { this.email = email; }
 
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
     //TODO should contain also encrypted password, username will be email
 
-    //todo can enum be inside or should i put it out?
-    /**
-     * Enum gender specifies user gender.
-     */
-    public enum Gender{ MALE, FEMALE};
 }
