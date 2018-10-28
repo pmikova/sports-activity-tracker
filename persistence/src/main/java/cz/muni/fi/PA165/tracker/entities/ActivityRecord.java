@@ -4,7 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,37 +14,38 @@ import java.util.Objects;
 
 /**
  * Class activity record represents finished and recorded activity.
- *
- * @author pmikova
+ * @author pmikova 433345
  */
 public class ActivityRecord {
 
-    @NotNull
-    private SportActivity activityType;
+    //@NotNull
+    //private SportActivity activityType;
     @NotNull
     private Duration duration;
 
+    @Min(0)
     private int distance;
+
     @NotNull
+    @Min(0)
     private double averageSpeed;
+
     @NotNull
+    @Past
     private LocalDateTime startTime;
+
     @NotNull
+    @Past
     private LocalDateTime endTime;
+
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
+    @Min(0)
     private int burnedCalories;
-
-    public SportActivity getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(SportActivity activityType) {
-        this.activityType = activityType;
-    }
 
     public Duration getDuration() {
         return duration;
@@ -108,7 +111,6 @@ public class ActivityRecord {
         return distance == that.distance &&
                 Double.compare(that.averageSpeed, averageSpeed) == 0 &&
                 burnedCalories == that.burnedCalories &&
-                Objects.equals(activityType, that.activityType) &&
                 Objects.equals(duration, that.duration) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
@@ -117,6 +119,6 @@ public class ActivityRecord {
 
     @Override
     public int hashCode() {
-        return Objects.hash(activityType, duration, distance, averageSpeed, startTime, endTime, id, burnedCalories);
+        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id, burnedCalories);
     }
 }

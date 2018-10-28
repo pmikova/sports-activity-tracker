@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Interface for User Data Access Object.
- * @author pmikova
+ * @author pmikova 433345
  */
 public interface UserDAO {
 
@@ -14,7 +14,7 @@ public interface UserDAO {
      * Creates new user record.
      * @param user object to be added to the database
      */
-    void create(User user);
+    void create(User user) throws IllegalAccessException;
 
     /**
      * Get user by its ID.

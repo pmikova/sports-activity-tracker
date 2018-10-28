@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Interface for Sport Activity Data Access Object.
- * @author pmikova
+ * @author pmikova 433345
  */
 public interface SportActivityDAO {
 
