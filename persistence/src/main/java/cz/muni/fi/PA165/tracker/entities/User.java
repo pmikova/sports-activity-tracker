@@ -7,6 +7,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -50,6 +53,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "user")
+    private List<ActivityRecord> activityRecords = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -132,5 +137,17 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public List<ActivityRecord> getActivityRecords() {
+        return Collections.unmodifiableList(activityRecords);
+    }
+
+    public void addActivityRecord(ActivityRecord activityRecord) {
+        activityRecords.add(activityRecord);
+    }
+
+    public void removeActivityRecord(ActivityRecord activityRecord) {
+        activityRecords.remove(activityRecord);
     }
 }

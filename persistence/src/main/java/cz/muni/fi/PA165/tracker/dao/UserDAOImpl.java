@@ -52,9 +52,9 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public List<User> getAll() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM Users u",
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM users u",
                 User.class);
-        return (List<User>) query.getResultList();
+        return query.getResultList();
     }
 
     //TODO implement the update method
