@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Interface for User Data Access Object.
- * @author pmikova
+ * @author pmikova 433345
  */
 public interface UserDAO {
 
