@@ -35,7 +35,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
     }
 
     public List<ActivityRecord> getAll(){
-        return entityManager.createQuery("SELECT a FROM ActivityRecord a", ActivityRecord.class).getResultList(); }
+        return entityManager.createQuery("SELECT a FROM activityrecord a", ActivityRecord.class).getResultList(); }
 
 
     public void update(ActivityRecord activityRecord){
