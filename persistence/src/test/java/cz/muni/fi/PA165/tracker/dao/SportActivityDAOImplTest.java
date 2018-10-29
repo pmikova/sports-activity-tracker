@@ -144,13 +144,6 @@ public class SportActivityDAOImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void testActivityWithoutCoefficient(){
-        SportActivity incompleteActivity = new SportActivity();
-        incompleteActivity.setActivityName("Feasting");
-        incompleteActivity.setBurnedCaloriesPerHour(420);
-        sportActivityDAO.create(incompleteActivity);
-    }
-    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testActivityWithoutName(){
         SportActivity incompleteActivity = new SportActivity();
         incompleteActivity.setWeightCoefficient(1.0);
@@ -159,18 +152,15 @@ public class SportActivityDAOImplTest extends AbstractTestNGSpringContextTests {
     }
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void testActivityWithNegativeBurnedCal(){
-        SportActivity incompleteActivity = new SportActivity();
-        incompleteActivity.setActivityName("Feasting");
-        incompleteActivity.setWeightCoefficient(1.0);
-        incompleteActivity.setBurnedCaloriesPerHour(-400);
-        sportActivityDAO.create(incompleteActivity);
+         SportActivity activity = new SportActivity();
+        activity.setActivityName("Feasting");
+        activity.setWeightCoefficient(1.0);
+        activity.setBurnedCaloriesPerHour(-400);
+        sportActivityDAO.create(activity);
     }
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void testActivityWithNegativeCoefficient(){
-        SportActivity incompleteActivity = new SportActivity();
-        incompleteActivity.setActivityName("Feasting");
-        incompleteActivity.setWeightCoefficient(-5);
-        incompleteActivity.setBurnedCaloriesPerHour(400);
-        sportActivityDAO.create(incompleteActivity);
+        activity3.setWeightCoefficient(-5);
+        sportActivityDAO.create(activity3);
     }
 }

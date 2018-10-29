@@ -22,8 +22,6 @@ public class SportActivity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
     @NotNull
     @Column(length = 30, nullable = false)
     private String activityName;
@@ -33,11 +31,8 @@ public class SportActivity {
     private double burnedCaloriesPerHour;
 
     @NotNull
-    @DecimalMin("0.001")
+    @Min(0)
     private double weightCoefficient;
-
-
-
 
     public String getActivityName() {
         return activityName;
@@ -75,17 +70,14 @@ public class SportActivity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || this.getClass() != o.getClass()) return false;
-        SportActivity toCompare = (SportActivity) o;
-        return this.activityName == toCompare.getActivityName();
+        if (o == null || getClass() != o.getClass()) return false;
+        SportActivity that = (SportActivity) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(activityName, that.activityName);
     }
 
-    //TODO: possible changes
     @Override
     public int hashCode() {
-        return Objects.hash(this.activityName);
+        return Objects.hash(id, activityName);
     }
-
-
-
 }

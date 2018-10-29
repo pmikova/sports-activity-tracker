@@ -129,6 +129,6 @@ public class ActivityRecord {
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id);
+        return Objects.hash(duration, averageSpeed, startTime, endTime, id);
     }
 }
