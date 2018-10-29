@@ -8,7 +8,6 @@ import java.util.List;
  * Interface for Burned Calories Data Access Object.
  * @author pmikova 433345
  */
-//TODO: This should be further discussed whether we dont want to link it with activity object?
 public interface BurnedCaloriesDAO {
 
     /**
