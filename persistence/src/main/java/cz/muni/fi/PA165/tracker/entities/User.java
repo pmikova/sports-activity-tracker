@@ -71,18 +71,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return weight == user.weight &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(surname, user.surname) &&
-                gender == user.gender &&
-                Objects.equals(birthdate, user.birthdate) &&
-                Objects.equals(email, user.email) &&
+        return Objects.equals(email, user.email) &&
                 Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userType, name, surname, weight, gender, birthdate, email, passwordHash, id);
+        return Objects.hash(email, id);
     }
 
     public Long getId() {

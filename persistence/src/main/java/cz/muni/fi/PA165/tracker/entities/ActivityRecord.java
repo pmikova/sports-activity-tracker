@@ -119,8 +119,7 @@ public class ActivityRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ActivityRecord that = (ActivityRecord) o;
-        return distance == that.distance &&
-                Double.compare(that.averageSpeed, averageSpeed) == 0 &&
+        return  Double.compare(that.averageSpeed, averageSpeed) == 0 &&
                 Objects.equals(duration, that.duration) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
@@ -129,6 +128,6 @@ public class ActivityRecord {
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, averageSpeed, startTime, endTime, id);
+        return Objects.hash(averageSpeed, duration, startTime, endTime, id);
     }
 }
