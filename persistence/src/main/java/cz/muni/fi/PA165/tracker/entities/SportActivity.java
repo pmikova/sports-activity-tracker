@@ -15,26 +15,59 @@ import java.util.Objects;
 public class SportActivity {
 
 
-    /*
-
-    each activity has its name
-    some of them should contain distance information, which can be specified
-    some of the activities have different intensity levels or style of performing, which is expressed by the categories
-
-     */
-
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+
 
     @NotNull
     @Column(length = 30, nullable = false)
     private String activityName;
 
     @NotNull
+    private double burnedCaloriesPerHour;
+
+    @NotNull
+    private double weightCoefficient;
+
+
+
+
+    @NotNull
     public String getActivityName() {
         return activityName;
+    }
+
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    @NotNull
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public double getBurnedCaloriesPerHour() {
+        return burnedCaloriesPerHour;
+    }
+
+    public void setBurnedCaloriesPerHour(double burnedCaloriesPerHour) {
+        this.burnedCaloriesPerHour = burnedCaloriesPerHour;
+    }
+
+    public double getWeightCoefficient() {
+        return weightCoefficient;
+    }
+
+    public void setWeightCoefficient(double coefficient) {
+        this.weightCoefficient = coefficient;
     }
 
     @Override
