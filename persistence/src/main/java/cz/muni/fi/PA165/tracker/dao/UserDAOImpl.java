@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
 
         try {
             return entityManager
-                    .createQuery("select u from Users u where email=:email",
+                    .createQuery("SELECT u FROM User u WHERE u.email=:email",
                             User.class).setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException nre) {
@@ -52,7 +52,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public List<User> getAll() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM users u",
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u",
                 User.class);
         return query.getResultList();
     }
