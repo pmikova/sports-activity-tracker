@@ -70,7 +70,7 @@ public class ActivityRecordDAOImplTest extends AbstractTestNGSpringContextTests 
         return sportActivity;
     }
 
-    private ActivityRecord prepareActivityRecord(LocalDateTime startTime, LocalDateTime endTime, double averageSpeed, int distance, User user, SportActivity sportActivity, int burnedCalories) {
+    private ActivityRecord prepareActivityRecord(LocalDateTime startTime, LocalDateTime endTime, double averageSpeed, int distance, User user, SportActivity sportActivity) {
         ActivityRecord activityRecord = new ActivityRecord();
         activityRecord.setStartTime(startTime);
         activityRecord.setEndTime(endTime);
@@ -79,7 +79,6 @@ public class ActivityRecordDAOImplTest extends AbstractTestNGSpringContextTests 
         activityRecord.setDistance(distance);
         activityRecord.setUser(user);
         activityRecord.setSportActivity(sportActivity);
-        activityRecord.setBurnedCalories(burnedCalories);
         return activityRecord;
     }
 
@@ -101,19 +100,19 @@ public class ActivityRecordDAOImplTest extends AbstractTestNGSpringContextTests 
 
         LocalDateTime startTime1 = LocalDateTime.of(2018, 10, 25, 15, 0);
         LocalDateTime endTime1 = LocalDateTime.of(2018, 10, 25, 16, 0);
-        activityRecord1 = prepareActivityRecord(startTime1, endTime1, 15, 15, user1, sportActivity1, 1000);
+        activityRecord1 = prepareActivityRecord(startTime1, endTime1, 15, 15, user1, sportActivity1);
 
         LocalDateTime startTime2 = LocalDateTime.of(2018, 10, 26, 15, 0);
         LocalDateTime endTime2 = LocalDateTime.of(2018, 10, 26, 16, 0);
-        activityRecord2 = prepareActivityRecord(startTime2, endTime2, 15, 15, user1, sportActivity2, 1500);
+        activityRecord2 = prepareActivityRecord(startTime2, endTime2, 15, 15, user1, sportActivity2);
 
         LocalDateTime startTime3 = LocalDateTime.of(2018, 10, 27, 15, 0);
         LocalDateTime endTime3 = LocalDateTime.of(2018, 10, 27, 16, 0);
-        activityRecord3 = prepareActivityRecord(startTime3, endTime3, 15, 15, user2, sportActivity1, 1000);
+        activityRecord3 = prepareActivityRecord(startTime3, endTime3, 15, 15, user2, sportActivity1);
 
         LocalDateTime startTime4 = LocalDateTime.of(2018, 10, 28, 15, 0);
         LocalDateTime endTime4 = LocalDateTime.of(2018, 10, 28, 16, 0);
-        activityRecord4 = prepareActivityRecord(startTime4, endTime4, 15, 15, user2, sportActivity2, 1500);
+        activityRecord4 = prepareActivityRecord(startTime4, endTime4, 15, 15, user2, sportActivity2);
     }
 
     @Test
@@ -212,12 +211,6 @@ public class ActivityRecordDAOImplTest extends AbstractTestNGSpringContextTests 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateWithNegativeAverageSpeed() {
         activityRecord4.setAverageSpeed(-1);
-        activityRecordDAO.create(activityRecord4);
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void testCreateWithNegativeBurnedCalories() {
-        activityRecord4.setBurnedCalories(-1);
         activityRecordDAO.create(activityRecord4);
     }
 }
