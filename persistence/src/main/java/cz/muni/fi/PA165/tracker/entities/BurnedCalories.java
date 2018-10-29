@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -18,16 +19,20 @@ public class BurnedCalories {
     private Long id;
 
     @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     @NotNull
+    @OneToOne(fetch = FetchType.EAGER)
     private ActivityRecord activityRecord;
 
     @NotNull
+    @Min(0)
     private int burnedCalories;
 
     @NotNull
-    private double actualWeght;
+    @Min(1)
+    private double actualWeight;
 
     public Long getId() {
         return id;
@@ -45,12 +50,12 @@ public class BurnedCalories {
         return burnedCalories;
     }
 
-    public double getActualWeght() {
-        return actualWeght;
+    public double getActualWeight() {
+        return actualWeight;
     }
 
-    public void setActualWeght(double actualWeght) {
-        this.actualWeght = actualWeght;
+    public void setActualWeight(double actualWeight) {
+        this.actualWeight = actualWeight;
     }
 
     public void setBurnedCalories(int burnedCalories) {
@@ -78,11 +83,11 @@ public class BurnedCalories {
                 Objects.equals(id, that.id) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(activityRecord, that.activityRecord) &&
-                Objects.equals(actualWeght, that.actualWeght);
+                Objects.equals(actualWeight, that.actualWeight);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, activityRecord, burnedCalories, actualWeght);
+        return Objects.hash(id, user, activityRecord, burnedCalories, actualWeight);
     }
 }
