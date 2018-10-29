@@ -3,7 +3,6 @@ package cz.muni.fi.PA165.tracker.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -36,11 +35,9 @@ public class ActivityRecord {
     private double averageSpeed;
 
     @NotNull
-    //@Past
     private LocalDateTime startTime;
 
     @NotNull
-    //@Past
     private LocalDateTime endTime;
 
     @Id
@@ -48,9 +45,6 @@ public class ActivityRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Min(0)
-    private int burnedCalories;
 
     public Duration getDuration() {
         return duration;
@@ -100,14 +94,6 @@ public class ActivityRecord {
         this.id = id;
     }
 
-    public int getBurnedCalories() {
-        return burnedCalories;
-    }
-
-    public void setBurnedCalories(int burnedCalories) {
-        this.burnedCalories = burnedCalories;
-    }
-
     public User getUser() {
         return user;
     }
@@ -131,7 +117,6 @@ public class ActivityRecord {
         ActivityRecord that = (ActivityRecord) o;
         return distance == that.distance &&
                 Double.compare(that.averageSpeed, averageSpeed) == 0 &&
-                burnedCalories == that.burnedCalories &&
                 Objects.equals(duration, that.duration) &&
                 Objects.equals(startTime, that.startTime) &&
                 Objects.equals(endTime, that.endTime) &&
@@ -140,6 +125,6 @@ public class ActivityRecord {
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id, burnedCalories);
+        return Objects.hash(duration, distance, averageSpeed, startTime, endTime, id);
     }
 }
