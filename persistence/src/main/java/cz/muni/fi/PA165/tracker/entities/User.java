@@ -2,11 +2,11 @@ package cz.muni.fi.PA165.tracker.entities;
 
 import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,6 +51,7 @@ public class User {
 
     @NotNull
     @Column(length = 25, unique = true, nullable = false)
+    @Email(regexp = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @NotNull
