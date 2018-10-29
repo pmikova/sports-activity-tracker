@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.validation.ConstraintViolationException;
 import javax.xml.bind.ValidationException;
 
@@ -96,6 +97,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testCreate(){
         userDAO.create(user1);
+        entityManager.flush();
         Assert.assertEquals(this.userDAO.getById(user1.getId()), user1);
     }
     @Test
@@ -157,6 +159,16 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
 
     }
 
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void testUpdateEmailNull(){
+        entityManager.persist(user1);
+        entityManager.flush();
+        user1.setEmail(null);
+        userDAO.update(user1);
+        entityManager.flush();
+
+    }
+
     @Test
     public void testUpdate(){
         entityManager.persist(user2);
@@ -169,13 +181,30 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testChangeUserId(){
+    public void testUpdateOther(){
         entityManager.persist(user3);
         entityManager.flush();
-        user3.setId((long)50);
+        user3.setName("Rex");
+        user3.setSurname("Forehead");
+        user3.setEmail("hello@gmail.com");
+        user3.setGender(Gender.FEMALE);
+        user3.setWeight(72);
+        user3.setPasswordHash("bestPassword");
+        user3.setUserType(UserType.ADMIN);
         userDAO.update(user3);
+        Assert.assertEquals(userDAO.getById(user3.getId()), user3);
     }
 
+    @Test(expectedExceptions = PersistenceException.class)
+    public void testChangeUserIdFails(){
+        entityManager.persist(user3);
+        entityManager.flush();
+        Long id = user3.getId();
+        Long idReplace = id * 2;
+        user3.setId(idReplace);
+        userDAO.update(user3);
+        entityManager.flush();
+    }
 
     @Test
     public void testDelete(){
@@ -195,6 +224,22 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         incompleteUser.setGender(Gender.FEMALE);
         //dont fill email or password
         userDAO.create(incompleteUser);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void testInvalidMail(){
+        entityManager.persist(user3);
+        entityManager.flush();
+        user3.setEmail("emailemail");
+        userDAO.update(user3);
+        entityManager.flush();
+
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void createInvalidWeight(){
+        user4.setWeight((long) -30);
+        entityManager.persist(user4);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)

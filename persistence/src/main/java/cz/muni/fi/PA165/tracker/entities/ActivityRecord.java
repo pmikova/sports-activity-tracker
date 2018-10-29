@@ -17,6 +17,7 @@ import java.util.Objects;
 public class ActivityRecord {
 
     @NotNull
+    @Column(nullable = false)
     private Duration duration;
 
     @NotNull
@@ -32,12 +33,15 @@ public class ActivityRecord {
 
     @NotNull
     @Min(0)
+    @Column(nullable = false)
     private double averageSpeed;
 
     @NotNull
+    @Column(nullable = false)
     private LocalDateTime startTime;
 
     @NotNull
+    @Column(nullable = false)
     private LocalDateTime endTime;
 
     @Id
