@@ -54,7 +54,7 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
         if (calories == null){
             throw new IllegalArgumentException("Calories record can not be null!");
         }
-        entityManager.find(BurnedCalories.class, calories);
+        entityManager.find(BurnedCalories.class, calories.getId());
         entityManager.remove(calories);
     }
 }
