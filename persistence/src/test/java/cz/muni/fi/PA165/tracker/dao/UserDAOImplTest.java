@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.dao;
 import cz.muni.fi.PA165.tracker.PersistenceApplicationContext;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
+import cz.muni.fi.PA165.tracker.enums.UserType;
 import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import javax.xml.bind.ValidationException;
 
 
@@ -53,6 +55,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         user1.setPasswordHash("password");
         LocalDate bdate = LocalDate.of(1950,10,13);
         user1.setBirthdate(bdate);
+        user1.setUserType(UserType.USER);
 
         //user2 setup
         user2 = new User();
@@ -64,6 +67,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         user2.setPasswordHash("password2");
         LocalDate bdate2 = LocalDate.of(1991, 8, 16);
         user2.setBirthdate(bdate2);
+        user2.setUserType(UserType.USER);
 
         //user3 setup
         user3 = new User();
@@ -75,6 +79,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         user3.setPasswordHash("password3");
         LocalDate bdate3 = LocalDate.of(1980, 5, 21);
         user3.setBirthdate(bdate3);
+        user3.setUserType(UserType.ADMIN);
 
         //user4 setup
         user4 = new User();
@@ -86,6 +91,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         user4.setPasswordHash("password4");
         LocalDate bdate4 = LocalDate.of(1975, 11, 11);
         user4.setBirthdate(bdate4);
+        user4.setUserType(UserType.USER);
     }
     @Test
     public void testCreate(){
@@ -127,35 +133,50 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testRemoveNull(){
+    public void testRemoveNotExistingUser(){
         User user = new User();
         userDAO.delete(user);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testRemoveNullUser(){
+        userDAO.delete(null);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
     public void testGetByEmailNull(){
         userDAO.getByEmail(null);
     }
-    /*
-        @Test(expectedExceptions = DataAccessException.class)
-        public void testUpdateNull(){
-            entityManager.persist(user2);
-            entityManager.flush();
-            userDAO.update(null);
 
-        }
 
-        @Test
-        public void testUpdate(){
-            entityManager.persist(user2);
-            entityManager.flush();
-            user2.setName("Susan");
-            user2.setWeight(50);
-            user2.setPasswordHash("greatPassword");
-            userDAO.update(user2);
-            Assert.assertEquals(userDAO.getById(user2.getId()), user2);
-        }
-    */
+    @Test//(expectedExceptions = DataAccessException.class)
+    public void testUpdateNull(){
+        entityManager.persist(user2);
+        entityManager.flush();
+        userDAO.update(null);
+
+    }
+
+    @Test
+    public void testUpdate(){
+        entityManager.persist(user2);
+        entityManager.flush();
+        user2.setName("Susan");
+        user2.setWeight(50);
+        user2.setPasswordHash("greatPassword");
+        userDAO.update(user2);
+        Assert.assertEquals(userDAO.getById(user2.getId()), user2);
+    }
+
+    @Test
+    public void testChangeUserId(){
+        entityManager.persist(user3);
+        entityManager.flush();
+        user3.setId((long)50);
+        userDAO.update(user3);
+    }
+
+
     @Test
     public void testDelete(){
         entityManager.persist(user3);
@@ -164,7 +185,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(userDAO.getById(user3.getId()));
     }
 
-    @Test(expectedExceptions = ValidationException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateIncompleteUser(){
         User incompleteUser = new User();
         incompleteUser.setWeight(10);
@@ -174,6 +195,33 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         incompleteUser.setGender(Gender.FEMALE);
         //dont fill email or password
         userDAO.create(incompleteUser);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void testCreateIncompleteUser2(){
+        User incompleteUser = new User();
+        incompleteUser.setName("Alice");
+        incompleteUser.setBirthdate(LocalDate.of(1999,10,05));
+        incompleteUser.setSurname("Strewn");
+        incompleteUser.setGender(Gender.FEMALE);
+        incompleteUser.setEmail("email.gmail@gmail.com");
+        incompleteUser.setPasswordHash("hellopassword");
+        incompleteUser.setUserType(UserType.USER);
+        userDAO.create(incompleteUser);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void testCreateUserZeroWeight(){
+        User user = new User();
+        user.setEmail("johnd@email.com");
+        user.setGender(Gender.MALE);
+        user.setName("John");
+        user.setSurname("Doe");
+        user.setWeight(0);
+        user.setPasswordHash("password");
+        LocalDate bdate = LocalDate.of(1950,10,13);
+        user.setBirthdate(bdate);
+        userDAO.create(user);
     }
 
 }
