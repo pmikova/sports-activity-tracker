@@ -35,7 +35,6 @@ public class SportActivity {
 
 
 
-    @NotNull
     public String getActivityName() {
         return activityName;
     }
@@ -45,7 +44,6 @@ public class SportActivity {
         this.activityName = activityName;
     }
 
-    @NotNull
     public Long getId() {
         return id;
     }
