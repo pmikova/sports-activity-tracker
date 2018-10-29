@@ -108,6 +108,22 @@ public class ActivityRecord {
         this.burnedCalories = burnedCalories;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public SportActivity getSportActivity() {
+        return sportActivity;
+    }
+
+    public void setSportActivity(SportActivity sportActivity) {
+        this.sportActivity = sportActivity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
