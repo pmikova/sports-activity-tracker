@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.entities;
 
 import cz.muni.fi.PA165.tracker.enums.Gender;
+import cz.muni.fi.PA165.tracker.enums.UserType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -21,6 +22,11 @@ import java.util.Objects;
 @Table(name = "users")
 public class User {
 
+    @Enumerated
+    @NotNull
+    @Column(nullable = false)
+    private UserType userType;
+
     @NotNull
     @Column (length = 30, nullable = false)
     private String name;
@@ -31,14 +37,16 @@ public class User {
 
     @NotNull
     @Min(1)
-    private int weight;
+    @Column(nullable = false)
+    private long weight;
 
     @Enumerated
     @NotNull
+    @Column(nullable = false)
     private Gender gender;
 
     @NotNull
-    @Past
+    @Column(nullable = false)
     private LocalDate birthdate;
 
     @NotNull
@@ -46,6 +54,7 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(nullable = false)
     private String passwordHash;
 
     @Id
@@ -99,7 +108,7 @@ public class User {
         this.surname = surname;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 

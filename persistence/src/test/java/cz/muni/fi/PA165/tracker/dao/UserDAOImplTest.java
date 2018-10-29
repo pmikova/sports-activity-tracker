@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.dao;
 import cz.muni.fi.PA165.tracker.PersistenceApplicationContext;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
+import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import javax.inject.Inject;
-
+import javax.xml.bind.ValidationException;
 
 
 /**
@@ -130,32 +131,31 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         User user = new User();
         userDAO.delete(user);
     }
-/*
+
     @Test(expectedExceptions = DataAccessException.class)
     public void testGetByEmailNull(){
         userDAO.getByEmail(null);
     }
-*/
-    @Test(expectedExceptions = DataAccessException.class)
-    public void testUpdateNull(){
-        entityManager.persist(user2);
-        entityManager.flush();
-        userDAO.update(null);
+    /*
+        @Test(expectedExceptions = DataAccessException.class)
+        public void testUpdateNull(){
+            entityManager.persist(user2);
+            entityManager.flush();
+            userDAO.update(null);
 
-    }
+        }
 
-
-    @Test
-    public void testUpdate(){
-        entityManager.persist(user2);
-        entityManager.flush();
-        user2.setName("Susan");
-        user2.setWeight(50);
-        user2.setPasswordHash("greatPassword");
-        userDAO.update(user2);
-        Assert.assertEquals(userDAO.getById(user2.getId()), user2);
-    }
-
+        @Test
+        public void testUpdate(){
+            entityManager.persist(user2);
+            entityManager.flush();
+            user2.setName("Susan");
+            user2.setWeight(50);
+            user2.setPasswordHash("greatPassword");
+            userDAO.update(user2);
+            Assert.assertEquals(userDAO.getById(user2.getId()), user2);
+        }
+    */
     @Test
     public void testDelete(){
         entityManager.persist(user3);
@@ -164,6 +164,16 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(userDAO.getById(user3.getId()));
     }
 
-
+    @Test(expectedExceptions = ValidationException.class)
+    public void testCreateIncompleteUser(){
+        User incompleteUser = new User();
+        incompleteUser.setWeight(10);
+        incompleteUser.setName("Alice");
+        incompleteUser.setBirthdate(LocalDate.of(1999,10,05));
+        incompleteUser.setSurname("Strewn");
+        incompleteUser.setGender(Gender.FEMALE);
+        //dont fill email or password
+        userDAO.create(incompleteUser);
+    }
 
 }

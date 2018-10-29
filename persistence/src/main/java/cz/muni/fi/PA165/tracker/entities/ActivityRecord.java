@@ -36,11 +36,11 @@ public class ActivityRecord {
     private double averageSpeed;
 
     @NotNull
-    @Past
+    //@Past
     private LocalDateTime startTime;
 
     @NotNull
-    @Past
+    //@Past
     private LocalDateTime endTime;
 
     @Id
