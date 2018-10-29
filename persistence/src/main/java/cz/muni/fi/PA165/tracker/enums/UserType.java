@@ -1,4 +1,6 @@
 package cz.muni.fi.PA165.tracker.enums;
 
-public class UserType {
+public enum UserType {
+
+    ADMIN, USER;
 }
