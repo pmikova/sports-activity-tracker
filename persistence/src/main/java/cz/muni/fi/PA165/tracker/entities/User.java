@@ -82,7 +82,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmail());
+        return Objects.hash(userType, name, surname, weight, gender, birthdate, email, passwordHash, id);
     }
 
     public Long getId() {
