@@ -2,6 +2,8 @@ package cz.muni.fi.PA165.tracker.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -27,9 +29,11 @@ public class SportActivity {
     private String activityName;
 
     @NotNull
+    @Min(1)
     private double burnedCaloriesPerHour;
 
     @NotNull
+    @DecimalMin("0.001")
     private double weightCoefficient;
 
 
