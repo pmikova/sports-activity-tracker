@@ -149,7 +149,7 @@ public class UserDAOImplTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test//(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testUpdateNull(){
         entityManager.persist(user2);
         entityManager.flush();
