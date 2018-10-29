@@ -35,7 +35,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
     }
 
     public List<ActivityRecord> getAll(){
-        return entityManager.createQuery("SELECT a FROM activityrecord a", ActivityRecord.class).getResultList(); }
+        return entityManager.createQuery("SELECT a FROM ActivityRecord a", ActivityRecord.class).getResultList(); }
 
 
     public void update(ActivityRecord activityRecord){
@@ -52,7 +52,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
             throw new IllegalArgumentException("Activity record can not be null!");
         }
         // ensure the entity is associated with persistence context before removing it
-        entityManager.find(ActivityRecord.class, activityRecord);
+        entityManager.find(ActivityRecord.class, activityRecord.getId());
         entityManager.remove(activityRecord);
     }
 
