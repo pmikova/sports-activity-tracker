@@ -112,7 +112,7 @@ public class User {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(long weight) {
         this.weight = weight;
     }
 
@@ -159,4 +159,13 @@ public class User {
     public void removeActivityRecord(ActivityRecord activityRecord) {
         activityRecords.remove(activityRecord);
     }
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
 }
