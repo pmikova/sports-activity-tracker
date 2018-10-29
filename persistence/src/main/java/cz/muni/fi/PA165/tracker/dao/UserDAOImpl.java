@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO{
 
         try {
             return entityManager
-                    .createQuery("SELECT u FROM User u WHERE u.email=:email",
+                    .createQuery("SELECT u FROM users u WHERE u.email=:email",
                             User.class).setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException nre) {
@@ -52,20 +52,25 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public List<User> getAll() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u",
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM users u",
                 User.class);
         return query.getResultList();
     }
 
-    //TODO implement the update method
-
     @Override
     public void update(User user) {
-
+        if (user == null){
+            throw new IllegalArgumentException("User record can not be null!");
+        }
+        entityManager.merge(user);
     }
 
     @Override
     public void delete(User user) {
-        entityManager.remove(getById(user.getId()));
+        if (user == null){
+            throw new IllegalArgumentException("User record can not be null!");
+        }
+        entityManager.find(User.class, user);
+        entityManager.remove(user);
     }
 }
