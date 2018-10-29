@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.dao;
 
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,6 +13,10 @@ import java.util.List;
  * Implementation of BurnedCaloriesDAO interface.
  * @author Dominik-Bujna
  **/
+
+
+@Repository
+@Transactional
 public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
 
     @PersistenceContext
@@ -33,14 +39,22 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
         return (List<BurnedCalories>) query.getResultList();
     }
 
-    //TODO:write update query
     @Override
     public void update(BurnedCalories calories) {
+
+        if (calories == null){
+            throw new IllegalArgumentException("Calories record can not be null!");
+        }
+        entityManager.merge(calories);
 
     }
 
     @Override
     public void delete(BurnedCalories calories) {
+        if (calories == null){
+            throw new IllegalArgumentException("Calories record can not be null!");
+        }
+        entityManager.find(BurnedCalories.class, calories);
         entityManager.remove(calories);
     }
 }
