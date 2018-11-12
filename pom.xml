@@ -16,6 +16,8 @@
 
     <modules>
         <module>persistence</module>
+        <module>api</module>
+        <module>service</module>
     </modules>
 
     <!-- this should be used as parent
