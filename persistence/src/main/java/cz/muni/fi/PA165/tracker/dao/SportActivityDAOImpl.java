@@ -10,8 +10,6 @@ import java.util.List;
 
 // this marks class as DAO
 @Repository
-// define as a transaction
-@Transactional
 /**
  * Implementation of SportActivityDAO interface.
  * @author HonzaOstrava
