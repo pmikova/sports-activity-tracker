@@ -5,13 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 // this marks class as DAO
 @Repository
-// define as a transaction
-@Transactional
 /**
  * Implementation of ActivityRecordDAO interface.
  * @author pmikova 433345
