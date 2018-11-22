@@ -1,5 +1,4 @@
 package cz.muni.fi.PA165.tracker.facade;
-
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordDTO;
 import java.util.List;
 
@@ -34,15 +33,48 @@ public interface ActivityRecordFacade {
     /**
      * Get ActivityRecord by given ID.
      *
-     * @param id ID of user we want to retrieve
-     * @return user with given ID
+     * @param id ID of activity record we want to retrieve
+     * @return ActivityRecord with given ID
      */
     ActivityRecordDTO getById(Long id);
 
     /**
-     * Get all Activities.
+     * Get all Activity records by all users.
      *
-     * @return List of users
+     * @return List of all activity records
      */
+
     List<ActivityRecordDTO> getAll();
+
+    /**
+     * Get all Activity records by a single user.
+     *
+     * @param id of user whose activities we want displayed
+     * @return List of all activity records belonging to the user
+     */
+
+    List<ActivityRecordDTO> getAllByUser(Long id);
+
+    /*
+    ActivityRecordDTO getById(Long id);
+    List<ActivityRecordDTO> getByUser(User user);
+    List<ActivityRecordDTO> getAll();
+
+    void getUser();
+    void getDistance();
+    void getGetUser();
+    void getStartTime();
+    void getEndTime();
+
+    void updateDistance();
+    void updateStartTime();
+    void updateEndTime();
+
+    void create();
+
+    void update();
+
+    void delete();
+*/
+
 }
