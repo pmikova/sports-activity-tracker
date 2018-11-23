@@ -61,7 +61,7 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
 
     @Override
     public List<BurnedCalories> getByUser(User user) {
-        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.users = :user",
+        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.user = :user",
                 BurnedCalories.class);
         query.setParameter("user", user);
         return query.getResultList();
@@ -69,7 +69,7 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
 
     @Override
     public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
-        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.activityrecord = :activityRecord",
+        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.activityRecord = :activityRecord",
                 BurnedCalories.class);
         query.setParameter("activityRecord", activityRecord);
         return query.getResultList();
