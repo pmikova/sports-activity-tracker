@@ -26,6 +26,7 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Override
     public void delete(ActivityRecord activityRecord) {
+        activityRecord record = activityRecordDAO.
         activityRecordDAO.delete(activityRecord);
     }
 
