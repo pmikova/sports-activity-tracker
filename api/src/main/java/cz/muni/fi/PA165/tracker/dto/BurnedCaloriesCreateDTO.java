@@ -3,12 +3,10 @@ package cz.muni.fi.PA165.tracker.dto;
 import java.util.Objects;
 
 /**
- * DTO for Burned Calories.
+ * DTO for creation of Burned Calories.
  * @author HonzaOstrava
  */
-public class BurnedCaloriesDTO {
-
-    private Long id;
+public class BurnedCaloriesCreateDTO {
 
     private UserDTO user;
 
@@ -17,14 +15,6 @@ public class BurnedCaloriesDTO {
     private int burnedCalories;
 
     private double actualWeight;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public UserDTO getUser() {
         return user;
