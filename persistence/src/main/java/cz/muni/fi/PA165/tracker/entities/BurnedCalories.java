@@ -62,10 +62,6 @@ public class BurnedCalories {
         this.burnedCalories = burnedCalories;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }

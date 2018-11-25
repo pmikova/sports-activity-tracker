@@ -21,7 +21,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class User {
-
     @Enumerated
     @NotNull
     @Column(nullable = false)
@@ -66,26 +65,30 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ActivityRecord> activityRecords = new ArrayList<>();
 
+    public User() {
+    }
+
+    public User(Long id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
+
         User user = (User) o;
-        return Objects.equals(email, user.email) &&
-                Objects.equals(id, user.id);
+
+        return !(getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, id);
+        return getEmail() != null ? getEmail().hashCode() : 0;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
