@@ -39,6 +39,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- provides some messy warnings in output, when trying to create multiple databases-->
