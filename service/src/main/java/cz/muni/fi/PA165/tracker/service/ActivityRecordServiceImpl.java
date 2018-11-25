@@ -5,7 +5,15 @@ import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
+
+/**
+ * Implements services to work with an activity record.
+ * @author Dominik-Bujna
+ */
 
 public class ActivityRecordServiceImpl implements ActivityRecordService {
 
@@ -14,9 +22,29 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
 
     @Override
-    public Long create(ActivityRecord activityRecord) {
+    public Duration calculateDuration(ActivityRecord activityRecord) {
+        LocalDateTime startTime = activityRecord.getStartTime();
+        LocalDateTime endTime = activityRecord.getEndTime();
+        return Duration.between(startTime, endTime);
+    }
+
+    @Override
+    public double calculateAverageSpeed(ActivityRecord activityRecord) {
+        double distance = (double)activityRecord.getDistance();
+        if (distance !=0){
+            Duration duration = activityRecord.getDuration();
+            return distance/(duration.toHours());
+        }
+        return 0.0;
+    }
+
+    @Override
+    public void create(ActivityRecord activityRecord) {
+        activityRecord.setDuration(calculateDuration(activityRecord));
+        activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.create(activityRecord);
-        return activityRecord.getId();
+        User user = activityRecord.getUser();
+        user.addActivityRecord(activityRecord);
     }
 
     @Override
@@ -26,7 +54,6 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Override
     public void delete(ActivityRecord activityRecord) {
-        activityRecord record = activityRecordDAO.
         activityRecordDAO.delete(activityRecord);
     }
 
@@ -38,12 +65,5 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     @Override
     public List<ActivityRecord> getAll() {
         return activityRecordDAO.getAll();
-    }
-
-
-    //TODO:is this reasonable, or should it be in user?
-    @Override
-    public List<ActivityRecord> getAllByUser(Long id) {
-        return null;
     }
 }

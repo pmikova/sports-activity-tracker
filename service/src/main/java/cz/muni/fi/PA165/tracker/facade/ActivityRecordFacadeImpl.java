@@ -1,7 +1,7 @@
 package cz.muni.fi.PA165.tracker.facade;
 
+import cz.muni.fi.PA165.tracker.dto.ActivityRecordCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordDTO;
-import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
 import cz.muni.fi.PA165.tracker.service.ActivityRecordService;
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Activity Record Facade implementation.
- * @author TODO
+ * @author Dominik-Bujna
  */
 
 
@@ -32,10 +32,9 @@ public class ActivityRecordFacadeImpl implements  ActivityRecordFacade{
 
 
     @Override
-    public Long create(ActivityRecordDTO activityRecordDTO) {
+    public void create(ActivityRecordCreateDTO activityRecordDTO) {
         ActivityRecord activityRecord = mappingService.mapTo(activityRecordDTO, ActivityRecord.class);
         activityRecordService.create(activityRecord);
-        return activityRecord.getId();
     }
 
     @Override
@@ -61,8 +60,4 @@ public class ActivityRecordFacadeImpl implements  ActivityRecordFacade{
         return mappingService.mapTo(activityRecordService.getAll(), ActivityRecordDTO.class);
     }
 
-    @Override
-    public List<ActivityRecordDTO> getAllByUser(Long id) {
-        return mappingService.mapTo(activityRecordService.getAllByUser(id), ActivityRecordDTO.class);
-    }
 }

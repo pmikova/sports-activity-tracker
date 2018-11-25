@@ -1,8 +1,7 @@
 package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
-import cz.muni.fi.PA165.tracker.entities.User;
-
+import java.time.Duration;
 import java.util.List;
 
 /**
@@ -10,13 +9,29 @@ import java.util.List;
  * @author Dominik-Bujna
  */
 public interface ActivityRecordService {
+
+    /**
+     * Calculate the duration of the activity
+     *
+     * @param activityRecord activityRecord to calculate the duration of
+     */
+    Duration calculateDuration(ActivityRecord activityRecord);
+
+
+    /**
+     * Calculate the speed of the activity
+     *
+     * @param activityRecord activityRecord to calculate the speed of
+     */
+    double calculateAverageSpeed(ActivityRecord activityRecord);
+
+
     /**
      * Create a record of an activity.
      *
      * @param activityRecord activityRecord to create
-     * @return id of created user
      */
-    Long create(ActivityRecord activityRecord);
+    void create(ActivityRecord activityRecord);
 
     /**
      * Update ActivityRecord.
@@ -47,15 +62,4 @@ public interface ActivityRecordService {
      */
 
     List<ActivityRecord> getAll();
-
-    /**
-     * Get all Activity records by a single user.
-     *
-     * @param id of user whose activities we want displayed
-     * @return List of all activity records belonging to the user
-     */
-
-    List<ActivityRecord> getAllByUser(Long id);
-
-
 }
