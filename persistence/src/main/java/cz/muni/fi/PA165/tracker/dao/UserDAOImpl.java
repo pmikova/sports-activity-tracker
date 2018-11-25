@@ -61,7 +61,8 @@ public class UserDAOImpl implements UserDAO{
         if (user == null){
             throw new IllegalArgumentException("User record can not be null!");
         }
-        return entityManager.merge(user);
+        entityManager.merge(user);
+        return user;
     }
 
     @Override
