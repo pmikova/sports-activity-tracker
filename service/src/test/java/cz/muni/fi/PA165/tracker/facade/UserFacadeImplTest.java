@@ -229,13 +229,6 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
 
     }
-
-    @Test
-    public void findByNameTest() {
-        UserDTO a = userFacade.getByEmail(admin.getEmail());
-        assertEquals(adminDTO, a);
-    }
-
     @Test
     public void testGetAll(){
         when(userService.getAll()).thenReturn(Collections.singletonList(admin));
@@ -273,9 +266,15 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void deleteTest() {
+        userFacade.delete(userDTO);
+        verify(userService).delete(user);
+    }
+    @Test
+    public void deleteAdminTest() {
         userFacade.delete(adminDTO);
         verify(userService).delete(admin);
     }
+
 
     @Test
     public void getStatisticsTest() {

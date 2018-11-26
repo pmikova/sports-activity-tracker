@@ -2,22 +2,19 @@ package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
+import cz.muni.fi.PA165.tracker.dao.BurnedCaloriesDAO;
 import cz.muni.fi.PA165.tracker.dao.UserDAO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
-import cz.muni.fi.PA165.tracker.mapping.MappingService;
-import cz.muni.fi.PA165.tracker.mapping.MappingServiceImpl;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.inject.Inject;
 import org.mockito.*;
 
-import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.test.context.ContextConfiguration;
@@ -41,6 +38,9 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Mock
     private ActivityRecordDAO activityRecordDAO;
+
+    @Mock
+    private BurnedCaloriesDAO bcd;
 
     @InjectMocks
     private final UserService userService = new UserServiceImpl();
@@ -162,12 +162,12 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
 
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void removeNullTest() {
+    public void deleteNullTest() {
         userService.delete(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void removeNonExistingTest() {
+    public void deleteNotExistingTest() {
         userService.delete(noid);
     }
 
@@ -190,7 +190,7 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void updateTest() {
         userService.update(user);
-        verify(userDAO, atLeast(1)).update(userCaptor.capture());
+        verify(userDAO).update(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
         assertEquals(userCaptor.getValue().getId(), user.getId());
     }
@@ -214,13 +214,13 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
         assertNotNull(user.getId());
         user.setEmail("changed@email.com");
         userService.update(user);
-        verify(userDAO, atLeast(1)).update(userCaptor.capture());
+        verify(userDAO).update(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
         assertEquals(userCaptor.getValue().getId(), user.getId());
     }
 
     @Test
-    public void findAllTest() {
+    public void getAllTest() {
         List<User> res = userService.getAll();
         assertEquals(res.size(), users.size());
         for (int i = 0; i < users.size(); i++) {
@@ -262,36 +262,44 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void getByEmailNull() {
+    public void getByEmailNullTest() {
         userService.getByEmail(null);
     }
 
     @Test
-    public void findUserNonExistingByEmail() {
+    public void getNotExistingByEmailTest() {
         assertNull(userService.getByEmail("hi@hi.hi"));
     }
-/*
+
     @Test
     public void deleteUserTest() {
         userService.delete(user);
-        verify(userDAO, atLeast(1)).delete(userCaptor.capture());
+        verify(userDAO).delete(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
     }
-*/
+
     @Test
-    public void authenticate() {
+    public void deleteAdminTest(){
+        userService.delete(admin);
+        verify(userDAO).delete(userCaptor.capture());
+        assertEquals(userCaptor.getValue(), admin);
+
+    }
+
+    @Test
+    public void authenticateTest() {
         userService.register(noid, "hellohowareyoutoday");
         Assert.assertTrue(userService.authenticate(noid, "hellohowareyoutoday"));
         Assert.assertFalse(userService.authenticate(noid, "meh"));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void authenticateNullUser() {
+    public void authenticateNullTest() {
         userService.register(null, "heyyyyyyyyyyyyyyya");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void authenticateNullPassword() {
+    public void authenticateNullPasswordTest() {
         userService.register(noid, null);
     }
 

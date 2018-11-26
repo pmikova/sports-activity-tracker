@@ -1,7 +1,5 @@
 package cz.muni.fi.PA165.tracker.dto;
 
-import java.util.Objects;
-
 /**
  * DTO for User.
  * @author pmikova 433345

@@ -43,7 +43,10 @@ public interface BurnedCaloriesDAO {
      */
     void delete(BurnedCalories calories);
 
-
+    /**
+     * Deletes all Burned calories connected with user
+     * @param user user to delete burned calories for
+     */
     void deleteByUser(User user);
 
     /**
