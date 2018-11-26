@@ -23,32 +23,47 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Override
     public Duration calculateDuration(ActivityRecord activityRecord) {
+        if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
         LocalDateTime startTime = activityRecord.getStartTime();
         LocalDateTime endTime = activityRecord.getEndTime();
-        return Duration.between(startTime, endTime);
+        if (startTime == null || endTime == null){
+            throw new IllegalArgumentException("startTime and endTime can not be null!");
+        }else{
+            return Duration.between(startTime, endTime);
+        }
     }
 
     @Override
     public double calculateAverageSpeed(ActivityRecord activityRecord) {
-        double distance = (double)activityRecord.getDistance();
-        if (distance !=0){
+        if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
+        double distance = (double) activityRecord.getDistance()/1000.0;
+        if (distance !=0 ){
             Duration duration = activityRecord.getDuration();
-            return distance/(duration.toHours());
+            if (duration == null){
+                throw new IllegalArgumentException("Duration needs to be calculated");
+            }else{
+                return distance/(duration.toHours());
+            }
         }
         return 0.0;
     }
 
     @Override
     public void create(ActivityRecord activityRecord) {
+        if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
         activityRecord.setDuration(calculateDuration(activityRecord));
         activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.create(activityRecord);
         User user = activityRecord.getUser();
+        if(user == null){
+            throw new IllegalArgumentException("User cannot be null.");
+        }
         user.addActivityRecord(activityRecord);
     }
 
     @Override
     public void update(ActivityRecord activityRecord) {
+        if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
         activityRecord.setDuration(calculateDuration(activityRecord));
         activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.update(activityRecord);
@@ -56,11 +71,13 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Override
     public void delete(ActivityRecord activityRecord) {
+        if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
         activityRecordDAO.delete(activityRecord);
     }
 
     @Override
     public ActivityRecord getById(Long id) {
+        if(id == null) throw new IllegalArgumentException("id cannot be null.");
         return activityRecordDAO.getById(id);
     }
 

@@ -19,21 +19,25 @@ public class SportActivityServiceImpl implements SportActivityService {
 
     @Override
     public void create(SportActivity sportActivity) {
+        if(sportActivity == null) throw new IllegalArgumentException("SportActivity cannot be null.");
         sportActivityDAO.create(sportActivity);
     }
 
     @Override
     public void update(SportActivity sportActivity) {
+        if(sportActivity == null) throw new IllegalArgumentException("SportActivity cannot be null.");
         sportActivityDAO.update(sportActivity);
     }
 
     @Override
     public void delete(SportActivity sportActivity) {
+        if(sportActivity == null) throw new IllegalArgumentException("SportActivity cannot be null.");
         sportActivityDAO.delete(sportActivity);
     }
 
     @Override
     public SportActivity getById(Long id) {
+        if(id == null) throw new IllegalArgumentException("Id cannot be null.");
         return sportActivityDAO.getById(id);
     }
 
