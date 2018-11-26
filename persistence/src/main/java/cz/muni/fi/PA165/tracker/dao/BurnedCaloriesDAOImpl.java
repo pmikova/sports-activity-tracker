@@ -87,6 +87,9 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
 
     @Override
     public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
+        if (activityRecord == null){
+            throw new IllegalArgumentException("Activity record can not be null!");
+        }
         TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.activityRecord = :activityRecord",
                 BurnedCalories.class);
         query.setParameter("activityRecord", activityRecord);
