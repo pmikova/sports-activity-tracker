@@ -1,5 +1,6 @@
 package cz.muni.fi.PA165.tracker.service;
 
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
 import cz.muni.fi.PA165.tracker.entities.User;
 
@@ -20,9 +21,8 @@ public interface BurnedCaloriesService {
     /**
      * Updates burnedCalories.
      * @param burnedCalories to update
-     * @return updated burnedCalories.
      */
-    BurnedCalories update(BurnedCalories burnedCalories);
+    void update(BurnedCalories burnedCalories);
 
     /**
      * Delete burnedCalories.
@@ -45,13 +45,15 @@ public interface BurnedCaloriesService {
 
     /**
      * Get list of burnedCalories by user
+     * @param user user to find by
      * @return list of burnedCalories
      */
-    List<BurnedCalories> getByUser();
+    List<BurnedCalories> getByUser(User user);
 
     /**
      * Get list of burnedCalories by activityRecord
+     * @param activityRecord activityRecord to find by
      * @return list of burnedCalories
      */
-    List<BurnedCalories> getByActivity();
+    List<BurnedCalories> getByActivity(ActivityRecord activityRecord);
 }
