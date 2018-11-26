@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.facade;
 
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
+import cz.muni.fi.PA165.tracker.dto.UserAuthenticationDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
@@ -13,19 +14,19 @@ import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import cz.muni.fi.PA165.tracker.facade.UserFacadeImpl;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.inject.Inject;
 import org.mockito.*;
+
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -57,12 +58,10 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     UserDTO userDTO;
     User admin;
     UserDTO adminDTO;
+    User noid;
+    UserDTO noidDTO;
+    UserAuthenticationDTO authDTO;
 
-
-    @BeforeClass
-    public void setupMockito() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @BeforeMethod
     public void init() {
@@ -110,11 +109,37 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         adminDTO.setPasswordHash(admin.getPasswordHash());
         adminDTO.setBirthdate(admin.getBirthdate());
 
+        noid = new User();
+        noid.setWeight(30);
+        noid.setEmail("smail@gmail.com");
+        noid.setUserType(UserType.USER);
+        noid.setGender(Gender.MALE);
+        noid.setName("Olaf");
+        noid.setSurname("Bjorndalen");
+        noid.setPasswordHash("hahahahahaha");
+        noid.setBirthdate(LocalDate.of(1920, 12, 18));
+
+        noidDTO = new UserDTO();
+        noidDTO.setId(noid.getId());
+        noidDTO.setWeight(noid.getWeight());
+        noidDTO.setEmail(noid.getEmail());
+        noidDTO.setUserType(noid.getUserType());
+        noidDTO.setGender(noid.getGender());
+        noidDTO.setName(noid.getName());
+        noidDTO.setSurname(noid.getSurname());
+        noidDTO.setPasswordHash(noid.getPasswordHash());
+        noidDTO.setBirthdate(noid.getBirthdate());
+
+        authDTO = new UserAuthenticationDTO();
+        authDTO.setId(user.getId());
+        authDTO.setPasswordHash(user.getPasswordHash());
+
 
     }
 
     @BeforeMethod(dependsOnMethods = "init")
     public void initMocksBehaviour() {
+        MockitoAnnotations.initMocks(this);
         when(userService.isAdministrator(admin)).thenReturn(true);
         when(userService.isAdministrator(user)).thenReturn(false);
 
@@ -134,7 +159,7 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = NotExistingEntityException.class)
-    public void findNonExistingUserByIdTest() {
+    public void getNotExistingUserByIdTest() {
         userFacade.getById(20L);
     }
 
@@ -142,7 +167,7 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     public void createNullTest() {
         userFacade.create(null);
     }
-/*
+
     @Test
     public void createTest() {
         userFacade.create(userDTO);
@@ -150,42 +175,39 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         assertEquals(userCaptor.getValue(), user);
         assertEquals(strCaptor.getValue(), userDTO.getPasswordHash());
     }
-*/
+
 
     @Test
     public void createAdminTest() {
-        Long id = userFacade.create(adminDTO);
+        userFacade.create(adminDTO);
         verify(userService).register(userCaptor.capture(), strCaptor.capture());
         assertEquals(userCaptor.getValue(), admin);
         assertEquals(strCaptor.getValue(), adminDTO.getPasswordHash());
     }
-/*
-    @Test
-    public void deleteUserTest() {
-        userFacade.delete(userDTO);
-        verify(userService).delete(userCaptor.capture());
-        assertEquals(userCaptor.getValue().getId(), user.getId());
-        assertEquals(userCaptor.getValue().getEmail(), user.getEmail());
+
+    @Test(expectedExceptions = NotExistingEntityException.class)
+    public void logInNullId() {
+        userFacade.logIn(null);
     }
-*/
+
+    @Test
+    public void logInTest() {
+        userFacade.logIn(authDTO);
+        verify(userService).authenticate(userCaptor.capture(), strCaptor.capture());
+        assertEquals(userCaptor.getValue().getId(), user.getId());
+        assertEquals(userCaptor.getValue().getPasswordHash(), user.getPasswordHash());
+    }
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void deleteNullTest() {
         userFacade.delete(null);
     }
 
     @Test
-    public void findUserByIdTest() {
+    public void getByIdTest() {
         UserDTO u = userFacade.getById(user.getId());
         assertEquals(u, userDTO);
     }
 
-/*
-    @Test(expectedExceptions = NotExistingEntityException.class)
-    public void removeUserNonExistingTest() {
-        userDTO.setId(20L);
-        userFacade.delete(userDTO);
-    }
-*/
     @Test
     public void isAdministratorTest() {
         Assert.assertTrue(userFacade.isAdministrator(adminDTO));
@@ -199,7 +221,7 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void isAdminNullTest() {
+    public void isAdministratorNullTest() {
         userFacade.isAdministrator(null);
 
 
@@ -211,13 +233,45 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         assertEquals(adminDTO, a);
     }
 
+    @Test
+    public void testGetAll(){
+        when(userService.getAll()).thenReturn(Collections.singletonList(admin));
+        userFacade.getAll();
+        verify(userService).getAll();
+    }
 
+    @Test(expectedExceptions = NotExistingEntityException.class)
+    public void getNotExistingTest() {
+        userFacade.getById(20L);
+    }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void getByIdNullTest() {
+        userFacade.getById(null);
+    }
 
+    @Test
+    public void getByEmailTest() {
+        UserDTO result = userFacade.getByEmail(user.getEmail());
+        assertEquals(result.getId(), user.getId());
+        assertEquals(result.getEmail(), user.getEmail());
+        assertEquals(result.getPasswordHash(), user.getPasswordHash());
+    }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void getByEmailNullTest() {
+        userFacade.getByEmail(null);
+    }
 
+    @Test(expectedExceptions = NotExistingEntityException.class)
+    public void getNonExistingByEmailTest() {
+        userFacade.getByEmail("hi@hi.hi");
+    }
 
-
-
+    @Test
+    public void deleteTest() {
+        userFacade.delete(adminDTO);
+        verify(userService).delete(admin);
+    }
 
 }
