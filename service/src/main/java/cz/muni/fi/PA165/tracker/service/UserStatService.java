@@ -17,7 +17,7 @@ public interface UserStatService {
          * @param user given user to count the calories
          * @return number of burned calories
          */
-        float getAllCalories(User user);
+        Float getAllCalories(User user);
 
         /**
          * Get all burned calories in given period of time.
@@ -26,14 +26,14 @@ public interface UserStatService {
          * @param end end time and day
          * @return number of burned calories
          */
-        float getAllCalories(User user, LocalDate start, LocalDate end);
+        Float getAllCalories(User user, LocalDate start, LocalDate end);
 
         /**
          * Get number of activities performed by user.
          * @param user given user to count the activites
          * @return number of activities performed by user
          */
-        int getNumberOfActivities(User user);
+        Integer getNumberOfActivities(User user);
 
         /**
          * Get number of activities performed in given period of time.
@@ -42,7 +42,7 @@ public interface UserStatService {
          * @param end end time and day
          * @return number of activities performed by user
          */
-        int getNumberOfActivities(User user, LocalDate start, LocalDate end);
+        Integer getNumberOfActivities(User user, LocalDate start, LocalDate end);
 
         /**
          * Count all activities for user, by type.

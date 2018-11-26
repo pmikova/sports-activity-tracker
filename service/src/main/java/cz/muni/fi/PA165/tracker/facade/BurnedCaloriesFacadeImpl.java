@@ -30,8 +30,9 @@ public class BurnedCaloriesFacadeImpl implements BurnedCaloriesFacade {
     private BurnedCaloriesService burnedCaloriesService;
 
     @Override
-    public Long create(BurnedCaloriesCreateDTO burnedCaloriesDTO) {
+    public void create(BurnedCaloriesCreateDTO burnedCaloriesDTO) {
         BurnedCalories burnedCalories = mappingService.mapTo(burnedCaloriesDTO, BurnedCalories.class);
+        burnedCaloriesService.computeBurnedCalories(burnedCalories);
         burnedCaloriesService.create(burnedCalories);
     }
 
@@ -44,6 +45,7 @@ public class BurnedCaloriesFacadeImpl implements BurnedCaloriesFacade {
     @Override
     public void update(BurnedCaloriesDTO burnedCaloriesDTO) {
         BurnedCalories burnedCalories = mappingService.mapTo(burnedCaloriesDTO, BurnedCalories.class);
+        burnedCaloriesService.computeBurnedCalories(burnedCalories);
         burnedCaloriesService.update(burnedCalories);
     }
 

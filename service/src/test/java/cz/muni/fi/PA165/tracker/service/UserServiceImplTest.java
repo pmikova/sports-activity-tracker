@@ -7,18 +7,13 @@ import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
-import cz.muni.fi.PA165.tracker.facade.UserFacade;
-import cz.muni.fi.PA165.tracker.facade.UserFacadeImpl;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
 import cz.muni.fi.PA165.tracker.mapping.MappingServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Inject;
 import org.mockito.*;
 
@@ -30,13 +25,11 @@ import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertNull;
-
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- *
+ * User service tests.
  * @author pmikova 433345
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
@@ -55,9 +48,6 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
     @Captor
     ArgumentCaptor<User> userCaptor;
 
-    @Spy
-    @Inject
-    private final MappingService mappingService = new MappingServiceImpl();
 
     User user;
     User admin;
@@ -125,14 +115,10 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
 
     }
 
-    @BeforeClass
-    public void setupMockito() {
-        MockitoAnnotations.initMocks(this);
-
-    }
 
     @BeforeMethod(dependsOnMethods = "initUsers")
     public void initMocksBehaviour() {
+        MockitoAnnotations.initMocks(this);
 
         when(userDAO.getAll()).thenReturn(users);
 
@@ -140,16 +126,23 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
         when(userDAO.getByEmail(admin.getEmail())).thenReturn(admin);
         when(userDAO.getByEmail("noemail@noemail.com")).thenReturn(null);
 
-        when(userDAO.getById(1L)).thenReturn(user);
-        when(userDAO.getById(2L)).thenReturn(admin);
+        when(userDAO.getById(user.getId())).thenReturn(user);
+        when(userDAO.getById(admin.getId())).thenReturn(admin);
         when(userDAO.getById(20L)).thenReturn(null);
 
+    }
+
+    @Test
+    public void registerTest() {
+        userService.register(user, user.getPasswordHash());
+        verify(userDAO).create(user);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void registerNullTest() {
         userService.register(null, "password");
     }
+
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void registerNullPasswordTest() {
@@ -193,26 +186,39 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
     public void isAdministratorNullTest() {
         userService.isAdministrator(null);
     }
-    /*
+
     @Test
     public void updateTest() {
-        User updated = userService.update(user);
+        userService.update(user);
         verify(userDAO, atLeast(1)).update(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
-        assertEquals(updated.getId(), user.getId());
-        assertEquals(updated, user);
+        assertEquals(userCaptor.getValue().getId(), user.getId());
+    }
+
+    @Test
+    public void updateAdminBaseTest()  {
+        assertNotNull(admin.getId());
+        userService.update(admin);
+        verify(userDAO).update(admin);
+    }
+
+    @Test
+    public void updateTest2() {
+        assertNotNull(user.getId());
+        userService.update(user);
+        verify(userDAO).update(user);
     }
 
     @Test
     public void updateEmailTest() {
         assertNotNull(user.getId());
         user.setEmail("changed@email.com");
-        User updated = userService.update(user);
+        userService.update(user);
         verify(userDAO, atLeast(1)).update(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
-        assertEquals(updated.getId(), user.getId());
+        assertEquals(userCaptor.getValue().getId(), user.getId());
     }
-*/
+
     @Test
     public void findAllTest() {
         List<User> res = userService.getAll();

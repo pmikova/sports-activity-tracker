@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.facade;
 import cz.muni.fi.PA165.tracker.dto.UserAuthenticationDTO;
 import cz.muni.fi.PA165.tracker.dto.UserCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
+import cz.muni.fi.PA165.tracker.dto.UserStatDTO;
 
 import java.util.List;
 
@@ -64,5 +65,7 @@ public interface UserFacade {
      * @return true if user is admin, false otherwise
      */
     boolean isAdministrator(UserDTO user);
+
+    UserStatDTO getStats(UserDTO userDTO);
 
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.PA165.tracker.service;
 
+import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
 import cz.muni.fi.PA165.tracker.dao.UserDAO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
@@ -14,6 +15,8 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 /**
@@ -25,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private ActivityRecordDAO ard;
 
     @Override
     public void register(User user, String password) {
@@ -78,6 +84,7 @@ public class UserServiceImpl implements UserService {
         if (getUser == null){
             throw new NotExistingEntityException("No user with given id!");
         }
+        ard.deleteByUser(getUser);
         userDAO.delete(getUser);
 
     }
@@ -108,8 +115,12 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new IllegalArgumentException("User can not be null!");
         }
-        User u = userDAO.update(user);
-        return u;
+        return userDAO.update(user);
+    }
+
+    @Override
+    public int getAge(User user) {
+        return Period.between(user.getBirthdate(), LocalDate.now()).getYears();
     }
 
     /**
