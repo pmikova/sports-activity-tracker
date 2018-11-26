@@ -66,6 +66,11 @@ public interface UserFacade {
      */
     boolean isAdministrator(UserDTO user);
 
+    /**
+     * Get some statistic info about user
+     * @param userDTO user dto to get stats for
+     * @return statistic dto
+     */
     UserStatDTO getStats(UserDTO userDTO);
 
 }
