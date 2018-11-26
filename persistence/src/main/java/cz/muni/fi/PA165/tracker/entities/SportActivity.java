@@ -47,10 +47,6 @@ public class SportActivity {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public double getBurnedCaloriesPerHour() {
         return burnedCaloriesPerHour;
     }

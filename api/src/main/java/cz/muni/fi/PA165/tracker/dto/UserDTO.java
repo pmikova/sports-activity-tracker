@@ -26,18 +26,18 @@ public class UserDTO extends UserCreateDTO{
         this.id = id;
     }
 
-    //TODO fix the methods according to the business "logic"
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(getId(), userDTO.getId());
+        if (!(o instanceof UserDTO)) return false;
+
+        UserDTO user = (UserDTO) o;
+
+        return !(getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getId());
+        return getEmail() != null ? getEmail().hashCode() : 0;
     }
 }
