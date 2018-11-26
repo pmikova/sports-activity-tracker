@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.dao;
 
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
+import cz.muni.fi.PA165.tracker.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +37,7 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
     public List<BurnedCalories> getAll() {
         TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c",
                 BurnedCalories.class);
-        return (List<BurnedCalories>) query.getResultList();
+        return query.getResultList();
     }
 
     @Override
@@ -55,5 +57,21 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
         }
         entityManager.find(BurnedCalories.class, calories.getId());
         entityManager.remove(calories);
+    }
+
+    @Override
+    public List<BurnedCalories> getByUser(User user) {
+        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.user = :user",
+                BurnedCalories.class);
+        query.setParameter("user", user);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
+        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.activityRecord = :activityRecord",
+                BurnedCalories.class);
+        query.setParameter("activityRecord", activityRecord);
+        return query.getResultList();
     }
 }

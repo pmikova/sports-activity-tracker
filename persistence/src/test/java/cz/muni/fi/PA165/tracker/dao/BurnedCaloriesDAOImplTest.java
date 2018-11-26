@@ -24,6 +24,7 @@ import javax.validation.ConstraintViolationException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Tests for BurnedCaloriesDAOImpl class.
@@ -37,12 +38,6 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
 
     @Inject
     BurnedCaloriesDAO burnedCaloriesDAO;
-    @Inject
-    UserDAO userDAO;
-    @Inject
-    ActivityRecordDAO activityRecordDAO;
-    @Inject
-    SportActivityDAO sportActivityDAO;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -51,6 +46,10 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
     private BurnedCalories burnedCalories2;
     private BurnedCalories burnedCalories3;
     private BurnedCalories burnedCalories4;
+
+    private User user1;
+
+    private ActivityRecord activityRecord1;
 
     private User prepareUser(String email, String name, String surname, Gender gender, String password, int weight, LocalDate birthdate, UserType userType) {
         User user = new User();
@@ -97,38 +96,38 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
     @BeforeMethod
     public void setUp() {
         LocalDate birthdate1 = LocalDate.of(1950,10,13);
-        User user1 = prepareUser("johnd@email.com", "John", "Doe", Gender.MALE, "password", 80, birthdate1, UserType.USER);
-        userDAO.create(user1);
+        user1 = prepareUser("johnd@email.com", "John", "Doe", Gender.MALE, "password", 80, birthdate1, UserType.USER);
+        entityManager.persist(user1);
 
         LocalDate birthdate2 = LocalDate.of(1991, 8, 16);
         User user2 = prepareUser("lucy@email.com", "Lucy", "Doe", Gender.FEMALE, "password2", 55, birthdate2, UserType.USER);
-        userDAO.create(user2);
+        entityManager.persist(user2);
 
         SportActivity sportActivity1 = prepareSportActivity("Running", 1000, 1.0);
-        sportActivityDAO.create(sportActivity1);
+        entityManager.persist(sportActivity1);
 
         SportActivity sportActivity2 = prepareSportActivity("Swimming", 1500, 0.8);
-        sportActivityDAO.create(sportActivity2);
+        entityManager.persist(sportActivity2);
 
         LocalDateTime startTime1 = LocalDateTime.of(2018, 10, 25, 15, 0);
         LocalDateTime endTime1 = LocalDateTime.of(2018, 10, 25, 16, 0);
-        ActivityRecord activityRecord1 = prepareActivityRecord(startTime1, endTime1, 15, 15, user1, sportActivity1);
-        activityRecordDAO.create(activityRecord1);
+        activityRecord1 = prepareActivityRecord(startTime1, endTime1, 15, 15, user1, sportActivity1);
+        entityManager.persist(activityRecord1);
 
         LocalDateTime startTime2 = LocalDateTime.of(2018, 10, 26, 15, 0);
         LocalDateTime endTime2 = LocalDateTime.of(2018, 10, 26, 16, 0);
         ActivityRecord activityRecord2 = prepareActivityRecord(startTime2, endTime2, 15, 15, user1, sportActivity2);
-        activityRecordDAO.create(activityRecord2);
+        entityManager.persist(activityRecord2);
 
         LocalDateTime startTime3 = LocalDateTime.of(2018, 10, 27, 15, 0);
         LocalDateTime endTime3 = LocalDateTime.of(2018, 10, 27, 16, 0);
         ActivityRecord activityRecord3 = prepareActivityRecord(startTime3, endTime3, 15, 15, user2, sportActivity1);
-        activityRecordDAO.create(activityRecord3);
+        entityManager.persist(activityRecord3);
 
         LocalDateTime startTime4 = LocalDateTime.of(2018, 10, 28, 15, 0);
         LocalDateTime endTime4 = LocalDateTime.of(2018, 10, 28, 16, 0);
         ActivityRecord activityRecord4 = prepareActivityRecord(startTime4, endTime4, 15, 15, user2, sportActivity2);
-        activityRecordDAO.create(activityRecord4);
+        entityManager.persist(activityRecord4);
 
         burnedCalories1 = prepareBurnedCalories(activityRecord1, user1, 80, 1000);
 
@@ -218,5 +217,30 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
     public void testCreateWithNegativeBurnedCalories() {
         burnedCalories4.setBurnedCalories(-1);
         burnedCaloriesDAO.create(burnedCalories4);
+    }
+
+    @Test
+    public void testGetByUser() {
+        entityManager.persist(burnedCalories1);
+        entityManager.persist(burnedCalories2);
+        entityManager.persist(burnedCalories3);
+        entityManager.persist(burnedCalories4);
+        entityManager.flush();
+        List<BurnedCalories> result = burnedCaloriesDAO.getByUser(user1);
+        Assert.assertEquals(result.size(), 2);
+        Assert.assertTrue(result.contains(burnedCalories1));
+        Assert.assertTrue(result.contains(burnedCalories2));
+    }
+
+    @Test
+    public void testGetByActivity() {
+        entityManager.persist(burnedCalories1);
+        entityManager.persist(burnedCalories2);
+        entityManager.persist(burnedCalories3);
+        entityManager.persist(burnedCalories4);
+        entityManager.flush();
+        List<BurnedCalories> result = burnedCaloriesDAO.getByActivity(activityRecord1);
+        Assert.assertEquals(result.size(), 1);
+        Assert.assertTrue(result.contains(burnedCalories1));
     }
 }
