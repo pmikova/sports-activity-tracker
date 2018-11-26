@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -61,10 +62,27 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
 
     @Override
     public List<BurnedCalories> getByUser(User user) {
-        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.user = :user",
-                BurnedCalories.class);
-        query.setParameter("user", user);
-        return query.getResultList();
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        try {
+            TypedQuery<BurnedCalories> q = entityManager.createQuery(
+                    "SELECT a FROM BurnedCalories a WHERE a.user = :user",
+                    BurnedCalories.class).setParameter("user", user);
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        entityManager.createQuery("DELETE FROM BurnedCalories a WHERE a.user.id = :user")
+                .setParameter("user", user.getId())
+                .executeUpdate();
     }
 
     @Override

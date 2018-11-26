@@ -1,8 +1,8 @@
 package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
+import cz.muni.fi.PA165.tracker.dao.BurnedCaloriesDAO;
 import cz.muni.fi.PA165.tracker.dao.UserDAO;
-import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.UserType;
 import cz.muni.fi.PA165.tracker.exceptions.NotExistingEntityException;
@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private ActivityRecordDAO ard;
+
+    @Inject
+    private BurnedCaloriesDAO bcd;
 
     @Override
     public void register(User user, String password) {
@@ -85,6 +88,7 @@ public class UserServiceImpl implements UserService {
             throw new NotExistingEntityException("No user with given id!");
         }
         ard.deleteByUser(getUser);
+        bcd.deleteByUser(getUser);
         userDAO.delete(getUser);
 
     }

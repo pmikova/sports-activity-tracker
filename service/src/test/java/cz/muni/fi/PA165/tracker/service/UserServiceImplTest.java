@@ -270,14 +270,14 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
     public void findUserNonExistingByEmail() {
         assertNull(userService.getByEmail("hi@hi.hi"));
     }
-
+/*
     @Test
     public void deleteUserTest() {
         userService.delete(user);
         verify(userDAO, atLeast(1)).delete(userCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
     }
-
+*/
     @Test
     public void authenticate() {
         userService.register(noid, "hellohowareyoutoday");

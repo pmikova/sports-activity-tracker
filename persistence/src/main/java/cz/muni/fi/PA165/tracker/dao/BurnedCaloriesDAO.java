@@ -43,6 +43,9 @@ public interface BurnedCaloriesDAO {
      */
     void delete(BurnedCalories calories);
 
+
+    void deleteByUser(User user);
+
     /**
      * Get a list of BurnedCalories objects by User.
      * @param user user to find by

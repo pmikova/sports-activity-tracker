@@ -1,16 +1,17 @@
 package cz.muni.fi.PA165.tracker.dto;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class UserStatDTO {
 
     private UserDTO userDTO;
 
-    private float calories;
+    private int calories;
 
-    private float caloriesWeek;
+    private int caloriesWeek;
 
-    private float caloriesMonth;
+    private int caloriesMonth;
 
     private int activities;
 
@@ -20,8 +21,6 @@ public class UserStatDTO {
 
     private Map<SportActivityDTO, Integer> activitiesSumUp;
 
-    private Map<SportActivityDTO, Float> caloriesSumUp;
-
     public UserDTO getUserDTO() {
         return userDTO;
     }
@@ -30,27 +29,27 @@ public class UserStatDTO {
         this.userDTO = userDTO;
     }
 
-    public float getCalories() {
+    public int getCalories() {
         return calories;
     }
 
-    public void setCalories(float calories) {
+    public void setCalories(int calories) {
         this.calories = calories;
     }
 
-    public float getCaloriesWeek() {
+    public int getCaloriesWeek() {
         return caloriesWeek;
     }
 
-    public void setCaloriesWeek(float caloriesWeek) {
+    public void setCaloriesWeek(int caloriesWeek) {
         this.caloriesWeek = caloriesWeek;
     }
 
-    public float getCaloriesMonth() {
+    public int getCaloriesMonth() {
         return caloriesMonth;
     }
 
-    public void setCaloriesMonth(float caloriesMonth) {
+    public void setCaloriesMonth(int caloriesMonth) {
         this.caloriesMonth = caloriesMonth;
     }
 
@@ -86,13 +85,24 @@ public class UserStatDTO {
         this.activitiesSumUp = activitiesSumUp;
     }
 
-    public Map<SportActivityDTO, Float> getCaloriesSumUp() {
-        return caloriesSumUp;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserStatDTO that = (UserStatDTO) o;
+        return getCalories() == that.getCalories() &&
+                getCaloriesWeek() == that.getCaloriesWeek() &&
+                getCaloriesMonth() == that.getCaloriesMonth() &&
+                getActivities() == that.getActivities() &&
+                getActivitiesWeek() == that.getActivitiesWeek() &&
+                getActivitiesMonth() == that.getActivitiesMonth() &&
+                getUserDTO() == that.getUserDTO() &&
+                getActivitiesSumUp()== that.getActivitiesSumUp();
     }
 
-    public void setCaloriesSumUp(Map<SportActivityDTO, Float> caloriesSumUp) {
-        this.caloriesSumUp = caloriesSumUp;
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserDTO(), getCalories(), getCaloriesWeek(),
+                getCaloriesMonth(), getActivities(), getActivitiesWeek(), getActivitiesMonth(), getActivitiesSumUp());
     }
-
-    //TODO implement hash/equals
 }
