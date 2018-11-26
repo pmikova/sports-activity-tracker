@@ -17,13 +17,13 @@ public interface SportActivityFacade {
      * @param activity activity to create
      * @return id of SportActivity object
      */
-    Long create(SportActivityCreateDTO activity);
+    void create(SportActivityCreateDTO activity);
 
     /**
      * Updates SportActivity.
      * @param activity activity to update
      */
-    void update(SportActivityUpdateDTO activity);
+    void update(SportActivityDTO activity);
 
     /**
      * Deletes SportActivity
