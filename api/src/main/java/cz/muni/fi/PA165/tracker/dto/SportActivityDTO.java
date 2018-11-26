@@ -50,8 +50,8 @@ public class SportActivityDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SportActivityUpdateDTO)) return false;
-        SportActivityUpdateDTO that = (SportActivityUpdateDTO) o;
+        if (!(o instanceof SportActivityDTO)) return false;
+        SportActivityDTO that = (SportActivityDTO) o;
         return Double.compare(that.getBurnedCaloriesPerHour(), getBurnedCaloriesPerHour()) == 0 &&
                 Double.compare(that.getWeightCoefficient(), getWeightCoefficient()) == 0 &&
                 getActivityName().equals(that.getActivityName());
@@ -61,5 +61,4 @@ public class SportActivityDTO {
     public int hashCode() {
         return Objects.hash(getActivityName(), getBurnedCaloriesPerHour(), getWeightCoefficient());
     }
-
 }

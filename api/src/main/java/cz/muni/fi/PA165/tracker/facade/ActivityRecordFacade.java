@@ -46,5 +46,4 @@ public interface ActivityRecordFacade {
      */
 
     List<ActivityRecordDTO> getAll();
-
 }

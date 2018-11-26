@@ -4,8 +4,9 @@ import java.util.Objects;
 
 /**
  * DTO for Sport Activity Create
- * @author TODO
+ * @author Dominik-Bujna
  */
+
 public class SportActivityCreateDTO {
 
     private String activityName;
@@ -42,8 +43,8 @@ public class SportActivityCreateDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SportActivityUpdateDTO)) return false;
-        SportActivityUpdateDTO that = (SportActivityUpdateDTO) o;
+        if (!(o instanceof SportActivityCreateDTO)) return false;
+        SportActivityCreateDTO that = (SportActivityCreateDTO) o;
         return Double.compare(that.getBurnedCaloriesPerHour(), getBurnedCaloriesPerHour()) == 0 &&
                 Double.compare(that.getWeightCoefficient(), getWeightCoefficient()) == 0 &&
                 getActivityName().equals(that.getActivityName());

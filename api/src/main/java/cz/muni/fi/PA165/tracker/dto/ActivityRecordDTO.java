@@ -1,7 +1,5 @@
 package cz.muni.fi.PA165.tracker.dto;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;

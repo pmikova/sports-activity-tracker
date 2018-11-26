@@ -49,6 +49,8 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Override
     public void update(ActivityRecord activityRecord) {
+        activityRecord.setDuration(calculateDuration(activityRecord));
+        activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.update(activityRecord);
     }
 

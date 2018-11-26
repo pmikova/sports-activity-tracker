@@ -2,9 +2,9 @@ package cz.muni.fi.PA165.tracker.facade;
 
 import cz.muni.fi.PA165.tracker.dto.SportActivityCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.SportActivityDTO;
-import cz.muni.fi.PA165.tracker.dto.SportActivityUpdateDTO;
+import cz.muni.fi.PA165.tracker.entities.SportActivity;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
-import cz.muni.fi.PA165.tracker.service.ActivityRecordService;
+import cz.muni.fi.PA165.tracker.service.SportActivityService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Sport Activity Facade implementation.
- * @author TODO
+ * @author Dominik-Bujna
  */
 
 @Service
@@ -25,30 +25,33 @@ public class SportActivityFacadeImpl implements SportActivityFacade {
     private MappingService mappingService;
 
     @Inject
-    private ActivityRecordService activityRecordService;
+    private SportActivityService sportActivityService;
 
     @Override
-    public Long create(SportActivityCreateDTO activity) {
-        return (long) 0.0;
+    public void create(SportActivityCreateDTO sportActivityCreateDTO) {
+        SportActivity sportActivity = mappingService.mapTo(sportActivityCreateDTO, SportActivity.class);
+        sportActivityService.create(sportActivity);
     }
 
     @Override
-    public void update(SportActivityUpdateDTO activity) {
-
+    public void update(SportActivityDTO sportActivityDTO) {
+        SportActivity sportActivity = mappingService.mapTo(sportActivityDTO, SportActivity.class);
+        sportActivityService.update(sportActivity);
     }
 
     @Override
-    public void delete(SportActivityDTO activity) {
-
+    public void delete(SportActivityDTO sportActivityDTO) {
+        SportActivity sportActivity = mappingService.mapTo(sportActivityDTO, SportActivity.class);
+        sportActivityService.delete(sportActivity);
     }
 
     @Override
     public SportActivityDTO getById(Long id) {
-        return null;
+        return mappingService.mapTo(sportActivityService.getById(id), SportActivityDTO.class);
     }
 
     @Override
     public List<SportActivityDTO> getAll() {
-        return null;
+        return mappingService.mapTo(sportActivityService.getAll(), SportActivityDTO.class);
     }
 }
