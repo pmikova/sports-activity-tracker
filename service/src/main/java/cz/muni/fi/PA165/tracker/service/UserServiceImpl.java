@@ -1,8 +1,10 @@
 package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.dao.UserDAO;
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.enums.UserType;
+import cz.muni.fi.PA165.tracker.exceptions.NotExistingEntityException;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
@@ -73,7 +75,9 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User has no ID!");
         }
         User getUser = getById(user.getId());
-        //TODO delete all burnedCalories and all activityRecords
+        if (getUser == null){
+            throw new NotExistingEntityException("No user with given id!");
+        }
         userDAO.delete(getUser);
 
     }
@@ -104,7 +108,8 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new IllegalArgumentException("User can not be null!");
         }
-        return userDAO.update(user);
+        User u = userDAO.update(user);
+        return u;
     }
 
     /**
