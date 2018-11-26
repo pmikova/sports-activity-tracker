@@ -16,9 +16,8 @@ public interface BurnedCaloriesFacade {
     /**
      * Creates burnedCalories.
      * @param burnedCalories burnedCalories to create
-     * @return id of created user
      */
-    Long create(BurnedCaloriesCreateDTO burnedCalories);
+    void create(BurnedCaloriesCreateDTO burnedCalories);
 
     /**
      * Update burnedCalories.
