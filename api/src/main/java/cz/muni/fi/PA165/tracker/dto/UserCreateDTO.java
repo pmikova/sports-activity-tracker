@@ -113,19 +113,19 @@ public class UserCreateDTO {
         this.birthdate = birthdate;
     }
 
-    //TODO fix according to that business logic or whatever
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserCreateDTO that = (UserCreateDTO) o;
-        return Objects.equals(getEmail(), that.getEmail());
+        if (!(o instanceof UserCreateDTO)) return false;
+
+        UserCreateDTO user = (UserCreateDTO) o;
+
+        return !(getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmail());
+        return getEmail() != null ? getEmail().hashCode() : 0;
     }
-
 }

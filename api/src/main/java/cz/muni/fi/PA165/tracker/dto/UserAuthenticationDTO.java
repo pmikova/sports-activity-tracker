@@ -38,4 +38,6 @@ public class UserAuthenticationDTO {
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
     }
+
+    //TODO implement hash and equals
 }
