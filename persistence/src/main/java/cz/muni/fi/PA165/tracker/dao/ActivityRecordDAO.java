@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.dao;
 
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.SportActivity;
+import cz.muni.fi.PA165.tracker.entities.User;
 
 import java.util.List;
 
@@ -46,4 +48,10 @@ public interface ActivityRecordDAO {
      */
 
     void delete(ActivityRecord activityRecord);
+
+    List<ActivityRecord> getByUser(User user);
+
+    List<ActivityRecord> getByActivity(SportActivity activity);
+
+    void deleteByUser(User user);
 }
