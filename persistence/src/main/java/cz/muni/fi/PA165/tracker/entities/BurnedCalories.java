@@ -73,17 +73,16 @@ public class BurnedCalories {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BurnedCalories)) return false;
         BurnedCalories that = (BurnedCalories) o;
-        return burnedCalories == that.burnedCalories &&
-                Objects.equals(id, that.id) &&
-                Objects.equals(user, that.user) &&
-                Objects.equals(activityRecord, that.activityRecord) &&
-                Objects.equals(actualWeight, that.actualWeight);
+        return getBurnedCalories() == that.getBurnedCalories() &&
+                Objects.equals(getUser(), that.getUser()) &&
+                Objects.equals(getActivityRecord(), that.getActivityRecord()) &&
+                getActualWeight() == that.getActualWeight();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, activityRecord, burnedCalories, actualWeight);
+        return Objects.hash(user, activityRecord, burnedCalories, actualWeight);
     }
 }

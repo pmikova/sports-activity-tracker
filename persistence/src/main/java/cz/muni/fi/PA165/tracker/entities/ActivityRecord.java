@@ -113,17 +113,16 @@ public class ActivityRecord {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ActivityRecord)) return false;
         ActivityRecord that = (ActivityRecord) o;
-        return  Double.compare(that.averageSpeed, averageSpeed) == 0 &&
-                Objects.equals(duration, that.duration) &&
-                Objects.equals(startTime, that.startTime) &&
-                Objects.equals(endTime, that.endTime) &&
-                Objects.equals(id, that.id);
+        return  Double.compare(that.getAverageSpeed(), getAverageSpeed()) == 0 &&
+                Objects.equals(getDuration(), that.getDuration()) &&
+                Objects.equals(getStartTime(), that.getStartTime()) &&
+                Objects.equals(getEndTime(), that.getEndTime());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(averageSpeed, duration, startTime, endTime, id);
+        return Objects.hash(averageSpeed, duration, startTime, endTime);
     }
 }

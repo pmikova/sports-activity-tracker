@@ -2,7 +2,6 @@ package cz.muni.fi.PA165.tracker.facade;
 
 import cz.muni.fi.PA165.tracker.dto.SportActivityCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.SportActivityDTO;
-import cz.muni.fi.PA165.tracker.dto.SportActivityUpdateDTO;
 
 import java.util.List;
 
