@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.dao;
 
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
+import cz.muni.fi.PA165.tracker.entities.User;
 
 import java.util.List;
 
@@ -41,6 +43,19 @@ public interface BurnedCaloriesDAO {
      */
     void delete(BurnedCalories calories);
 
+    /**
+     * Get a list of BurnedCalories objects by User.
+     * @param user user to find by
+     * @return list of BurnedCalories objects
+     */
+    List<BurnedCalories> getByUser(User user);
+
+    /**
+     * Get a list of BurnedCalories objects by ActivityRecord.
+     * @param activityRecord activityRecord to find by
+     * @return list of BurnedCalories objects
+     */
+    List<BurnedCalories> getByActivity(ActivityRecord activityRecord);
 }
 
 
