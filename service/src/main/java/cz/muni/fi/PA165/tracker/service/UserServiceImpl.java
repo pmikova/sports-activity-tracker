@@ -15,6 +15,8 @@ import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 /**
@@ -118,6 +120,11 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User can not be null!");
         }
         return userDAO.update(user);
+    }
+
+    @Override
+    public int getAge(User user) {
+        return Period.between(user.getBirthdate(), LocalDate.now()).getYears();
     }
 
     /**

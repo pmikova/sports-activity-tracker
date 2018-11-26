@@ -64,4 +64,11 @@ public interface UserService {
      * @return updated user.
      */
     User update(User user);
+
+    /**
+     * Get age of given user
+     * @param user user to get age of
+     * @return age of given user
+     */
+    int getAge(User user);
 }
