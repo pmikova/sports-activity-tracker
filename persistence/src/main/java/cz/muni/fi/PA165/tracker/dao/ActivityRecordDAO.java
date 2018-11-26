@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Interface for Activity Record Data Access Object.
- * @author Dominik-Bujna
+ * @author Dominik-Bujna, pmikova
  */
 public interface ActivityRecordDAO {
 
@@ -49,9 +49,23 @@ public interface ActivityRecordDAO {
 
     void delete(ActivityRecord activityRecord);
 
+    /**
+     * Get all ActivityRecords with given user.
+     * @param user user to get records for
+     * @return list of activity records of user
+     */
     List<ActivityRecord> getByUser(User user);
 
+    /**
+     * Get records with specified activity.
+     * @param activity to get records for
+     * @return list of records with given activity
+     */
     List<ActivityRecord> getByActivity(SportActivity activity);
 
+    /**
+     * Deletes all records connected with given user.
+     * @param user user to delete records for.
+     */
     void deleteByUser(User user);
 }

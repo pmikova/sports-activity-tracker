@@ -9,6 +9,10 @@ import org.springframework.context.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service configuration class
+ * @author pmikova 433345
+ */
 @Configuration
 @EnableAspectJAutoProxy
 @Import(PersistenceApplicationContext.class)

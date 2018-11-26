@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * DTO for creating users.
@@ -28,12 +27,10 @@ public class UserCreateDTO {
     @NotBlank
     private String passwordHash;
 
-    //TODO add pattern
     @NotNull
     @NotBlank
     private String name;
 
-    //TODO add pattern
     @NotNull
     @NotBlank
     private String surname;
@@ -46,7 +43,6 @@ public class UserCreateDTO {
     private Gender gender;
 
     @NotNull
-    //TODO should be checked if it is in the past
     private LocalDate birthdate;
 
     public UserType getUserType() {

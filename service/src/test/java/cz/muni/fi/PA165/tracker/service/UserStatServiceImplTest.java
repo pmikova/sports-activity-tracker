@@ -14,20 +14,16 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.security.acl.LastOwnerException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -270,31 +266,37 @@ public class UserStatServiceImplTest extends AbstractTestNGSpringContextTests {
     public void getNumberOfActsEmptyPeriodValidUserTest() {
         assertEquals(userStatService.getAllCalories(admin, LocalDate.now().minusYears(3),
                 LocalDate.now().minusYears(1)), Integer.valueOf(0));
+        verify(burnedCaloriesDAO).getByUser(admin);
     }
     @Test
     public void getNumberOfActsEmptyPeriodTest() {
         assertEquals(userStatService.getNumberOfActivities(admin,
                 LocalDate.now().minusDays(1000), LocalDate.now().minusDays(999)), Integer.valueOf(0));
+        verify(activityRecordDAO).getByUser(admin);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void getNumberOfActsNullArgsTest() {
         userStatService.getNumberOfActivities(null, null, null);
+        verify(activityRecordDAO).getByUser(user);
     }
 
     @Test
     public void countActivitiesNoRecordsTest() {
         assertEquals(userStatService.countActivitiesForUser(admin).size(), 0);
+        verify(activityRecordDAO).getByUser(admin);
     }
 
     @Test
     public void countActivitiesValidUserTest() {
         assertEquals(userStatService.countActivitiesForUser(user).size(), 2);
+        verify(activityRecordDAO).getByUser(user);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void countActivitiesNull() {
+    public void countActivitiesNullTest() {
         userStatService.countActivitiesForUser(null);
+        verify(activityRecordDAO).getByUser(user);
     }
 
 }

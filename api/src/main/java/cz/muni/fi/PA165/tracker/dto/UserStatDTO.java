@@ -3,6 +3,10 @@ package cz.muni.fi.PA165.tracker.dto;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * User stat DTO class.
+ * @author pmikova 433345
+ */
 public class UserStatDTO {
 
     private UserDTO userDTO;
