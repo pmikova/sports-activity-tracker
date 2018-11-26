@@ -5,13 +5,10 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * DTO for Activity Record.
+ * DTO for creating Activity Record.
  * @author Dominik-Bujna
  */
-
-public class ActivityRecordDTO {
-
-    private Long id;
+public class ActivityRecordCreateDTO {
 
     private UserDTO user;
 
@@ -33,14 +30,6 @@ public class ActivityRecordDTO {
 
     public void setUser(UserDTO user) {
         this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public SportActivityDTO getSportActivity() {
@@ -94,8 +83,8 @@ public class ActivityRecordDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ActivityRecordDTO)) return false;
-        ActivityRecordDTO that = (ActivityRecordDTO) o;
+        if (!(o instanceof ActivityRecordCreateDTO)) return false;
+        ActivityRecordCreateDTO that = (ActivityRecordCreateDTO) o;
         return getDistance() == that.getDistance() &&
                 Double.compare(that.getAverageSpeed(), getAverageSpeed()) == 0 &&
                 getUser().equals(that.getUser()) &&

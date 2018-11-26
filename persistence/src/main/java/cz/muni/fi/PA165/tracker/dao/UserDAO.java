@@ -40,7 +40,7 @@ public interface UserDAO {
      * Update user record.
      * @param user to update
      */
-    void update(User user);
+    User update(User user);
 
     /**
      * Deletes user record.

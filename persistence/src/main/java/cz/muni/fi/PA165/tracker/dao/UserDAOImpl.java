@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Implementation of UserDAO interface.
  * @author Dominik-Bujna
- *  */
+ */
 
 @Repository
 public class UserDAOImpl implements UserDAO{
@@ -57,11 +57,12 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         if (user == null){
             throw new IllegalArgumentException("User record can not be null!");
         }
         entityManager.merge(user);
+        return user;
     }
 
     @Override
