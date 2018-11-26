@@ -29,21 +29,33 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
 
     @Override
     public void create(BurnedCalories burnedCalories) {
+        if (burnedCalories == null){
+            throw new IllegalArgumentException("Burned calories can not be null!");
+        }
         burnedCaloriesDAO.create(burnedCalories);
     }
 
     @Override
     public void update(BurnedCalories burnedCalories) {
+        if (burnedCalories == null){
+            throw new IllegalArgumentException("Burned calories can not be null!");
+        }
         burnedCaloriesDAO.update(burnedCalories);
     }
 
     @Override
     public void delete(BurnedCalories burnedCalories) {
+        if (burnedCalories == null){
+            throw new IllegalArgumentException("Burned calories can not be null!");
+        }
         burnedCaloriesDAO.delete(burnedCalories);
     }
 
     @Override
     public BurnedCalories getById(Long id) {
+        if (id == null){
+            throw new IllegalArgumentException("ID can not be null!");
+        }
         return burnedCaloriesDAO.getById(id);
     }
 
@@ -54,25 +66,41 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
 
     @Override
     public List<BurnedCalories> getByUser(User user) {
+        if (user == null){
+            throw new IllegalArgumentException("User can not be null!");
+        }
         return burnedCaloriesDAO.getByUser(user);
     }
 
     @Override
     public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
+        if (activityRecord == null){
+            throw new IllegalArgumentException("Activity record can not be null!");
+        }
         return burnedCaloriesDAO.getByActivity(activityRecord);
     }
 
     @Override
     public void computeBurnedCalories(BurnedCalories burnedCalories) {
+        if (burnedCalories == null){
+            throw new IllegalArgumentException("Burned calories can not be null!");
+        }
         User user = burnedCalories.getUser();
-        Duration duration = burnedCalories.getActivityRecord().getDuration();
-        SportActivity sportActivity = burnedCalories.getActivityRecord().getSportActivity();
+        ActivityRecord activityRecord = burnedCalories.getActivityRecord();
+        if (user == null || activityRecord == null) {
+            throw new IllegalArgumentException("Burned calories must be complete!");
+        }
+        Duration duration = activityRecord.getDuration();
+        SportActivity sportActivity = activityRecord.getSportActivity();
+        if (duration == null || sportActivity == null) {
+            throw new IllegalArgumentException("Burned calories must be complete!");
+        }
         double bmr;
         int age = userService.getAge(user);
         if (user.getGender() == Gender.MALE)
-            bmr = 968 + (6.23 * (burnedCalories.getActualWeight() / 2.2)) - (6.8 * age);
+            bmr = (916 + (13.7 * burnedCalories.getActualWeight()) - (6.8 * age)) * 4;
         else
-            bmr = 1506 + (4.35 * (burnedCalories.getActualWeight() / 2.2)) - (4.7 * age);
+            bmr = (943 + (9.6 * burnedCalories.getActualWeight()) - (4.7 * age)) * 4;
 
         int burnedCaloriesAmount = (int) Math.round(bmr * sportActivity.getBurnedCaloriesPerHour() * duration.toHours());
         burnedCalories.setBurnedCalories(burnedCaloriesAmount);
