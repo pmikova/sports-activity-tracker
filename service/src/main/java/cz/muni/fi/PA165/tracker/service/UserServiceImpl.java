@@ -1,5 +1,6 @@
 package cz.muni.fi.PA165.tracker.service;
 
+import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
 import cz.muni.fi.PA165.tracker.dao.UserDAO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
@@ -25,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private ActivityRecordDAO ard;
 
     @Override
     public void register(User user, String password) {
@@ -78,6 +82,7 @@ public class UserServiceImpl implements UserService {
         if (getUser == null){
             throw new NotExistingEntityException("No user with given id!");
         }
+        ard.deleteByUser(getUser);
         userDAO.delete(getUser);
 
     }
@@ -108,8 +113,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new IllegalArgumentException("User can not be null!");
         }
-        User u = userDAO.update(user);
-        return u;
+        return userDAO.update(user);
     }
 
     /**
