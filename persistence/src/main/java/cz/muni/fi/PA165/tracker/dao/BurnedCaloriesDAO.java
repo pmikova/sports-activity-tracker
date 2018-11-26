@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.dao;
 
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
+import cz.muni.fi.PA165.tracker.entities.User;
 
 import java.util.List;
 
@@ -40,6 +41,10 @@ public interface BurnedCaloriesDAO {
      * @param calories BurnedCalories to delete
      */
     void delete(BurnedCalories calories);
+
+    List<BurnedCalories> getByUser(User user);
+
+    void deleteByUser(User user);
 
 }
 

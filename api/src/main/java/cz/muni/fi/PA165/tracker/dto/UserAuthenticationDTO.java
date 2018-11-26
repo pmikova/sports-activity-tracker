@@ -39,5 +39,4 @@ public class UserAuthenticationDTO {
         this.passwordHash = passwordHash;
     }
 
-    //TODO implement hash and equals
 }

@@ -1,10 +1,13 @@
 package cz.muni.fi.PA165.tracker.dao;
 
+import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
+import cz.muni.fi.PA165.tracker.entities.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -56,4 +59,30 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
         entityManager.find(BurnedCalories.class, calories.getId());
         entityManager.remove(calories);
     }
+
+    @Override
+    public List<BurnedCalories> getByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        try {
+            TypedQuery<BurnedCalories> q = entityManager.createQuery(
+                    "SELECT a FROM BurnedCalories a WHERE a.user = :user",
+                    BurnedCalories.class).setParameter("user", user);
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        entityManager.createQuery("DELETE FROM BurnedCalories a WHERE a.user.id = :user")
+                .setParameter("user", user.getId())
+                .executeUpdate();
+    }
+
 }
