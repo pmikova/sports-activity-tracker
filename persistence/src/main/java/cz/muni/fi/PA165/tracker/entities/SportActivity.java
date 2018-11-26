@@ -66,14 +66,13 @@ public class SportActivity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof SportActivity)) return false;
         SportActivity that = (SportActivity) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(activityName, that.activityName);
+        return Objects.equals(getActivityName(), that.getActivityName()) && getBurnedCaloriesPerHour() == that.getBurnedCaloriesPerHour();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, activityName);
+        return Objects.hash(getActivityName(), getBurnedCaloriesPerHour());
     }
 }

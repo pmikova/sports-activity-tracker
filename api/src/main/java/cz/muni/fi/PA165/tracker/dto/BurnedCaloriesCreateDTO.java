@@ -51,7 +51,7 @@ public class BurnedCaloriesCreateDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof BurnedCaloriesCreateDTO)) return false;
         BurnedCaloriesCreateDTO that = (BurnedCaloriesCreateDTO) o;
         return getBurnedCalories() == that.getBurnedCalories() &&
                 Double.compare(that.getActualWeight(), getActualWeight()) == 0 &&
