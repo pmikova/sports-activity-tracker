@@ -24,15 +24,16 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
     @Inject
     private BurnedCaloriesDAO burnedCaloriesDAO;
 
+    @Inject
+    private UserService userService;
+
     @Override
     public void create(BurnedCalories burnedCalories) {
-        computeBurnedCalories(burnedCalories);
         burnedCaloriesDAO.create(burnedCalories);
     }
 
     @Override
     public void update(BurnedCalories burnedCalories) {
-        computeBurnedCalories(burnedCalories);
         burnedCaloriesDAO.update(burnedCalories);
     }
 
@@ -61,12 +62,13 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
         return burnedCaloriesDAO.getByActivity(activityRecord);
     }
 
-    private void computeBurnedCalories(BurnedCalories burnedCalories) {
+    @Override
+    public void computeBurnedCalories(BurnedCalories burnedCalories) {
         User user = burnedCalories.getUser();
         Duration duration = burnedCalories.getActivityRecord().getDuration();
         SportActivity sportActivity = burnedCalories.getActivityRecord().getSportActivity();
         double bmr;
-        int age = Period.between(user.getBirthdate(), LocalDate.now()).getYears();
+        int age = userService.getAge(user);
         if (user.getGender() == Gender.MALE)
             bmr = 968 + (6.23 * (burnedCalories.getActualWeight() / 2.2)) - (6.8 * age);
         else
