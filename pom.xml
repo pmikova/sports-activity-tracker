@@ -18,6 +18,8 @@
         <module>persistence</module>
         <module>api</module>
         <module>service</module>
+        <module>rest</module>
+        <module>spring-mvc</module>
     </modules>
 
     <!-- this should be used as parent
