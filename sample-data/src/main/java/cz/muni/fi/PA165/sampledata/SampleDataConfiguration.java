@@ -1,5 +1,6 @@
 package cz.muni.fi.PA165.sampledata;
 
+import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.io.IOException;
  * @author pmikova 433345
  */
 @Configuration
-//@Import(ServiceConfiguration.class)
+@Import(ServiceConfiguration.class)
 @ComponentScan(basePackageClasses = {SampleDataLoadingFacadeImpl.class})
 public class SampleDataConfiguration {
 
