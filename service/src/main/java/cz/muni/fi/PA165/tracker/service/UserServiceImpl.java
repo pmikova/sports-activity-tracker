@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID can not be null!");
+            throw new IllegalArgumentException("ID of user can not be null!");
         }
         return userDAO.getById(id);
     }

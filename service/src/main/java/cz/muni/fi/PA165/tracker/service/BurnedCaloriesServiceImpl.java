@@ -54,7 +54,7 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
     @Override
     public BurnedCalories getById(Long id) {
         if (id == null){
-            throw new IllegalArgumentException("ID can not be null!");
+            throw new IllegalArgumentException("ID calories can not be null!");
         }
         return burnedCaloriesDAO.getById(id);
     }

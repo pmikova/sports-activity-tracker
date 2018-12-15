@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.muni.fi.PA165.sampledata.SampleDataConfiguration;
+import cz.muni.fi.PA165.tracker.AllowOriginInterceptor;
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
-import cz.muni.fi.PA165.tracker.controller.UserController;
+import cz.muni.fi.PA165.tracker.controller.UserRestController;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.mixin.UserDTOMixin;
 import org.springframework.context.annotation.*;
@@ -27,7 +28,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @Import({ServiceConfiguration.class, SampleDataConfiguration.class})
-@ComponentScan(basePackageClasses = UserController.class)
+@ComponentScan(basePackageClasses = UserRestController.class)
 public class RestContext  extends WebMvcConfigurerAdapter{
 
 

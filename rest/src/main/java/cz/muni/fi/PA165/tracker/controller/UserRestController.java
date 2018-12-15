@@ -23,8 +23,8 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping(ApiUris.USERS)
-public class UserController {
-    final static Logger logger = LoggerFactory.getLogger(UserController.class);
+public class UserRestController {
+    final static Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     @Inject
     private UserFacade userFacade;

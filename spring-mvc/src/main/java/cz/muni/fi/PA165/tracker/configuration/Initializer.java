@@ -1,8 +1,8 @@
 package cz.muni.fi.PA165.tracker.configuration;
 
+
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 
 import javax.servlet.Filter;
 
@@ -10,7 +10,7 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{MvcConfiguration.class};
+        return new Class<?>[]{MvcConfiguration.class, SecurityConfiguration.class};
     }
 
     @Override
@@ -29,6 +29,5 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
     protected Class<?>[] getServletConfigClasses() {
         return null;
     }
-
 }
 

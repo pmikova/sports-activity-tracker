@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.service;
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.User;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author Dominik-Bujna
  */
 
+@Service
 public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Inject

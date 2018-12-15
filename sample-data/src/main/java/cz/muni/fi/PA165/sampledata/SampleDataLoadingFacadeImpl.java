@@ -12,6 +12,7 @@ import cz.muni.fi.PA165.tracker.service.SportActivityService;
 import cz.muni.fi.PA165.tracker.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
@@ -28,13 +29,15 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     final static Logger log = LoggerFactory.getLogger(SampleDataLoadingFacadeImpl.class);
 
-    @Inject
+    @Autowired
     private UserService userService;
-    @Inject
+
+    @Autowired
     private ActivityRecordService activityRecordService;
-    @Inject
+
+    @Autowired
     private BurnedCaloriesService burnedCaloriesService;
-    @Inject
+    @Autowired
     private SportActivityService sportActivityService;
 
 
@@ -133,7 +136,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
 
-    private SportActivity activity(String name, double weight, double cph ){
+    public SportActivity activity(String name, double weight, double cph ){
         SportActivity activity = new SportActivity();
         activity.setActivityName(name);
         activity.setWeightCoefficient(weight);
@@ -142,7 +145,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return activity;
     }
 
-    private User user(LocalDate bdate, String pwhash, String name, String surname, Gender gender, String email,
+    public User user(LocalDate bdate, String pwhash, String name, String surname, Gender gender, String email,
                       UserType type, long weight){
         User user = new User();
         user.setBirthdate(bdate);
@@ -157,7 +160,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return user;
     }
 
-    private BurnedCalories calories(int cals, User user, long weight, ActivityRecord activityRecord){
+    public BurnedCalories calories(int cals, User user, long weight, ActivityRecord activityRecord){
         BurnedCalories calories = new BurnedCalories();
         calories.setBurnedCalories(cals);
         calories.setUser(user);
@@ -167,7 +170,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return calories;
     }
 
-    private ActivityRecord activityRecord(SportActivity activity, LocalDateTime startTime, LocalDateTime endTime,
+    public ActivityRecord activityRecord(SportActivity activity, LocalDateTime startTime, LocalDateTime endTime,
                                           int distance, User user){
         ActivityRecord record = new ActivityRecord();
         record.setSportActivity(activity);
