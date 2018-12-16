@@ -1,14 +1,14 @@
-package cz.muni.fi.PA165.tracker.configuration;
+package cz.muni.fi.PA165.tracker.mvc.configuration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import cz.muni.fi.PA165.sampledata.SampleDataConfiguration;
-import cz.muni.fi.PA165.tracker.AllowOriginInterceptor;
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
 import cz.muni.fi.PA165.tracker.controller.UserRestController;
-import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.mixin.UserDTOMixin;
+import cz.muni.fi.PA165.tracker.AllowOriginInterceptor;
+import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
