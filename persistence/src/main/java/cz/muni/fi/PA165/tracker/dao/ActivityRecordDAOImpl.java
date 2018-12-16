@@ -63,8 +63,9 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
             throw new IllegalArgumentException("User is not valid");
         }
         try {
+
             TypedQuery<ActivityRecord> q = entityManager.createQuery(
-                    "SELECT a FROM ActivityReport a WHERE a.user = :user",
+                    "SELECT a FROM ActivityRecord a WHERE a.user = :user",
                     ActivityRecord.class).setParameter("user", user);
             return q.getResultList();
         } catch (NoResultException e) {
@@ -79,7 +80,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
         }
         try {
             TypedQuery<ActivityRecord> q = entityManager.createQuery(
-                    "SELECT a FROM ActivityReport a WHERE a.sportActivity = :sportActivity",
+                    "SELECT a FROM ActivityRecord a WHERE a.sportActivity = :sportActivity",
                     ActivityRecord.class).setParameter("sportActivity", activity);
             return q.getResultList();
         } catch (NoResultException e) {
@@ -92,7 +93,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
         if (user == null) {
             throw new IllegalArgumentException("User is not valid");
         }
-        entityManager.createQuery("DELETE FROM ActivityReport a WHERE a.user.id = :user")
+        entityManager.createQuery("DELETE FROM ActivityRecord a WHERE a.user.id = :user")
                 .setParameter("user", user.getId())
                 .executeUpdate();
     }

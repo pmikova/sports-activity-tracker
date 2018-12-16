@@ -54,7 +54,7 @@ public class UserStatServiceImpl implements UserStatService {
 
         return bcd.getByUser(user).stream()
                 .filter(r -> r.getBurnedCalories() > 0 && r.getActivityRecord().getStartTime() != null)
-                .filter(r -> !r.getActivityRecord().getEndTime().toLocalDate().isBefore(start))
+                .filter(r -> !r.getActivityRecord().getStartTime().toLocalDate().isBefore(start))
                 .filter(r -> !r.getActivityRecord().getStartTime().toLocalDate().isAfter(end))
                 .mapToInt(r -> r.getBurnedCalories())
                 .sum();

@@ -67,11 +67,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isAdministrator(User user) {
-        if (user == null) {
+    public boolean isAdministrator(Long id) {
+        if (id == null) {
             throw new IllegalArgumentException("User can not be null!");
         }
-        User getUser = getById(user.getId());
+        User getUser = getById(id);
         return getUser.getUserType() == UserType.ADMIN;
     }
 

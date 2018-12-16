@@ -39,11 +39,12 @@ public class AuthProvider implements AuthenticationProvider {
         System.out.println("USER FOUND");
         UserAuthenticationDTO authData = new UserAuthenticationDTO(user.getId(), password);
 
+
         if (userFacade.logIn(authData)) {
             System.out.println("EXISTS!");
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-            if (userFacade.isAdministrator(user)) {
+            System.out.println(user.getId().toString());
+            if (userFacade.isAdministrator(user.getId())) {
                 System.out.println("IS ADMIN");
                 grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             } else {
