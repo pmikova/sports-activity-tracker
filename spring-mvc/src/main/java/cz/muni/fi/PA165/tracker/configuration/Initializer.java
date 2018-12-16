@@ -10,7 +10,7 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{MvcConfiguration.class, SecurityConfiguration.class};
+        return new Class<?>[]{MvcConfiguration.class};
     }
 
     @Override
