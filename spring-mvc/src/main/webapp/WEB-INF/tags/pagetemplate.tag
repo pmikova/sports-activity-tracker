@@ -18,18 +18,11 @@
         <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 
         <title><fmt:message key="application_name"/></title>
-        <!-- bootstrap css -->
-        <!--<link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"  crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css" crossorigin="anonymous">
-        <!--custom css stylesheet-->
-        <link href="/pa165/resources/css/site.css" rel="stylesheet">
         <!-- jquery themes -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        <!--Icon-->
-        <link rel="shortcut icon" href="resources/img/Calories-Burned.png">
-        <link rel="apple-touch-icon" href="resources/img/Calories-Burned.png">
         <jsp:invoke fragment="head"/>
     </head>
     <body class="body">
@@ -46,9 +39,9 @@
                     <a class="navbar-brand" href="${pageContext.request.contextPath}"><fmt:message key="application_name"/></a>
                 <div id="navbar" class="collapse navbar-collapse pull-left">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/reports"><fmt:message key="menu_records"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/sports"><fmt:message key="menu_activities"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/teams"><fmt:message key="menu_statistics"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/records"><fmt:message key="menu_records"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/activities"><fmt:message key="menu_activities"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/statistics"><fmt:message key="menu_statistics"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/users"><fmt:message key="menu_users"/></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
@@ -58,11 +51,11 @@
                             <li class="dropdown" id="menuLogin">
                               <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">
                                   <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                  <span class="userName">${loggedUser.firstName}</span>
+                                  <span class="userName">${loggedUser.name}</span>
                                   <span class="caret"></span>
                               </a>
                               <div class="dropdown-menu" style="padding:27px; background-color: white">
-                                  <p><fmt:message key="menu_user"/>&nbsp;<span class="fullName">${loggedUser.firstName}&nbsp;${loggedUser.lastName}</span></p>
+                                  <p><fmt:message key="menu_user"/>&nbsp;<span class="fullName">${loggedUser.name}&nbsp;${loggedUser.surname}</span></p>
                                   <p><fmt:message key="menu_email"/>&nbsp;<span class="userEmail">${loggedUser.email}</span></p>
                                   <c:if test="${isAdmin}">
                                        <p><fmt:message key="admin_rights"/></p>

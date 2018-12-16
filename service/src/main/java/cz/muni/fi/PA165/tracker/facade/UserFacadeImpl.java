@@ -111,7 +111,7 @@ public class UserFacadeImpl implements UserFacade {
             throw new NotExistingEntityException("UserAuthenticationDTO can not be null!");
         }
         User user = userService.getById(auth.getId());
-        return userService.authenticate(user, user.getPasswordHash());
+        return userService.authenticate(user, auth.getPasswordHash());
     }
 
     @Override

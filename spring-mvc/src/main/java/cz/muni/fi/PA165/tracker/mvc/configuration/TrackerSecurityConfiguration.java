@@ -2,7 +2,10 @@ package cz.muni.fi.PA165.tracker.mvc.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +30,9 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         log.debug("Configuring security - registering authentication provider");
-
         auth.authenticationProvider(authenticationProvider);
     }
+
 
     /**
      * Configure secured URLs inside out application
@@ -46,7 +49,7 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/remove/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/users/makeAdmin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/users/makeRegular/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/users/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                //.antMatchers("/users/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .and()
                 .formLogin()
                 .loginPage("/login").loginProcessingUrl("/j_spring_security_check")
@@ -59,5 +62,4 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 
     }
-
 }
