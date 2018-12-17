@@ -55,13 +55,13 @@
                                   <span class="caret"></span>
                               </a>
                               <div class="dropdown-menu" style="padding:27px; background-color: white">
-                                  <p><fmt:message key="menu_user"/>&nbsp;<span class="fullName">${loggedUser.name}&nbsp;${loggedUser.surname}</span></p>
-                                  <p><fmt:message key="menu_email"/>&nbsp;<span class="userEmail">${loggedUser.email}</span></p>
+                                  <p><fmt:message key="menu.user"/>&nbsp;<span class="name">${loggedUser.name}&nbsp;${loggedUser.surname}</span></p>
+                                  <p><fmt:message key="menu.email"/>&nbsp;<span class="email">${loggedUser.email}</span></p>
                                   <c:if test="${isAdmin}">
                                        <p><fmt:message key="admin_rights"/></p>
                                   </c:if>
 
-                                  <a href="${pageContext.request.contextPath}/settings" class="btn btn-lg btn-primary btn-block"><fmt:message key="menu_settings"/></a>
+                                  <a href="${pageContext.request.contextPath}/settings" class="btn btn-lg btn-primary btn-block"><fmt:message key="menu.settings"/></a>
                                   <a href="${pageContext.request.contextPath}/logout" class="btn btn-lg btn-primary btn-block"><fmt:message key="log_out"/></a>
                               </div>
                             </li>

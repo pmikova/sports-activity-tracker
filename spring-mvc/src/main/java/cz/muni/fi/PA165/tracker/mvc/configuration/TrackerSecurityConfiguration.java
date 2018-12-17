@@ -14,6 +14,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.inject.Inject;
 
+/**
+ * Security configuration for the Sports activity tracker
+ * @author pmikova 43345
+ */
 @Configuration
 @EnableWebSecurity
 public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -24,18 +28,18 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AuthProvider authenticationProvider;
 
     /**
-     * Initialize authentication in our application - use custom authentication provider
+     * Inject our custom authentication provider.
      */
     @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-        log.debug("Configuring security - registering authentication provider");
+        log.debug("Registering authentication provider");
         auth.authenticationProvider(authenticationProvider);
     }
 
 
     /**
-     * Configure secured URLs inside out application
+     * Configure URLs.
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,9 +51,9 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/records/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/settings/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/users/remove/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/users/makeAdmin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/users/makeRegular/**").access("hasRole('ROLE_ADMIN')")
-                //.antMatchers("/users/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/users/makeAdministrator/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/makeRegularUser/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/users/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .and()
                 .formLogin()
                 .loginPage("/login").loginProcessingUrl("/j_spring_security_check")

@@ -2,6 +2,7 @@ package cz.muni.fi.PA165.tracker.mvc.configuration;
 
 import cz.muni.fi.PA165.sampledata.SampleDataConfiguration;
 import cz.muni.fi.PA165.sampledata.SampleDataLoadingFacade;
+import cz.muni.fi.PA165.tracker.mvc.convert.CustomDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -21,7 +23,10 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import javax.inject.Inject;
 import javax.validation.Validator;
 
-
+/**
+ * Configuration class for our web app.
+ * @author pmikova 433345
+ */
 @Configuration
 @EnableWebMvc
 @Import({SampleDataConfiguration.class, TrackerSecurityConfiguration.class})
@@ -34,7 +39,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     private SampleDataLoadingFacade sampleDataLoadingFacade;
 
     /**
-     * Provides mapping from view names to JSP pages in WEB-INF/jsp directory.
+     * Map views to jsp.
      */
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
@@ -46,7 +51,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Handling of resources
+     * Get resources from WEB-INF
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -54,7 +59,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * Enables default Tomcat servlet that serves static files.
+     * Enable default tomcat servlet.
      */
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -77,6 +82,11 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("Texts");
         return messageSource;
+    }
+
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new CustomDateConverter());
+
     }
 
 }
