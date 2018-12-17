@@ -2,6 +2,7 @@ package cz.muni.fi.PA165.tracker.dto;
 
 import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
+import cz.muni.fi.PA165.tracker.validate.PastDate;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,6 +49,7 @@ public class UserCreateDTO {
     private Gender gender;
 
     @NotNull
+    @PastDate
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthdate;
 
