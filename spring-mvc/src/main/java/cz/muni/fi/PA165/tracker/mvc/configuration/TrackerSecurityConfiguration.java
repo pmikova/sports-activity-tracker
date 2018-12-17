@@ -54,6 +54,7 @@ public class TrackerSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/users/makeAdministrator/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/users/makeRegularUser/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/users/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/statistics").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .and()
                 .formLogin()
                 .loginPage("/login").loginProcessingUrl("/j_spring_security_check")
