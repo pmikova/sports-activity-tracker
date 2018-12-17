@@ -16,7 +16,7 @@ import java.util.List;
 @Configuration
 @EnableAspectJAutoProxy
 @Import(PersistenceApplicationContext.class)
-@ComponentScan(basePackageClasses = {MappingServiceImpl.class})
+@ComponentScan(basePackages= {"cz.muni.fi.PA165.tracker.service", "cz.muni.fi.PA165.tracker.facade", "cz.muni.fi.PA165.tracker.mapping"})
 public class ServiceConfiguration {
 
     @Bean

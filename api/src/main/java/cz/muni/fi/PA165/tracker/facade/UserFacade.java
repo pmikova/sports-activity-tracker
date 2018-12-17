@@ -61,10 +61,10 @@ public interface UserFacade {
 
     /**
      * Determine if user is admin or not.
-     * @param user user to check
+     * @param userId user to check
      * @return true if user is admin, false otherwise
      */
-    boolean isAdministrator(UserDTO user);
+    boolean isAdministrator(Long userId);
 
     /**
      * Get some statistic info about user

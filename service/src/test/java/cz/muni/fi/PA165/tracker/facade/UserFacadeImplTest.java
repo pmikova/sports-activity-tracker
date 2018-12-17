@@ -143,8 +143,8 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod(dependsOnMethods = "init")
     public void initMocksBehaviour() {
         MockitoAnnotations.initMocks(this);
-        when(userService.isAdministrator(admin)).thenReturn(true);
-        when(userService.isAdministrator(user)).thenReturn(false);
+        when(userService.isAdministrator(admin.getId())).thenReturn(true);
+        when(userService.isAdministrator(user.getId())).thenReturn(false);
 
         when(userService.getById(Long.valueOf(20L))).thenReturn(null);
         when(userService.getById(1L)).thenReturn(user);
@@ -213,13 +213,13 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void isAdministratorTest() {
-        Assert.assertTrue(userFacade.isAdministrator(adminDTO));
+        Assert.assertTrue(userFacade.isAdministrator(adminDTO.getId()));
 
     }
 
     @Test
     public void isUserAdministratorTest() {
-        Assert.assertFalse(userFacade.isAdministrator(userDTO));
+        Assert.assertFalse(userFacade.isAdministrator(userDTO.getId()));
 
     }
 

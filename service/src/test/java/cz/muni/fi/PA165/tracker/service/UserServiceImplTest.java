@@ -173,12 +173,12 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void isAdministratorAdministratorTest() {
-        Assert.assertTrue(userService.isAdministrator(admin));
+        Assert.assertTrue(userService.isAdministrator(admin.getId()));
     }
 
     @Test
     public void isUserAdministratorTest() {
-        Assert.assertFalse(userService.isAdministrator(user));
+        Assert.assertFalse(userService.isAdministrator(user.getId()));
     }
 
 

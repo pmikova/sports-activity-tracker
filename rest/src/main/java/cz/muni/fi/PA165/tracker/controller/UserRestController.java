@@ -1,13 +1,13 @@
 package cz.muni.fi.PA165.tracker.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import cz.muni.fi.PA165.tracker.exceptions.ConstraintViolationException;
+import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import cz.muni.fi.PA165.tracker.dto.UserCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
-import cz.muni.fi.PA165.tracker.exceptions.ConstraintViolationException;
 import cz.muni.fi.PA165.tracker.exceptions.NotExistingEntityException;
 import cz.muni.fi.PA165.tracker.exceptions.ResourceNotFoundException;
 import cz.muni.fi.PA165.tracker.exceptions.ResourceNotModifiedException;
-import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -23,8 +23,8 @@ import java.util.Collection;
  */
 @RestController
 @RequestMapping(ApiUris.USERS)
-public class UserController {
-    final static Logger logger = LoggerFactory.getLogger(UserController.class);
+public class UserRestController {
+    final static Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     @Inject
     private UserFacade userFacade;

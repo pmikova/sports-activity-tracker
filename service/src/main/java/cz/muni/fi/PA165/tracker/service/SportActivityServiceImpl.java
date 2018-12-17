@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.service;
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
 import cz.muni.fi.PA165.tracker.dao.SportActivityDAO;
 import cz.muni.fi.PA165.tracker.entities.SportActivity;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author Dominik-Bujna
  */
 
+@Service
 public class SportActivityServiceImpl implements SportActivityService {
 
     @Inject
