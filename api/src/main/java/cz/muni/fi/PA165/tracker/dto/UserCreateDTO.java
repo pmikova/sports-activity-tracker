@@ -4,9 +4,12 @@ import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
 /**
@@ -29,13 +32,15 @@ public class UserCreateDTO {
 
     @NotNull
     @NotBlank
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "The name can only contain letters")
     private String name;
 
     @NotNull
     @NotBlank
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "The name can only contain letters")
     private String surname;
 
-    @Min(1)
+    @Min(value = 1, message = "Must be bigger than 0")
     @NotNull
     private long weight;
 
@@ -43,6 +48,7 @@ public class UserCreateDTO {
     private Gender gender;
 
     @NotNull
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate birthdate;
 
     public UserType getUserType() {

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import cz.muni.fi.PA165.tracker.dto.UserCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
+import cz.muni.fi.PA165.tracker.dto.UserStatDTO;
 import cz.muni.fi.PA165.tracker.enums.UserType;
 import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import org.slf4j.Logger;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -167,4 +172,11 @@ public class UserController extends MainController {
         return "redirect:" + uriBuilder.path("/users").toUriString();
     }
 
+    @RequestMapping(value = "statistics", method = RequestMethod.GET)
+    public String statistics(Model model) {
+        UserDTO loggedUser = getLoggedUser();
+        UserStatDTO userStats = userFacade.getStats(loggedUser);
+        model.addAttribute("userStats", userStats);
+        return "user/statistics";
+    }
 }
