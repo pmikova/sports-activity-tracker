@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+/**
+ * Authentication controller
+ * @author pmikova 433345
+ */
 @Controller
 public class AuthenticationController {
 

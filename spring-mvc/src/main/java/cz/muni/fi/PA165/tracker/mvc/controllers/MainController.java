@@ -13,12 +13,19 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
-
+/**
+ * Base controller that should be extended by other controllers
+ * @author pmikova 433345
+ */
 public class MainController {
 
     @Inject
     private UserFacade userFacade;
 
+    /**
+     * Get currently logged usser in the application
+     * @return logged users DTO
+     */
     @ModelAttribute("loggedUser")
     protected UserDTO getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -36,26 +43,24 @@ public class MainController {
         return user;
     }
 
-    @ModelAttribute("isAdmin")
+    /**
+     * This method determines whether an user is admin or not
+     * @param request request to process
+     * @return true if user is admin, false otherwise
+     */
+    @ModelAttribute("isUserAdmin")
     protected boolean isUserAdmin(HttpServletRequest request) {
         return request.isUserInRole("ROLE_ADMIN");
     }
 
+    /**
+     * Method to process validation errors
+     */
     protected void addValidationErrors(BindingResult bindingResult, Model model) {
         for (FieldError fe : bindingResult.getFieldErrors()) {
             model.addAttribute(fe.getField() + "_error", true);
         }
     }
 
-    protected String getUtf8RequestParam(String iso8859String) {
-        String utf8String = null;
-
-        if (iso8859String != null) {
-            byte[] bytes = iso8859String.getBytes(StandardCharsets.ISO_8859_1);
-            utf8String = new String(bytes, StandardCharsets.UTF_8);
-        }
-
-        return utf8String;
-    }
 
 }

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
 
+/**
+ * Home controller.
+ * @author pmikova 433345
+ */
 @Controller
 public class HomeController extends MainController {
 
