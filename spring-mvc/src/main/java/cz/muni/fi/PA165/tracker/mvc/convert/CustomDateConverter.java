@@ -1,8 +1,6 @@
 package cz.muni.fi.PA165.tracker.mvc.convert;
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.core.convert.converter.GenericConverter;
-
 import java.time.LocalDate;
 
 public class CustomDateConverter implements Converter<String, LocalDate> {

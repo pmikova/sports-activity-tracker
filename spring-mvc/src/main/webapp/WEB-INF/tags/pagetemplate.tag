@@ -104,7 +104,7 @@
         <!-- footer -->
         <footer class="footer">
             <div class="container" align="center">
-                <p class="text-muted">&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp; Thank you Thank you!</p>
+                <p class="text-muted">&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp; Sports Activity Tracker</p>
             </div>
         </footer>
 
