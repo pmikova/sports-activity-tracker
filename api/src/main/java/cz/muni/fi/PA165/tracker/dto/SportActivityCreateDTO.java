@@ -1,5 +1,10 @@
 package cz.muni.fi.PA165.tracker.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 /**
@@ -9,8 +14,13 @@ import java.util.Objects;
 
 public class SportActivityCreateDTO {
 
+    @NotNull
+    @NotBlank
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "The name can only contain letters")
     private String activityName;
 
+    @NotNull
+    @Min(value = 1, message = "Must be bigger than 0")
     private double burnedCaloriesPerHour;
 
     private double weightCoefficient;
