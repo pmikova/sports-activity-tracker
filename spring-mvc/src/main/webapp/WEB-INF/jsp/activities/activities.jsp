@@ -10,7 +10,7 @@
     <jsp:attribute name="body">
         <div class="jumbotron">
             <h1><fmt:message key="menu_activities"/></h1>
-            <p class="lead"><fmt:message key="menu_activities"/></p>
+            <p class="lead"><fmt:message key="activity.activityText"/></p>
         </div>
 
         <c:if test="${isUserAdmin}">
