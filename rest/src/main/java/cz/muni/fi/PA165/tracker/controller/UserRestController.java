@@ -1,13 +1,10 @@
 package cz.muni.fi.PA165.tracker.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import cz.muni.fi.PA165.tracker.exceptions.ConstraintViolationException;
+import cz.muni.fi.PA165.tracker.exceptions.*;
 import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import cz.muni.fi.PA165.tracker.dto.UserCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
-import cz.muni.fi.PA165.tracker.exceptions.NotExistingEntityException;
-import cz.muni.fi.PA165.tracker.exceptions.ResourceNotFoundException;
-import cz.muni.fi.PA165.tracker.exceptions.ResourceNotModifiedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -38,7 +35,7 @@ public class UserRestController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final Collection<UserDTO> getUsers() throws JsonProcessingException {
 
-        logger.debug("rest getUsers()");
+        logger.debug("rest getUsers");
         return userFacade.getAll();
     }
 
@@ -51,9 +48,9 @@ public class UserRestController {
      * @throws ResourceNotFoundException
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final UserDTO getUser(@PathVariable("id") long id) throws ResourceNotFoundException {
+    public final UserDTO getById(@PathVariable("id") long id) throws ResourceNotFoundException {
 
-        logger.debug("rest getUser({})", id);
+        logger.debug("rest getById", id);
         UserDTO userDTO = userFacade.getById(id);
         if (userDTO == null){
             throw new ResourceNotFoundException();
@@ -86,24 +83,25 @@ public class UserRestController {
 
     /**
      * Create user
-     * Command: curl -X POST -i -H "Content-Type: application/json"
-     * --data '{"attribute":"data"}' http://localhost:8080/pa165/rest/users
+     * Command: curl -X POST -i -H "Content-Type: application/json" --data '{"attribute":"data"}' http://localhost:8080/pa165/rest/users
+     *  curl -X POST -i -H "Content-Type: application/json" --data '{"userType":"USER","email":"haha@email.com","name":"fake","surname":"grown","weight":75,"gender":"MALE","birthdate":"1998-12-04","passwordHash":"blablabla"}' http://localhost:8080/pa165/rest/users
+
      * @param user user information to create
      * @return id of created user
      * @throws Exception
      */
-    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+
+    @RequestMapping(method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public final UserDTO createUser(@RequestBody UserCreateDTO user) throws Exception {
+    public final long create(@RequestBody UserCreateDTO user){
+        logger.debug("create User)");
         try {
-            Long id = userFacade.create(user);
-            return userFacade.getById(id);
-        } catch (NotExistingEntityException | IllegalArgumentException e) {
-            logger.error("Exception occurred while creating the user:", e);
-            throw new ResourceNotFoundException(e);
-        } catch (DataAccessException e) {
-            logger.error("Constraints violated:", e);
-            throw new ConstraintViolationException(e);
+            return userFacade.create(user);
+        } catch (NullPointerException e) {
+            throw new InvalidParameterException(e);
+        } catch (Exception e) {
+            throw new ResourceNotModifiedException(e);
         }
     }
 
