@@ -72,7 +72,7 @@ public class UserController extends MainController {
         userFacade.update(formData);
         redirectAttributes.addFlashAttribute("alert_success", "User was updated");
 
-        return "redirect:/";
+        return "redirect:/statistics";
     }
 
     /**

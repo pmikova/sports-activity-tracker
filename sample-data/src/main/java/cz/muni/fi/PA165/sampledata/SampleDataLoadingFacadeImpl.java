@@ -69,14 +69,14 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
                 LocalDateTime.of(2018, 10, 7, 10, 12, 30),
                 LocalDateTime.of(2018, 10, 7, 13, 13, 12), 0, user1);
         ActivityRecord footbal2 = activityRecord(football,
-                LocalDateTime.of(2018, 11, 14, 10, 13, 30),
-                LocalDateTime.of(2018, 11, 14, 13, 15, 12), 0, user2);
+                LocalDateTime.of(2018, 12, 14, 10, 13, 30),
+                LocalDateTime.of(2018, 12, 14, 13, 15, 12), 0, user2);
         ActivityRecord footbal3 = activityRecord(football,
-                LocalDateTime.of(2018, 3, 14, 10, 12, 30),
-                LocalDateTime.of(2018, 3, 14, 13, 18, 12), 0, user1);
+                LocalDateTime.of(2018, 12, 14, 10, 12, 30),
+                LocalDateTime.of(2018, 12, 14, 13, 18, 12), 0, user1);
         ActivityRecord footbal4 = activityRecord(football,
-                LocalDateTime.of(2018, 5, 10, 10, 10, 30),
-                LocalDateTime.of(2018, 5, 10, 13, 11, 12), 0, admin1);
+                LocalDateTime.of(2018, 12, 12, 10, 10, 30),
+                LocalDateTime.of(2018, 12, 12, 13, 11, 12), 0, admin1);
 
         ActivityRecord snow1 = activityRecord(snowboarding,
                 LocalDateTime.of(2018, 8, 15, 18, 11, 30),
@@ -85,18 +85,18 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
                 LocalDateTime.of(2018, 11, 13, 19, 11, 30),
                 LocalDateTime.of(2018, 11, 13, 22, 21, 30), 30, user2);
         ActivityRecord snow3 = activityRecord(snowboarding,
-                LocalDateTime.of(2018, 7, 7, 11, 17, 22),
-                LocalDateTime.of(2018, 7, 7, 13, 56, 11), 18, user1);
+                LocalDateTime.of(2018, 12, 7, 11, 17, 22),
+                LocalDateTime.of(2018, 12, 7, 13, 56, 11), 18, user1);
 
         ActivityRecord ski1 = activityRecord(skiing,
-                LocalDateTime.of(2018, 10, 11, 18, 17, 27),
-                LocalDateTime.of(2018, 10, 11, 19, 56, 55), 20, user1);
+                LocalDateTime.of(2018, 12, 11, 18, 17, 27),
+                LocalDateTime.of(2018, 12, 11, 19, 56, 55), 20, user1);
         ActivityRecord ski2 = activityRecord(skiing,
                 LocalDateTime.of(2018, 2, 20, 20, 17, 44),
                 LocalDateTime.of(2018, 2, 20, 23, 56, 11), 33, user2);
         ActivityRecord ski3 = activityRecord(skiing,
-                LocalDateTime.of(2018, 3, 13, 9, 17, 14),
-                LocalDateTime.of(2018, 3, 13, 13, 56, 41), 40, user1);
+                LocalDateTime.of(2018, 12, 13, 9, 17, 14),
+                LocalDateTime.of(2018, 12, 13, 13, 56, 41), 40, user1);
         ActivityRecord ski4 = activityRecord(skiing,
                 LocalDateTime.of(2018, 1, 24, 12, 17, 35),
                 LocalDateTime.of(2018, 1, 24, 15, 56, 25), 45, user1);
@@ -111,8 +111,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
                 LocalDateTime.of(2018, 7, 3,8, 33, 25),
                 LocalDateTime.of(2018, 7, 3, 10, 20, 35), 0, user2);
         ActivityRecord wl4 = activityRecord(weightlifting,
-                LocalDateTime.of(2018, 9, 9,9, 17, 11),
-                LocalDateTime.of(2018, 9, 9, 11, 10, 41), 0, admin1);
+                LocalDateTime.of(2018, 12, 9,9, 17, 11),
+                LocalDateTime.of(2018, 12, 9, 11, 10, 41), 0, admin1);
 
         log.info("All records loaded!");
 
