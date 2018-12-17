@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import cz.muni.fi.PA165.tracker.dto.UserCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
+import cz.muni.fi.PA165.tracker.dto.UserStatDTO;
 import cz.muni.fi.PA165.tracker.enums.UserType;
 import cz.muni.fi.PA165.tracker.facade.UserFacade;
 import org.slf4j.Logger;
@@ -171,4 +172,11 @@ public class UserController extends MainController {
         return "redirect:" + uriBuilder.path("/users").toUriString();
     }
 
+    @RequestMapping(value = "statistics", method = RequestMethod.GET)
+    public String statistics(Model model) {
+        UserDTO loggedUser = getLoggedUser();
+        UserStatDTO userStats = userFacade.getStats(loggedUser);
+        model.addAttribute("userStats", userStats);
+        return "user/statistics";
+    }
 }
