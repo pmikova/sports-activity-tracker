@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="form-group ${name_error?'has-error':''}">
+            <div class="form-group ${activityName_error?'has-error':''}">
                 <form:label path="activityName" cssClass="col-sm-2 control-label"><fmt:message key="activity.name"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="activityName" cssClass="form-control"/>
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="form-group ${surname_error?'has-error':''}">
+            <div class="form-group ${burnedCaloriesPerHour_error?'has-error':''}">
                 <form:label path="burnedCaloriesPerHour" cssClass="col-sm-2 control-label"><fmt:message key="activity.burnedCaloriesPerHour"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="burnedCaloriesPerHour" cssClass="form-control"/>

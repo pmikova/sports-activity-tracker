@@ -9,8 +9,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +19,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+/**
+ * Controller for Sport Activities
+ * @author HonzaOstrava 422539
+ */
 @Controller
 @RequestMapping(value = {"/"})
 public class SportActivityController extends MainController {
@@ -46,13 +48,7 @@ public class SportActivityController extends MainController {
     public String create(@Valid @ModelAttribute("activityCreate") SportActivityCreateDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-                log.trace("ObjectError: {}", ge);
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-                log.trace("FieldError: {}", fe);
-            }
+            addValidationErrors(bindingResult, model);
             return "activities/create";
         }
         try {
@@ -76,13 +72,7 @@ public class SportActivityController extends MainController {
     public String update(@Valid @ModelAttribute("activityUpdate") SportActivityDTO formBean, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-                log.trace("ObjectError: {}", ge);
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-                log.trace("FieldError: {}", fe);
-            }
+            addValidationErrors(bindingResult, model);
             return "activities/update";
         }
         try {
