@@ -21,6 +21,7 @@
         <module>rest</module>
         <module>spring-mvc</module>
         <module>sample-data</module>
+        <module>validate</module>
     </modules>
 
     <!-- this should be used as parent
