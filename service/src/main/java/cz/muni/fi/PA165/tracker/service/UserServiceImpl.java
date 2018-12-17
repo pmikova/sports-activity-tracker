@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password can not be null!");
         }
         try {
-            user.setPasswordHash(hash(password));
+            user.setPasswordHash(createHash(password));
         }catch (Exception e){
             throw new IllegalStateException("Error while creating password hash.");
         }
@@ -60,18 +60,18 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password can not be null!");
         }
         try {
-            return validate(password, user.getPasswordHash());
+            return validatePassword(password, user.getPasswordHash());
         } catch (Exception e) {
             throw new IllegalStateException("Error while validating password.");
         }
     }
 
     @Override
-    public boolean isAdministrator(User user) {
-        if (user == null) {
+    public boolean isAdministrator(Long id) {
+        if (id == null) {
             throw new IllegalArgumentException("User can not be null!");
         }
-        User getUser = getById(user.getId());
+        User getUser = getById(id);
         return getUser.getUserType() == UserType.ADMIN;
     }
 
@@ -127,94 +127,73 @@ public class UserServiceImpl implements UserService {
         return Period.between(user.getBirthdate(), LocalDate.now()).getYears();
     }
 
-    /**
-     * This method creates a hashed password with algorithm PBKDF2 with hmac SHA1
-     * @param password password to create hash of
-     * @return hashed password
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
-     */
-    private String hash(String password) throws NoSuchAlgorithmException, InvalidKeySpecException{
-        int iterations = 1000;
-        char[] chars = password.toCharArray();
-        byte[] salt = getSalt();
+    private static String createHash(String password) {
+        final int saltByteSize = 24;
+        final int hashByteSize = 24;
+        final int numberIterations = 1000;
+        // Generate a random salt
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[saltByteSize];
+        random.nextBytes(salt);
+        // Hash the password
+        byte[] hash = pbkdf2(password.toCharArray(), salt, numberIterations, hashByteSize);
+        // format iterations:salt:hash
+        return numberIterations + ":" + toHex(salt) + ":" + toHex(hash);
+    }
 
-        PBEKeySpec spec = new PBEKeySpec(chars, salt, iterations, 64 * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] hash = skf.generateSecret(spec).getEncoded();
-        return iterations + ":" + toHex(salt) + ":" + toHex(hash);
+    private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) {
+        try {
+            PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
+            return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec).getEncoded();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean validatePassword(String password, String correctHash) {
+        if (password == null) {
+            return false;
+        }
+        if (correctHash == null) {
+            throw new IllegalArgumentException("password hash is null");
+        }
+        String[] params = correctHash.split(":");
+        int iterations = Integer.parseInt(params[0]);
+        byte[] salt = fromHex(params[1]);
+        byte[] hash = fromHex(params[2]);
+        byte[] testHash = pbkdf2(password.toCharArray(), salt, iterations, hash.length);
+        return slowEquals(hash, testHash);
     }
 
     /**
-     * Validate method checks if the password is valid.
-     * @param originalPassword user input password
-     * @param storedPassword password hash in database
-     * @return true if the password is valid, false otherwise
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeySpecException
+     * Compares two byte arrays in length-constant time. This comparison method
+     * is used so that password hashes cannot be extracted from an on-line
+     * system using a timing attack and then attacked off-line.
+     *
+     * @param a the first byte array
+     * @param b the second byte array
+     * @return true if both byte arrays are the same, false if not
      */
-    private static boolean validate(String originalPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException
-    {
-        String[] parts = storedPassword.split(":");
-        int iterations = Integer.parseInt(parts[0]);
-        byte[] salt = fromHex(parts[1]);
-        byte[] hash = fromHex(parts[2]);
-
-        PBEKeySpec spec = new PBEKeySpec(originalPassword.toCharArray(), salt, iterations, hash.length * 8);
-        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        byte[] testHash = skf.generateSecret(spec).getEncoded();
-
-        int diff = hash.length ^ testHash.length;
-        for(int i = 0; i < hash.length && i < testHash.length; i++)
-        {
-            diff |= hash[i] ^ testHash[i];
+    private static boolean slowEquals(byte[] a, byte[] b) {
+        int diff = a.length ^ b.length;
+        for (int i = 0; i < a.length && i < b.length; i++) {
+            diff |= a[i] ^ b[i];
         }
         return diff == 0;
     }
 
-    /**
-     * Helper method to create bytes from hex
-     * @param hex to convert to byte
-     * @return byte array
-     */
-    private static byte[] fromHex(String hex)
-    {
-        byte[] bytes = new byte[hex.length() / 2];
-        for(int i = 0; i<bytes.length ;i++)
-        {
-            bytes[i] = (byte)Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
+    private static byte[] fromHex(String hex) {
+        byte[] binary = new byte[hex.length() / 2];
+        for (int i = 0; i < binary.length; i++) {
+            binary[i] = (byte) Integer.parseInt(hex.substring(2 * i, 2 * i + 2), 16);
         }
-        return bytes;
+        return binary;
     }
 
-    /**
-     * Provide some random salt for the passwords so they are never the same
-     * @return string that will be appended to password hash (a.k.a. salt)
-     * @throws NoSuchAlgorithmException
-     */
-    private static byte[] getSalt() throws NoSuchAlgorithmException {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return salt;
-    }
-
-    /**
-     * Helper method to convert byte array to hex
-     * @param array bytes to convert to hex
-     * @return hex in string
-     * @throws NoSuchAlgorithmException
-     */
-    private static String toHex(byte[] array) throws NoSuchAlgorithmException
-    {
-        BigInteger bi = new BigInteger(1, array);
-        String hex = bi.toString(16);
+    private static String toHex(byte[] array) {
+        BigInteger bigInt = new BigInteger(1, array);
+        String hex = bigInt.toString(16);
         int paddingLength = (array.length * 2) - hex.length();
-        if(paddingLength > 0)
-        {
-            return String.format("%0"  +paddingLength + "d", 0) + hex;
-        }else{
-            return hex;
-        }
+        return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
     }
 }

@@ -111,16 +111,16 @@ public class UserFacadeImpl implements UserFacade {
             throw new NotExistingEntityException("UserAuthenticationDTO can not be null!");
         }
         User user = userService.getById(auth.getId());
-        return userService.authenticate(user, user.getPasswordHash());
+        return userService.authenticate(user, auth.getPasswordHash());
     }
 
     @Override
-    public boolean isAdministrator(UserDTO user) {
-        if (user == null){
+    public boolean isAdministrator(Long id) {
+        if (id == null){
             throw new IllegalArgumentException("User can not be null!");
         }
-        User userEntity = mappingService.mapTo(user, User.class);
-        return userService.isAdministrator(userEntity);
+        //User userEntity = mappingService.mapTo(user, User.class);
+        return userService.isAdministrator(id);
     }
 
     @Override
@@ -145,10 +145,10 @@ public class UserFacadeImpl implements UserFacade {
 
         statisticsDTO.setActivities(userStatService.getNumberOfActivities(user));
         statisticsDTO.setActivitiesWeek(
-                userStatService.getNumberOfActivities(user, LocalDate.now(), LocalDate.now().minusWeeks(1))
+                userStatService.getNumberOfActivities(user, LocalDate.now().minusMonths(1), LocalDate.now())
         );
         statisticsDTO.setActivitiesMonth(
-                userStatService.getNumberOfActivities(user, LocalDate.now(), LocalDate.now().minusMonths(1))
+                userStatService.getNumberOfActivities(user, LocalDate.now().minusMonths(1), LocalDate.now())
         );
 
         Map<SportActivity, Integer> sportsAndCount = userStatService.countActivitiesForUser(user);

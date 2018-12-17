@@ -27,10 +27,10 @@ public interface UserService {
 
     /**
      * Check if user has administrator status.
-     * @param user user to check
+     * @param id user to check
      * @return true if user is an admin, false otherwise
      */
-    boolean isAdministrator(User user);
+    boolean isAdministrator(Long id);
 
     /**
      * Delete user.
