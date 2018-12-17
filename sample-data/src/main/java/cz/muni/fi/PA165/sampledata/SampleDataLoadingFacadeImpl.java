@@ -80,26 +80,26 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         ActivityRecord snow1 = activityRecord(snowboarding,
                 LocalDateTime.of(2018, 8, 15, 18, 11, 30),
-                LocalDateTime.of(2018, 8, 15, 21, 21, 30), 40, admin1);
+                LocalDateTime.of(2018, 8, 15, 21, 21, 30), 11140, admin1);
         ActivityRecord snow2 = activityRecord(snowboarding,
                 LocalDateTime.of(2018, 11, 13, 19, 11, 30),
-                LocalDateTime.of(2018, 11, 13, 22, 21, 30), 30, user2);
+                LocalDateTime.of(2018, 11, 13, 22, 21, 30), 25530, user2);
         ActivityRecord snow3 = activityRecord(snowboarding,
                 LocalDateTime.of(2018, 7, 7, 11, 17, 22),
-                LocalDateTime.of(2018, 7, 7, 13, 56, 11), 18, user1);
+                LocalDateTime.of(2018, 7, 7, 13, 56, 11), 35518, user1);
 
         ActivityRecord ski1 = activityRecord(skiing,
                 LocalDateTime.of(2018, 10, 11, 18, 17, 27),
-                LocalDateTime.of(2018, 10, 11, 19, 56, 55), 20, user1);
+                LocalDateTime.of(2018, 10, 11, 19, 56, 55), 24410, user1);
         ActivityRecord ski2 = activityRecord(skiing,
                 LocalDateTime.of(2018, 2, 20, 20, 17, 44),
-                LocalDateTime.of(2018, 2, 20, 23, 56, 11), 33, user2);
+                LocalDateTime.of(2018, 2, 20, 23, 56, 11), 32553, user2);
         ActivityRecord ski3 = activityRecord(skiing,
                 LocalDateTime.of(2018, 3, 13, 9, 17, 14),
-                LocalDateTime.of(2018, 3, 13, 13, 56, 41), 40, user1);
+                LocalDateTime.of(2018, 3, 13, 13, 56, 41), 25754, user1);
         ActivityRecord ski4 = activityRecord(skiing,
                 LocalDateTime.of(2018, 1, 24, 12, 17, 35),
-                LocalDateTime.of(2018, 1, 24, 15, 56, 25), 45, user1);
+                LocalDateTime.of(2018, 1, 24, 15, 56, 25), 14845, user1);
 
         ActivityRecord wl1 = activityRecord(weightlifting,
                 LocalDateTime.of(2018, 5, 24,18, 50, 8),

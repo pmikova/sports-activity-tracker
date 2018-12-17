@@ -40,7 +40,7 @@ public class ActivityRecordController extends MainController{
     public String list(Model model) {
             UserDTO loggedInUser = getLoggedUser();
             List<ActivityRecordDTO> reports = activityRecordFacade.getByUser(loggedInUser);
-            model.addAttribute("reports", reports);
+            model.addAttribute("records", reports);
             return "activityrecord/index";
         }
 
