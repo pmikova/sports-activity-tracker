@@ -22,7 +22,7 @@ import java.util.Collection;
  * @author pmikova 433345
  */
 @RestController
-@RequestMapping(ApiUris.USERS)
+@RequestMapping("/users")
 public class UserRestController {
     final static Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
@@ -110,7 +110,7 @@ public class UserRestController {
     /**
      * This method updates user with given information.
      * Command: curl -i -X PUT -H "Content-Type: application/json"
-     * --data '{"attribute":"data"}' http://localhost:8080/pa165/rest/users/{id}
+     * --data '{"name":"Lux"}' http://localhost:8080/pa165/rest/users/1
      * @param id id of user
      * @param newUser UserDTO for updating user
      * @return user that was updated

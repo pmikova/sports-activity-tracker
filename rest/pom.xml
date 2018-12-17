@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rest</artifactId>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -51,27 +52,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-        <!--Test dependencies -->
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.el</artifactId>
-            <scope>test</scope> <!-- conflicts with tomcat libraries, but needed for tests to run -->
-        </dependency>
         <dependency>
             <groupId>edu.muni.fi</groupId>
             <artifactId>sample-data</artifactId>
@@ -80,19 +60,15 @@
     </dependencies>
 
     <build>
+        <!-- what to do when only "mvn" is run -->
+        <defaultGoal>cargo:run</defaultGoal>
+        <!-- name of the produced war -->
+        <finalName>pa165/rest</finalName>
         <plugins>
-            <!--  embedded tomcat 8 -->
+            <!--  embedded Tomcat -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven2-plugin</artifactId>
-            </plugin>
-            <!--  embedded tomcat 7 -->
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <configuration>
-                    <path>/rest</path>
-                </configuration>
             </plugin>
         </plugins>
     </build>

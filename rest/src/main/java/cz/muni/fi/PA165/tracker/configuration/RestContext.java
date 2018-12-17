@@ -1,4 +1,4 @@
-package cz.muni.fi.PA165.tracker.mvc.configuration;
+package cz.muni.fi.PA165.tracker.configuration;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -7,7 +7,6 @@ import cz.muni.fi.PA165.sampledata.SampleDataConfiguration;
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
 import cz.muni.fi.PA165.tracker.controller.UserRestController;
 import cz.muni.fi.PA165.tracker.mixin.UserDTOMixin;
-import cz.muni.fi.PA165.tracker.AllowOriginInterceptor;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -30,7 +29,6 @@ import java.util.Locale;
 @Import({ServiceConfiguration.class, SampleDataConfiguration.class})
 @ComponentScan(basePackageClasses = UserRestController.class)
 public class RestContext  extends WebMvcConfigurerAdapter{
-
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -63,5 +61,4 @@ public class RestContext  extends WebMvcConfigurerAdapter{
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(customJackson2HttpMessageConverter());
     }
-
 }
