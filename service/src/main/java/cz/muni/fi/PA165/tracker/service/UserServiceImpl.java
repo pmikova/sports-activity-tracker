@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserService {
         if (getUser == null){
             throw new NotExistingEntityException("No user with given id!");
         }
-        ard.deleteByUser(getUser);
         bcd.deleteByUser(getUser);
+        ard.deleteByUser(getUser);
         userDAO.delete(getUser);
 
     }

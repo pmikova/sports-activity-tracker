@@ -65,6 +65,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ActivityRecord> activityRecords = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<BurnedCalories> burnedCalories = new ArrayList<>();
+
     public User() {
     }
 
