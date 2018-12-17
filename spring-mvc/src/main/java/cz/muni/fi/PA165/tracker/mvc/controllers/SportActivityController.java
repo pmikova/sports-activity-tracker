@@ -92,7 +92,7 @@ public class SportActivityController extends MainController {
             redirectAttributes.addFlashAttribute("alert_success", "Sport Activity with id " + id + " was deleted");
         } catch (DataAccessException e) {
             log.error("Could not delete sport activity" + e.getMessage(), e);
-            redirectAttributes.addFlashAttribute("alert_danger", "Sport Activity with id " + id + " can not be deleted.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Sport Activity with id " + id + " can not be deleted. It is used in Activity Record!");
         }
         return "redirect:" + uriBuilder.path("/activities").toUriString();
     }
