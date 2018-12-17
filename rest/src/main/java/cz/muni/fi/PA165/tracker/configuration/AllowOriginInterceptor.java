@@ -1,4 +1,4 @@
-package cz.muni.fi.PA165.tracker;
+package cz.muni.fi.PA165.tracker.configuration;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 

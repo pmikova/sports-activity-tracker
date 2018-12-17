@@ -49,6 +49,9 @@ public class ActivityRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public void setId(Long id){
+        this.id = id;
+    }
 
     public Duration getDuration() {
         return duration;
