@@ -87,4 +87,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     public List<ActivityRecord> getAll() {
         return activityRecordDAO.getAll();
     }
+
+    @Override
+    public List<ActivityRecord> getByUser(User user) {
+        return activityRecordDAO.getByUser(user);
+    }
 }

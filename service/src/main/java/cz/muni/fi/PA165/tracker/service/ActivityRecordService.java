@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.User;
+
 import java.time.Duration;
 import java.util.List;
 
@@ -62,4 +64,6 @@ public interface ActivityRecordService {
      */
 
     List<ActivityRecord> getAll();
+
+    List<ActivityRecord> getByUser(User user);
 }

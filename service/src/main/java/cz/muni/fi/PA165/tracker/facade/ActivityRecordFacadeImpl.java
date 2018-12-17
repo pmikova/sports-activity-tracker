@@ -2,7 +2,9 @@ package cz.muni.fi.PA165.tracker.facade;
 
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordDTO;
+import cz.muni.fi.PA165.tracker.dto.UserDTO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
 import cz.muni.fi.PA165.tracker.service.ActivityRecordService;
 import org.springframework.stereotype.Service;
@@ -56,6 +58,12 @@ public class ActivityRecordFacadeImpl implements  ActivityRecordFacade{
     @Override
     public List<ActivityRecordDTO> getAll() {
         return mappingService.mapTo(activityRecordService.getAll(), ActivityRecordDTO.class);
+    }
+    @Override
+    public List<ActivityRecordDTO> getByUser(UserDTO userDto){
+        User user = mappingService.mapTo(userDto, User.class);
+        return mappingService.mapTo(activityRecordService.getByUser(user), ActivityRecordDTO.class);
+
     }
 
 }

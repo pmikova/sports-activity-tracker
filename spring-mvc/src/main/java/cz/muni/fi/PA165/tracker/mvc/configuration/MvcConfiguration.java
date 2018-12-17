@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.mvc.configuration;
 import cz.muni.fi.PA165.sampledata.SampleDataConfiguration;
 import cz.muni.fi.PA165.sampledata.SampleDataLoadingFacade;
 import cz.muni.fi.PA165.tracker.mvc.convert.CustomDateConverter;
+import cz.muni.fi.PA165.tracker.mvc.convert.CustomTimeDateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -86,6 +87,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new CustomDateConverter());
+        registry.addConverter(new CustomTimeDateConverter());
 
     }
 

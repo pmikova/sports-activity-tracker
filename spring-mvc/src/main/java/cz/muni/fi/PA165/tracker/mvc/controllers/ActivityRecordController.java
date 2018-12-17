@@ -36,12 +36,14 @@ public class ActivityRecordController extends MainController{
     @Autowired
     private SportActivityFacade sportActivityFacade;
 
-    @RequestMapping(value = {"", "/", "/list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String list(Model model) {
-        List<BurnedCaloriesDTO> calories = burnedCaloriesFacade.getByUser(getLoggedUser());
-        model.addAttribute("calories", calories);
-        return "activityrecord/list";
-    }
+            UserDTO loggedInUser = getLoggedUser();
+            List<ActivityRecordDTO> reports = activityRecordFacade.getByUser(loggedInUser);
+            model.addAttribute("reports", reports);
+            return "activityrecord/index";
+        }
+
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model) {

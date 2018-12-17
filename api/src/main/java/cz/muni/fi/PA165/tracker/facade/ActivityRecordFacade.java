@@ -1,6 +1,8 @@
 package cz.muni.fi.PA165.tracker.facade;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordDTO;
+import cz.muni.fi.PA165.tracker.dto.UserDTO;
+
 import java.util.List;
 
 /**
@@ -46,4 +48,6 @@ public interface ActivityRecordFacade {
      */
 
     List<ActivityRecordDTO> getAll();
+
+    List<ActivityRecordDTO> getByUser(UserDTO userDto);
 }

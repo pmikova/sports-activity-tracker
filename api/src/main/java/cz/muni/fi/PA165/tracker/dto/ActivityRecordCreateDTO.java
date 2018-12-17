@@ -1,5 +1,7 @@
 package cz.muni.fi.PA165.tracker.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -20,8 +22,11 @@ public class ActivityRecordCreateDTO {
 
     private double averageSpeed;
 
+
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime startTime;
 
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime endTime;
 
     public UserDTO getUser() {
