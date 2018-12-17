@@ -33,6 +33,37 @@
                             <td class="col-xs-3 lead-column"><c:out value="${user.name}"/></td>
                             <td class="col-xs-3 lead-column"><c:out value="${user.surname}"/></td>
                             <td class="col-xs-3 lead-column"><c:out value="${user.userType}"/></td>
+
+                            <c:if test="${isUserAdmin}">
+                                <c:choose>
+                                <c:when test="${user.userType !='ADMIN'}">
+                                    <form:form method="post" action="${pageContext.request.contextPath}/users/update/${user.id}" cssClass="form-horizontal">
+                                        <td class="col-xs-1 text-center">
+                                             <a href="${pageContext.request.contextPath}/users/makeAdministrator/${user.id}" class="btn btn-default">Make Administrator</a>
+                                        </td>
+                                    </form:form>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:if test="${loggedUser.id!=user.id}">
+                                        <form:form method="post" action="${pageContext.request.contextPath}/users/update/${user.id}" cssClass="form-horizontal">
+                                                <td class="col-xs-1 text-center">
+                                                    <a href="${pageContext.request.contextPath}/users/makeUser/${user.id}" class="btn btn-default">Make User </a>
+                                                </td>
+                                         </form:form>
+                                    </c:if>
+                                </c:otherwise>
+                                </c:choose>
+                                <c:if test="${loggedUser.id!=user.id}">
+                                    <form:form method="post" action="${pageContext.request.contextPath}/users/remove/${user.id}" cssClass="form-horizontal">
+                                        <td class="col-xs-1 text-center">
+                                            <button class="btn btn-default" type="submit">
+                                                <span class="sr-only"><fmt:message key="remove"/></span>
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                        </td>
+                                    </form:form>
+                                </c:if>
+                            </c:if>
                         </tr>
                     </c:forEach>
             </table>

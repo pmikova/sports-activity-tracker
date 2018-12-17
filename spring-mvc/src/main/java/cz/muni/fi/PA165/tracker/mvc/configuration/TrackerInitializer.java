@@ -9,6 +9,10 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+/**
+ * Initializer for our app
+ * @author pmikova 433345
+ */
 public class TrackerInitializer implements WebApplicationInitializer {
 
     @Override

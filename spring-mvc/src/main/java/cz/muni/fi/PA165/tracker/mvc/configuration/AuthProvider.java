@@ -11,18 +11,22 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
-
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Implementation of our custom AuthenticationProvider
+ * @author pmikova 433345
+ */
 @Component
 public class AuthProvider implements AuthenticationProvider {
 
     @Autowired
     private UserFacade userFacade;
 
+    /**
+     * Implementation of authenticate that checks user credentials.
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -34,29 +38,26 @@ public class AuthProvider implements AuthenticationProvider {
         try {
             user = userFacade.getByEmail(email);
         } catch (Exception e) {
-            return null; //we can not do anything when user doesn't exist
+            return null;
         }
-        System.out.println("USER FOUND");
         UserAuthenticationDTO authData = new UserAuthenticationDTO(user.getId(), password);
 
-
         if (userFacade.logIn(authData)) {
-            System.out.println("EXISTS!");
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
             System.out.println(user.getId().toString());
             if (userFacade.isAdministrator(user.getId())) {
-                System.out.println("IS ADMIN");
                 grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             } else {
-                System.out.println("IS USER");
                 grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
             }
             return new UsernamePasswordAuthenticationToken(email, password, grantedAuthorities);
         }
-
         return null;
     }
 
+    /**
+     * Supports method determines whether our authentication provider can authenticate user with given token.
+     */
     @Override
     public boolean supports(Class<?> authClass) {
         return (UsernamePasswordAuthenticationToken.class

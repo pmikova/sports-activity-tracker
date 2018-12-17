@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -59,6 +58,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
                 "Strewn", Gender.MALE, "gmail@email.com", UserType.USER, 85);
         User admin1 = user(LocalDate.of(1970, 1, 20),"passpass", "Rudolf",
                 "Rednose", Gender.MALE, "rednose@email.com", UserType.ADMIN, 79);
+        User admin2 = user(LocalDate.of(1987, 3, 21),"passpass", "Alice",
+                "Red", Gender.FEMALE, "alice@email.com", UserType.ADMIN, 88);
+        User admin3 = user(LocalDate.of(1990, 1, 20),"passpass", "Donna",
+                "Pinciotti", Gender.FEMALE, "donna@email.com", UserType.USER, 60);
 
         log.info("All users loaded!");
 

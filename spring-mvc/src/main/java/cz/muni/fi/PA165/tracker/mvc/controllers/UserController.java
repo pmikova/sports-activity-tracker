@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
+/**
+ * Controller for user operations.
+ */
 @Controller
 @RequestMapping(value = {"/"})
 public class UserController extends MainController {
@@ -29,6 +32,9 @@ public class UserController extends MainController {
     @Inject
     private UserFacade userFacade;
 
+    /**
+     * Controller for user settings
+     */
     @RequestMapping(value = {"settings", "settings/"}, method = RequestMethod.GET)
     public String settings(Model model) {
         UserDTO user = getLoggedUser();
@@ -38,6 +44,9 @@ public class UserController extends MainController {
         return "user/settings";
     }
 
+    /**
+     * Controller for user POST settings.
+     */
     @RequestMapping(value = {"settings", "settings/"}, method = RequestMethod.POST)
     public String settings(
             @Valid @ModelAttribute("user") UserDTO formData,
@@ -48,7 +57,7 @@ public class UserController extends MainController {
         UserDTO notUpdated = getLoggedUser();
         formData.setId(notUpdated.getId());
 
-        log.debug("update user({})", formData);
+        log.debug("Updating user...");
 
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
@@ -56,17 +65,23 @@ public class UserController extends MainController {
         }
 
         userFacade.update(formData);
-        redirectAttributes.addFlashAttribute("alert_success", "User " + formData.getEmail() + " was updated");
+        redirectAttributes.addFlashAttribute("alert_success", "User was updated");
 
         return "redirect:/";
     }
 
+    /**
+     * Registration controller
+     */
     @RequestMapping(value = {"register", "register/"}, method = RequestMethod.GET)
     public String register(Model model) {
         model.addAttribute("newUser", new UserCreateDTO());
         return "user/register";
     }
 
+    /**
+     * Registration POST controller.
+     */
     @RequestMapping(value = {"register", "register/"}, method = RequestMethod.POST)
     public String register(
             @Valid @ModelAttribute("newUser") UserCreateDTO formData,
@@ -74,7 +89,7 @@ public class UserController extends MainController {
             Model model,
             RedirectAttributes redirectAttributes) {
 
-        log.debug("register user({})", formData);
+        log.debug("Register user.");
 
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
@@ -82,15 +97,74 @@ public class UserController extends MainController {
         }
 
         userFacade.create(formData);
-        redirectAttributes.addFlashAttribute("alert_success", "User " + formData.getEmail() + " was created");
+        redirectAttributes.addFlashAttribute("alert_success", "User was created");
 
         return "redirect:/login";
     }
 
+    /**
+     * Controller for Users table.
+     */
     @RequestMapping(value = {"users", "users/"}, method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("users", userFacade.getAll());
         return "user/users";
+    }
+
+    /**
+     * Controller to make user administrator
+     */
+    @RequestMapping(value = {"/users/makeAdministrator/{id}"}, method = RequestMethod.GET)
+    public String makeAdministrator(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
+                            RedirectAttributes redirectAttributes) {
+        log.info("Make user an administrator.");
+        UserDTO updated = userFacade.getById(id);
+        updated.setUserType(UserType.ADMIN);
+        userFacade.update(updated);
+
+        if (updated.getId().equals(getLoggedUser().getId())) {
+            redirectAttributes.addFlashAttribute("alert_danger", "You changed your permissions. Please log in again.");
+            return "redirect:" + uriBuilder.path("/logout").toUriString();
+        }
+        return "redirect:" + uriBuilder.path("/users").toUriString();
+    }
+
+    /**
+     * Controller to make user a normal user.
+     */
+    @RequestMapping(value = {"/users/makeUser/{id}"}, method = RequestMethod.GET)
+    public String makeUser(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
+                              RedirectAttributes redirectAttributes) {
+        log.info("Making user a regular user.");
+        UserDTO updated = userFacade.getById(id);
+        updated.setUserType(UserType.USER);
+        userFacade.update(updated);
+
+        if (updated.getId().equals(getLoggedUser().getId())) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Your role was updated. Please log in.");
+            return "redirect:" + uriBuilder.path("/logout").toUriString();
+        }
+        return "redirect:" + uriBuilder.path("/users").toUriString();
+    }
+
+    @RequestMapping(value = "users/remove/{id}", method = RequestMethod.POST)
+    public String remove(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder,
+                         RedirectAttributes redirectAttributes) {
+
+        if (id == getLoggedUser().getId()) {
+            log.error("Deleting itself is not allowed!");
+            redirectAttributes.addFlashAttribute("alert_danger", "You can't delete yourself!");
+            return "redirect:" + uriBuilder.path("/users").toUriString();
+        }
+
+        try {
+            userFacade.delete(userFacade.getById(id));
+            redirectAttributes.addFlashAttribute("alert_success", "User with id " + id + " was deleted");
+        } catch (DataAccessException e) {
+            log.error("Could not delete user" + e.getMessage(), e);
+            redirectAttributes.addFlashAttribute("alert_danger", "User with id " + id + " can not be deleted.");
+        }
+        return "redirect:" + uriBuilder.path("/users").toUriString();
     }
 
 }
