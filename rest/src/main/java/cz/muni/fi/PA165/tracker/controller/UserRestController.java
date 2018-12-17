@@ -84,8 +84,6 @@ public class UserRestController {
     /**
      * Create user
      * Command: curl -X POST -i -H "Content-Type: application/json" --data '{"attribute":"data"}' http://localhost:8080/pa165/rest/users
-     *  curl -X POST -i -H "Content-Type: application/json" --data '{"userType":"USER","email":"haha@email.com","name":"fake","surname":"grown","weight":75,"gender":"MALE","birthdate":"1998-12-04","passwordHash":"blablabla"}' http://localhost:8080/pa165/rest/users
-
      * @param user user information to create
      * @return id of created user
      * @throws Exception
