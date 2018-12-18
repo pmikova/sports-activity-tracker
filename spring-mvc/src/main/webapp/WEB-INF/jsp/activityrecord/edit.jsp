@@ -15,7 +15,7 @@
     </jsp:attribute>
     <jsp:attribute name="body">
 
-            <a href="${pageContext.request.contextPath}/records/index" class="btn btn-default" role="button">
+            <a href="${pageContext.request.contextPath}/activityrecord/index" class="btn btn-default" role="button">
                 <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                 <fmt:message key="back"/>
             </a>
@@ -26,7 +26,7 @@
                 </h1>
             </div>
             <form:form method="POST"
-                       action="${pageContext.request.contextPath}/records/edit/${id}"
+                       action="${pageContext.request.contextPath}/activityrecord/edit"
                        acceptCharset=""
                        modelAttribute="record"
                        cssClass="form-horizontal">
@@ -66,15 +66,15 @@
                     </div>
                 </div>
 
-                      <div class="form-group ${distance_error?'has-error':''}">
-                          <form:label path="distance" cssClass="col-sm-2 control-label">
-                              <fmt:message key="records.distance"/>
-                          </form:label>
-                          <div class="col-sm-10">
-                              <form:input path="distance" cssClass="form-control"/>
-                              <form:errors path="distance" cssClass="help-block"/>
-                          </div>
-                      </div>
+                      <%--<div class="form-group ${distance_error?'has-error':''}">--%>
+                          <%--<form:label path="distance" cssClass="col-sm-2 control-label">--%>
+                              <%--<fmt:message key="records.distance"/>--%>
+                          <%--</form:label>--%>
+                          <%--<div class="col-sm-10">--%>
+                              <%--<form:input path="distance" cssClass="form-control"/>--%>
+                              <%--<form:errors path="distance" cssClass="help-block"/>--%>
+                          <%--</div>--%>
+                      <%--</div>--%>
 
             <button class="btn btn-primary createBtn center-block allow-vertical-space" type="submit"><fmt:message
                     key="submit"/></button>

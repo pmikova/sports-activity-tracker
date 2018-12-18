@@ -14,7 +14,7 @@
 
             <%--   <c:if test="${isAdministrator}"> --%>
             <%--<p align="right">--%>
-                <form:form method="get" action="${pageContext.request.contextPath}/records/create/" cssClass="form-horizontal">
+                <form:form method="get" action="${pageContext.request.contextPath}/activityrecord/create/" cssClass="form-horizontal">
 
                 <button class="btn btn-lg btn-success btn-jumbotron" role="button" type="submit" align="right">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -51,7 +51,7 @@
                                 <td class="col-xs-2 lead-column"><c:out value="${record.distance}"/></td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.averageSpeed}"/></td>
 
-                                <form:form method="get" action="${pageContext.request.contextPath}/records/edit/${record.id}" cssClass="form-horizontal">
+                                <form:form method="get" action="${pageContext.request.contextPath}/activityrecord/edit/${record.id}" cssClass="form-horizontal">
                                     <td class="col-xs-1 text-center">
                                         <button class="btn btn-default" type="submit">
                                             <span class="sr-only"><fmt:message key="edit"/></span>
@@ -59,7 +59,7 @@
                                         </button>
                                     </td>
                                 </form:form>
-                                <form:form method="post" action="${pageContext.request.contextPath}/records/delete/${record.id}" cssClass="form-horizontal">
+                                <form:form method="post" action="${pageContext.request.contextPath}/activityrecord/delete/${record.id}" cssClass="form-horizontal">
                                     <td class="col-xs-1 text-center">
                                         <button class="btn btn-default" type="submit">
                                             <span class="sr-only"><fmt:message key="remove"/></span>

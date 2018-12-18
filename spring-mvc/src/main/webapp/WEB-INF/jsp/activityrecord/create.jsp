@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<own:pagetemplate title="Create">
+<own:pagetemplate>
         <jsp:attribute name="scripts">
         <script>
             $(function () {
@@ -15,7 +15,7 @@
     </jsp:attribute>
     <jsp:attribute name="body">
 
-            <a href="${pageContext.request.contextPath}/records/index" class="btn btn-default" role="button">
+            <a href="${pageContext.request.contextPath}/activityrecord/index" class="btn btn-default" role="button">
                 <span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
                 <fmt:message key="back"/>
             </a>
@@ -26,7 +26,7 @@
                 </h1>
             </div>
             <form:form method="POST"
-                       action="${pageContext.request.contextPath}/records/index/"
+                       action="${pageContext.request.contextPath}/activityrecord/create"
                        acceptCharset=""
                        modelAttribute="recordCreate"
                        cssClass="form-horizontal">

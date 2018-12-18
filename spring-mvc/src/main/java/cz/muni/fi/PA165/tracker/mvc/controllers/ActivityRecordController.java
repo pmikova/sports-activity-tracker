@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/records")
+@RequestMapping("/activityrecord")
 public class ActivityRecordController extends MainController{
     private final static Logger log = LoggerFactory.getLogger(ActivityRecordController.class);
 
@@ -53,22 +53,23 @@ public class ActivityRecordController extends MainController{
 
     @RequestMapping(value = {"/edit/{id}", "/edit/{id}/"}, method = RequestMethod.GET)
     public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
-        BurnedCaloriesDTO caloriesDTO = burnedCaloriesFacade.getById(id);
-        ActivityRecordDTO recordDTO = caloriesDTO.getActivityRecord();
+        //BurnedCaloriesDTO caloriesDTO = burnedCaloriesFacade.getById(id);
+        //ActivityRecordDTO recordDTO = caloriesDTO.getActivityRecord();
+        ActivityRecordDTO recordDTO = activityRecordFacade.getById(id);
         List<SportActivityDTO> activityDTOS = sportActivityFacade.getAll();
-        model.addAttribute("id", id);
+        //model.addAttribute("id", id);
         model.addAttribute("activities", activityDTOS);
         model.addAttribute("record", recordDTO);
-        if(getLoggedUser().equals(caloriesDTO.getUser())){
+        if(getLoggedUser().equals(recordDTO.getUser())){
             return "activityrecord/edit";
         }else{
             redirectAttributes.addFlashAttribute("alert_danger", "You are not allowed to remove activities of other users.");
-            return "redirect:records/index";
+            return "redirect:activityrecord/index";
         }
 
     }
 
-    @RequestMapping(value = {"/edit/{id}", "/edit/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/edit", "/edit/"}, method = RequestMethod.POST)
     public String edit(
             @Valid @ModelAttribute("record") ActivityRecordDTO formData,
 
@@ -78,7 +79,7 @@ public class ActivityRecordController extends MainController{
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            return "redirect:/index";
+            return "redirect:activityrecord/index";
         }
         try{
             activityRecordFacade.update(formData);
@@ -87,8 +88,8 @@ public class ActivityRecordController extends MainController{
             log.error("Could not create sport activity" + e.getMessage(), e);
             redirectAttributes.addFlashAttribute("alert_danger", "Activity Record with id " + formData.getId() + " could not be updated.");
         }
-        return "redirect:/index";
-        //return "redirect:" + uriBuilder.path("/records/").toUriString();
+        //return "redirect:/index";
+        return "redirect:" + uriBuilder.path("/activityrecord/index").toUriString();
     }
 
 
@@ -99,7 +100,7 @@ public class ActivityRecordController extends MainController{
         return "activityrecord/create";
     }
 
-    @RequestMapping(value = {"/create/", "/create"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public String create(
             @Valid @ModelAttribute("recordCreate") ActivityRecordCreateDTO formData,
             @RequestParam(value = "distance", required=false) int distance,
@@ -109,7 +110,7 @@ public class ActivityRecordController extends MainController{
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            return "redirect:records/index";
+            return "activityrecord/create";
         }
         try{
             formData.setUser(getLoggedUser());
@@ -119,7 +120,7 @@ public class ActivityRecordController extends MainController{
             log.error("Could not create activity record" + e.getMessage(), e);
             redirectAttributes.addFlashAttribute("alert_danger", "Activity record can not be created.");
         }
-        return "redirect:" + uriBuilder.path("/records/index").toUriString();
+        return "redirect:" + uriBuilder.path("/activityrecord/index").toUriString();
     }
 
     @RequestMapping(value = {"/delete/{id}", "/delete/{id}/"}, method = RequestMethod.POST)
@@ -134,6 +135,6 @@ public class ActivityRecordController extends MainController{
             log.error("Activityrecord " + id + " cannot be deleted");
             redirectAttributes.addFlashAttribute("alert_danger", "Activity record cannot be deleted.");
         }
-        return "redirect:" + uriBuilder.path("/records/index").toUriString();
+        return "redirect:" + uriBuilder.path("/activityrecord/index").toUriString();
     }
 }
