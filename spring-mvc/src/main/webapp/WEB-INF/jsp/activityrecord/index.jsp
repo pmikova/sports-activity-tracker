@@ -46,8 +46,8 @@
                             <tr>
                                 <td class="col-xs-1 lead-column">${count}</td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.sportActivity.activityName}"/></td>
-                                <td class="col-xs-2 lead-column"><javatime:format value="${record.startTime}" pattern="HH:mm dd.MM.yyyy"/></td>
-                                <td class="col-xs-2 lead-column"><javatime:format value="${record.endTime}" pattern="HH:mm dd.MM.yyyy"/></td>
+                                <td class="col-xs-2 lead-column"><javatime:format value="${record.startTime}" pattern="dd.MM.YYYY HH:mm"/></td>
+                                <td class="col-xs-2 lead-column"><javatime:format value="${record.endTime}" pattern="dd.MM.YYYY HH:mm"/></td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.distance}"/></td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.averageSpeed}"/></td>
 

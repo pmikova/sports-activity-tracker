@@ -78,6 +78,7 @@ public class ActivityRecordController extends MainController{
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
+            model.addAttribute("activities", activityRecordFacade.getAll());
             return "activityrecord/edit";
         }
         try{
@@ -109,6 +110,7 @@ public class ActivityRecordController extends MainController{
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
+            model.addAttribute("activities", activityRecordFacade.getAll());
             return "activityrecord/create";
         }
         try{
