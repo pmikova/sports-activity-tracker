@@ -6,16 +6,14 @@ import cz.muni.fi.PA165.tracker.facade.ActivityRecordFacade;
 import cz.muni.fi.PA165.tracker.facade.BurnedCaloriesFacade;
 import cz.muni.fi.PA165.tracker.facade.SportActivityFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,22 +36,22 @@ public class ActivityRecordController extends MainController{
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String list(Model model) {
-            UserDTO loggedInUser = getLoggedUser();
-            List<ActivityRecordDTO> reports = activityRecordFacade.getByUser(loggedInUser);
-            model.addAttribute("records", reports);
-            return "activityrecord/index";
-        }
-
-
-    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
-    public String detail(@PathVariable long id, Model model) {
-        BurnedCaloriesDTO calorieDTO = burnedCaloriesFacade.getById(id);
-        model.addAttribute("calorie", calorieDTO);
-        return "activityrecord/detail";
+        UserDTO loggedInUser = getLoggedUser();
+        List<ActivityRecordDTO> reports = activityRecordFacade.getByUser(loggedInUser);
+        model.addAttribute("records", reports);
+        return "activityrecord/index";
     }
 
+//
+//    @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
+//    public String detail(@PathVariable long id, Model model) {
+//        BurnedCaloriesDTO calorieDTO = burnedCaloriesFacade.getById(id);
+//        model.addAttribute("calorie", calorieDTO);
+//        return "activityrecord/detail";
+//    }
+//
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = {"/edit/{id}", "/edit/{id}/"}, method = RequestMethod.GET)
     public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes) {
         BurnedCaloriesDTO caloriesDTO = burnedCaloriesFacade.getById(id);
         ActivityRecordDTO recordDTO = caloriesDTO.getActivityRecord();
@@ -62,84 +60,80 @@ public class ActivityRecordController extends MainController{
         model.addAttribute("activities", activityDTOS);
         model.addAttribute("record", recordDTO);
         if(getLoggedUser().equals(caloriesDTO.getUser())){
-            log.debug("");
             return "activityrecord/edit";
         }else{
-            //TODO: some sort of a warning
-            return "activityrecord/detail";
+            redirectAttributes.addFlashAttribute("alert_danger", "You are not allowed to remove activities of other users.");
+            return "redirect:records/index";
         }
 
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = {"/edit/{id}", "/edit/{id}/"}, method = RequestMethod.POST)
     public String edit(
             @Valid @ModelAttribute("record") ActivityRecordDTO formData,
+
             UriComponentsBuilder uriBuilder,
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes) {
-
-        UserDTO notUpdated = getLoggedUser();
-        formData.setId(notUpdated.getId());
-
-        log.debug("Updating activity record");
-
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            return "/detail/{id}";
+            return "redirect:/index";
         }
-        activityRecordFacade.update(formData);
-        return "redirect:/detail/{id}";
+        try{
+            activityRecordFacade.update(formData);
+            redirectAttributes.addFlashAttribute("alert_success", "Activity Record with id " + formData.getId() + " has been updated");
+        } catch (DataAccessException e) {
+            log.error("Could not create sport activity" + e.getMessage(), e);
+            redirectAttributes.addFlashAttribute("alert_danger", "Activity Record with id " + formData.getId() + " could not be updated.");
+        }
+        return "redirect:/index";
+        //return "redirect:" + uriBuilder.path("/records/").toUriString();
     }
 
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(
-            Model model,
-            RedirectAttributes redirectAttributes,
-            ActivityRecordCreateDTO formData
-    ) {
+    @RequestMapping(value ={"/create/", "/create"}, method = RequestMethod.GET)
+    public String create(Model model) {
         model.addAttribute("activities", sportActivityFacade.getAll());
-        log.debug("");
+        model.addAttribute("recordCreate", new ActivityRecordCreateDTO());
         return "activityrecord/create";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = {"/create/", "/create"}, method = RequestMethod.POST)
     public String create(
-            @Valid @ModelAttribute("record") ActivityRecordCreateDTO formData,
+            @Valid @ModelAttribute("recordCreate") ActivityRecordCreateDTO formData,
+            @RequestParam(value = "distance", required=false) int distance,
             UriComponentsBuilder uriBuilder,
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes) {
-
-        UserDTO notUpdated = getLoggedUser();
-        log.debug("creating activity record");
-
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            return "/detail/{id}";
+            return "redirect:records/index";
         }
-        activityRecordFacade.create(formData);
-        return "redirect:/detail/{id}";
+        try{
+            formData.setUser(getLoggedUser());
+            activityRecordFacade.create(formData);
+            redirectAttributes.addFlashAttribute("alert_success", "Activity Record was created");
+        } catch (DataAccessException e) {
+            log.error("Could not create activity record" + e.getMessage(), e);
+            redirectAttributes.addFlashAttribute("alert_danger", "Activity record can not be created.");
+        }
+        return "redirect:" + uriBuilder.path("/records/index").toUriString();
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = {"/delete/{id}", "/delete/{id}/"}, method = RequestMethod.POST)
     public String delete(
             @PathVariable long id,
             UriComponentsBuilder uriBuilder,
             RedirectAttributes redirectAttributes) {
-        ActivityRecordDTO record = activityRecordFacade.getById(id);
-        log.debug("delete({})", id);
         try {
-            activityRecordFacade.delete(record);
-            redirectAttributes.addFlashAttribute("alert_success", "ActivityRecord \"" + record.getSportActivity().getActivityName()
-                    + "\" performed by" + record.getUser().getName() + " on " + record.getStartTime().toString() + " was deleted.");
+            activityRecordFacade.delete(activityRecordFacade.getById(id));
+            redirectAttributes.addFlashAttribute("alert_success", "ActivityRecord was deleted.");
         } catch (Exception ex) {
             log.error("Activityrecord " + id + " cannot be deleted");
-            redirectAttributes.addFlashAttribute("alert_danger", "Activity record \"" + record.getSportActivity().getActivityName() + "\" cannot be deleted.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Activity record cannot be deleted.");
         }
-        return "redirect:" + uriBuilder.path("/activityrecords/list").toUriString();
+        return "redirect:" + uriBuilder.path("/records/index").toUriString();
     }
-
-
 }
