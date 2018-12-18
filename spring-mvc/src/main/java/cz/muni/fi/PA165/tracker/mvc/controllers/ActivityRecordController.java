@@ -72,14 +72,13 @@ public class ActivityRecordController extends MainController{
     @RequestMapping(value = {"/edit", "/edit/"}, method = RequestMethod.POST)
     public String edit(
             @Valid @ModelAttribute("record") ActivityRecordDTO formData,
-
-            UriComponentsBuilder uriBuilder,
             BindingResult bindingResult,
+            UriComponentsBuilder uriBuilder,
             Model model,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            return "redirect:activityrecord/index";
+            return "activityrecord/edit";
         }
         try{
             activityRecordFacade.update(formData);
@@ -103,9 +102,9 @@ public class ActivityRecordController extends MainController{
     @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public String create(
             @Valid @ModelAttribute("recordCreate") ActivityRecordCreateDTO formData,
-            @RequestParam(value = "distance", required=false) int distance,
-            UriComponentsBuilder uriBuilder,
             BindingResult bindingResult,
+            //@RequestParam(value = "distance", required=false) int distance,
+            UriComponentsBuilder uriBuilder,
             Model model,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
