@@ -87,9 +87,29 @@ public class UserServiceImpl implements UserService {
         if (getUser == null){
             throw new NotExistingEntityException("No user with given id!");
         }
-        bcd.deleteByUser(getUser);
-        ard.deleteByUser(getUser);
-        userDAO.delete(getUser);
+        List<User> users = getAll();
+        boolean hasAnotherAdmin = false;
+        if (getUser.getUserType().equals(UserType.ADMIN)) {
+            for (User u : users) {
+                UserType type = u.getUserType();
+                if (type.equals(UserType.ADMIN) && !(u.getId() == getUser.getId())) {
+                    hasAnotherAdmin = true;
+                    break;
+                }
+            }
+        }
+        else{
+            //user we delete is just a user
+            hasAnotherAdmin = true;
+        }
+        if (hasAnotherAdmin){
+            bcd.deleteByUser(getUser);
+            ard.deleteByUser(getUser);
+            userDAO.delete(getUser);
+        }
+        else {
+            throw new IllegalStateException("You can not delete only administrator in the system. It would become unusable!");
+        }
 
     }
 
