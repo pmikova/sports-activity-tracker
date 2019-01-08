@@ -38,12 +38,16 @@
                     </button>
                     <a class="navbar-brand" href="${pageContext.request.contextPath}"><fmt:message key="application_name"/></a>
                 <div id="navbar" class="collapse navbar-collapse pull-left">
+                <c:choose>
+                <c:when test="${not empty loggedUser}">
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/activityrecord"><fmt:message key="menu_records"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/activities"><fmt:message key="menu_activities"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/statistics"><fmt:message key="menu_statistics"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/users"><fmt:message key="menu_users"/></a></li>
                     </ul>
+                </c:when>
+                </c:choose>
                 </div><!--/.nav-collapse -->
                 <ul class="nav navbar-nav navbar-right pull-right">
                     <c:choose>

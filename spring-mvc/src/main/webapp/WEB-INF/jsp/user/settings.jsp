@@ -65,7 +65,7 @@
             </div>
 
             <div class="form-group ${birthdate_error?'has-error':''}">
-                <form:label path="birthdate" cssClass="col-sm-2 control-label">><fmt:message key="user.birthdate"/></form:label>
+                <form:label path="birthdate" cssClass="col-sm-2 control-label"><fmt:message key="user.birthdate"/></form:label>
                 <div class="col-sm-10">
                     <form:input path="birthdate" cssClass="form-control datepicker"/>
                     <form:errors path="birthdate" cssClass="help-block"/>

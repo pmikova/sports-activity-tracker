@@ -36,8 +36,6 @@
                             <th><fmt:message key="records.end"></fmt:message></th>
                             <th><fmt:message key="records.distance"></fmt:message></th>
                             <th><fmt:message key="records.averageSpeed"></fmt:message></th>
-                            <th class="text-center"><fmt:message key="edit"/></th>
-                            <th class="text-center"><fmt:message key="remove"/></th>
                         </tr>
                     </thead>
                     <tbody>
