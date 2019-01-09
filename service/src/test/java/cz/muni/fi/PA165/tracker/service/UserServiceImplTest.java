@@ -278,7 +278,8 @@ public class UserServiceImplTest extends AbstractTestNGSpringContextTests {
         assertEquals(userCaptor.getValue(), user);
     }
 
-    @Test
+    @Test(expectedExceptions = IllegalStateException.class)
+    // the conditions changed, now, sole admin can not be deleted
     public void deleteAdminTest(){
         userService.delete(admin);
         verify(userDAO).delete(userCaptor.capture());
