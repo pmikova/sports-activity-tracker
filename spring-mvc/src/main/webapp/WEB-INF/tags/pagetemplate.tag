@@ -41,8 +41,7 @@
                 <c:choose>
                 <c:when test="${not empty loggedUser}">
                     <ul class="nav navbar-nav">
-
-                        <li><a href="${pageContext.request.contextPath}/records"><fmt:message key="menu_records"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/activityrecord"><fmt:message key="menu_records"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/activities"><fmt:message key="menu_activities"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/statistics"><fmt:message key="menu_statistics"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/users"><fmt:message key="menu_users"/></a></li>

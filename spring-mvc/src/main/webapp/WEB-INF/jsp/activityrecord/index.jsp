@@ -12,6 +12,18 @@
             <h1><fmt:message key="records.header"/></h1>
             <p class="lead"><fmt:message key="records.subheader"/></p>
 
+            <%--   <c:if test="${isAdministrator}"> --%>
+            <%--<p align="right">--%>
+                <form:form method="get" action="${pageContext.request.contextPath}/activityrecord/create/" cssClass="form-horizontal">
+
+                <button class="btn btn-lg btn-success btn-jumbotron" role="button" type="submit" align="right">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <fmt:message key="records.create"/>
+                </button>
+                 </form:form>
+            <%--</p>--%>
+
+            <%--  </c:if> --%>
         </div>
         <c:if test="${not empty records}">
             <div class="row">
@@ -32,10 +44,27 @@
                             <tr>
                                 <td class="col-xs-1 lead-column">${count}</td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.sportActivity.activityName}"/></td>
-                                <td class="col-xs-2 lead-column"><javatime:format value="${record.startTime}" pattern="HH:mm dd.MM.yyyy"/></td>
-                                <td class="col-xs-2 lead-column"><javatime:format value="${record.endTime}" pattern="HH:mm dd.MM.yyyy"/></td>
+                                <td class="col-xs-2 lead-column"><javatime:format value="${record.startTime}" pattern="dd.MM.YYYY HH:mm"/></td>
+                                <td class="col-xs-2 lead-column"><javatime:format value="${record.endTime}" pattern="dd.MM.YYYY HH:mm"/></td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.distance}"/></td>
                                 <td class="col-xs-2 lead-column"><c:out value="${record.averageSpeed}"/></td>
+
+                                <form:form method="get" action="${pageContext.request.contextPath}/activityrecord/edit/${record.id}" cssClass="form-horizontal">
+                                    <td class="col-xs-1 text-center">
+                                        <button class="btn btn-default" type="submit">
+                                            <span class="sr-only"><fmt:message key="edit"/></span>
+                                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </form:form>
+                                <form:form method="post" action="${pageContext.request.contextPath}/activityrecord/delete/${record.id}" cssClass="form-horizontal">
+                                    <td class="col-xs-1 text-center">
+                                        <button class="btn btn-default" type="submit">
+                                            <span class="sr-only"><fmt:message key="remove"/></span>
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </form:form>
                             </tr>
                         </c:forEach>
                     </tbody>

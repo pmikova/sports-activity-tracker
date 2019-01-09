@@ -25,10 +25,10 @@ public class ActivityRecordDTO {
 
     private double averageSpeed;
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd.MM.YYYY HH:mm")
     private LocalDateTime startTime;
 
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd.MM.YYYY HH:mm")
     private LocalDateTime endTime;
 
     public UserDTO getUser() {
