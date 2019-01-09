@@ -9,7 +9,7 @@
         <jsp:attribute name="scripts">
         <script>
             $(function () {
-                $(".datepicker").datetimepicker({format:'DD/MM/YYYY HH:mm:ss',});
+                $(".datepicker").datetimepicker({format:'DD.MM.YYYY HH:mm',});
             });
         </script>
     </jsp:attribute>
