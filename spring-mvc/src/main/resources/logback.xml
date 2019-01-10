@@ -1,6 +1,6 @@
 
 <!-- configuration for logback http://logback.qos.ch/ -->
-<configuration debug="false">
+<configuration debug="true">
     <!-- logs to console -->
     <appender name="APP" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -24,4 +24,5 @@
 
     <!-- list of logger prefixes with non-default logging levels -->
     <logger name="org.hibernate" level="on" />
+    <logger name="cz.muni.fi.PA165.tracker" level="trace"/>
 </configuration>

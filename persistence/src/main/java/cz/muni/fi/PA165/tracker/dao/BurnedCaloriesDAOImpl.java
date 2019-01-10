@@ -86,13 +86,17 @@ public class BurnedCaloriesDAOImpl implements BurnedCaloriesDAO {
     }
 
     @Override
-    public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
-        if (activityRecord == null){
-            throw new IllegalArgumentException("Activity record can not be null!");
+    public BurnedCalories getByActivityRecordId(Long activityRecordId){
+        if (activityRecordId == null) {
+            throw new IllegalArgumentException("User can not be null");
         }
-        TypedQuery<BurnedCalories> query = entityManager.createQuery("SELECT c FROM BurnedCalories c WHERE c.activityRecord = :activityRecord",
-                BurnedCalories.class);
-        query.setParameter("activityRecord", activityRecord);
-        return query.getResultList();
+        try {
+            return entityManager
+                    .createQuery("SELECT a FROM BurnedCalories a WHERE a.activityRecordId = :activityRecordId",
+                    BurnedCalories.class).setParameter("activityRecordId", activityRecordId).getSingleResult();
+
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
 }

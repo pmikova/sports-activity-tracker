@@ -133,16 +133,18 @@ public class ActivityRecordController extends MainController{
         return "redirect:" + uriBuilder.path("/activityrecord/index").toUriString();
     }
 
-    @RequestMapping(value = {"/delete/{id}", "/delete/{id}/"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.POST)
     public String delete(
             @PathVariable long id,
             UriComponentsBuilder uriBuilder,
             RedirectAttributes redirectAttributes) {
         try {
-            activityRecordFacade.delete(activityRecordFacade.getById(id));
+            ActivityRecordDTO remove = activityRecordFacade.getById(id);
+            activityRecordFacade.delete(remove);
             redirectAttributes.addFlashAttribute("alert_success", "ActivityRecord was deleted.");
         } catch (Exception ex) {
             log.error("Activityrecord " + id + " cannot be deleted");
+            log.error(ex.getStackTrace().toString());
             redirectAttributes.addFlashAttribute("alert_danger", "Activity record cannot be deleted.");
         }
         return "redirect:" + uriBuilder.path("/activityrecord/index").toUriString();

@@ -171,7 +171,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         calories.setBurnedCalories(cals);
         calories.setUser(user);
         calories.setActualWeight(weight);
-        calories.setActivityRecord(activityRecord);
+        calories.setActivityRecordId(activityRecord.getId());
         burnedCaloriesService.create(calories);
         return calories;
     }

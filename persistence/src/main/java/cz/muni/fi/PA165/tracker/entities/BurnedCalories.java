@@ -22,9 +22,16 @@ public class BurnedCalories {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
+    public Long getActivityRecordId() {
+        return activityRecordId;
+    }
+
+    public void setActivityRecordId(Long activityRecordId) {
+        this.activityRecordId = activityRecordId;
+    }
+
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
-    private ActivityRecord activityRecord;
+    private Long activityRecordId;
 
     @NotNull
     @Min(0)
@@ -44,10 +51,6 @@ public class BurnedCalories {
 
     public User getUser() {
         return user;
-    }
-
-    public ActivityRecord getActivityRecord() {
-        return activityRecord;
     }
 
     public int getBurnedCalories() {
@@ -70,9 +73,6 @@ public class BurnedCalories {
         this.user = user;
     }
 
-    public void setActivityRecord(ActivityRecord activityRecord) {
-        this.activityRecord = activityRecord;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -81,12 +81,12 @@ public class BurnedCalories {
         BurnedCalories that = (BurnedCalories) o;
         return getBurnedCalories() == that.getBurnedCalories() &&
                 Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getActivityRecord(), that.getActivityRecord()) &&
+                Objects.equals(getActivityRecordId(), that.getActivityRecordId()) &&
                 getActualWeight() == that.getActualWeight();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, activityRecord, burnedCalories, actualWeight);
+        return Objects.hash(user, activityRecordId, burnedCalories, actualWeight);
     }
 }

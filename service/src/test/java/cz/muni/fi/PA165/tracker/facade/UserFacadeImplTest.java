@@ -319,13 +319,13 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         activity2DTO.setWeightCoefficient(1.1);
 
         BurnedCalories cals1 = new BurnedCalories();
-        cals1.setActivityRecord(record1);
+        cals1.setActivityRecordId(record1.getId());
         cals1.setActualWeight(87);
         cals1.setUser(user);
         cals1.setBurnedCalories(1000);
 
         BurnedCalories cals2 = new BurnedCalories();
-        cals2.setActivityRecord(record2);
+        cals2.setActivityRecordId(record2.getId());
         cals2.setActualWeight(45);
         cals2.setUser(user);
         cals2.setBurnedCalories(199);

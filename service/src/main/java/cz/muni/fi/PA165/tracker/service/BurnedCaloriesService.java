@@ -50,12 +50,8 @@ public interface BurnedCaloriesService {
      */
     List<BurnedCalories> getByUser(User user);
 
-    /**
-     * Get list of burnedCalories by activityRecord
-     * @param activityRecord activityRecord to find by
-     * @return list of burnedCalories
-     */
-    List<BurnedCalories> getByActivity(ActivityRecord activityRecord);
+
+    BurnedCalories getByActivityId(Long id);
 
     /**
      * Computes amount of burned calories and stores it in given BurnedCalories entity

@@ -27,6 +27,9 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
     @Inject
     private UserService userService;
 
+    @Inject
+    private ActivityRecordService activityRecordService;
+
     @Override
     public void create(BurnedCalories burnedCalories) {
         if (burnedCalories == null){
@@ -73,11 +76,11 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
     }
 
     @Override
-    public List<BurnedCalories> getByActivity(ActivityRecord activityRecord) {
+    public BurnedCalories getByActivityId(Long activityRecord) {
         if (activityRecord == null){
             throw new IllegalArgumentException("Activity record can not be null!");
         }
-        return burnedCaloriesDAO.getByActivity(activityRecord);
+        return burnedCaloriesDAO.getByActivityRecordId(activityRecord);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class BurnedCaloriesServiceImpl implements BurnedCaloriesService {
             throw new IllegalArgumentException("Burned calories can not be null!");
         }
         User user = burnedCalories.getUser();
-        ActivityRecord activityRecord = burnedCalories.getActivityRecord();
+        ActivityRecord activityRecord = activityRecordService.getById(burnedCalories.getActivityRecordId());
         if (user == null || activityRecord == null) {
             throw new IllegalArgumentException("Burned calories must be complete!");
         }

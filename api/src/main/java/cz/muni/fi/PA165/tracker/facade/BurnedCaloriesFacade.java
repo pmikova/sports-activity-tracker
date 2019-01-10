@@ -53,8 +53,8 @@ public interface BurnedCaloriesFacade {
 
     /**
      * Get burnedCalories by activityRecord.
-     * @param activityRecord activityRecord to find by
+     * @param activityRecordId activityRecord to find by
      * @return List of burnedCalories
      */
-    List<BurnedCaloriesDTO> getByActivity(ActivityRecordDTO activityRecord);
+    BurnedCaloriesDTO getByActivityId(Long activityRecordId);
 }
