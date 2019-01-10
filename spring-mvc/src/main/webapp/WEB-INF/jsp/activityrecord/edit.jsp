@@ -31,18 +31,18 @@
                        modelAttribute="record"
                        cssClass="form-horizontal">
 
-                <div class="form-group ${activity_error?'has-error':''}">
-                  <form:label path="sportActivity" cssClass="col-sm-2 control-label">
-                      <fmt:message key="records.activity"/>
-                  </form:label>
-                  <div class="col-sm-10">
-                            <form:select path="sportActivity" cssClass="form-control">
-                                <c:forEach items="${activities}" var="activity">
-                                    <form:option value="${activity}">${activity.activityName}</form:option>
-                                </c:forEach>
-                            </form:select>
-                      <form:errors path="sportActivity" cssClass="help-block"/>
-                  </div>
+                <div class="form-group ${sportActivityId_error?'has-error':''}">
+                    <form:label path="sportActivityId" cssClass="col-sm-2 control-label"><fmt:message key="records.activity"/>:</form:label>
+                    <div class="col-sm-10">
+                        <form:select path="sportActivityId" cssClass="form-control" >
+                            <c:forEach items="${activities}" var="activity">
+                                <form:option value="${activity.id}">${activity.activityName}</form:option>
+                            </c:forEach>
+                        </form:select>
+                        <form:input type="hidden" path="userId" value="${loggedUser.id}"/>
+                        <form:input type="hidden" path="id" value="${record.id}"/>
+                        <form:errors path="sportActivityId" cssClass="help-block"/>
+                    </div>
                 </div>
 
                 <div class="form-group ${startTime_error?'has-error':''}">

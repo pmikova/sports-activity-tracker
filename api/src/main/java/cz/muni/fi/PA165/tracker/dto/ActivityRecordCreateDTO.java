@@ -2,6 +2,7 @@ package cz.muni.fi.PA165.tracker.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,9 +13,27 @@ import java.util.Objects;
  */
 public class ActivityRecordCreateDTO {
 
-    private UserDTO user;
+    public Long getUserId() {
+        return userId;
+    }
 
-    private SportActivityDTO sportActivity;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getSportActivityId() {
+        return sportActivityId;
+    }
+
+    public void setSportActivityId(Long sportActivityId) {
+        this.sportActivityId = sportActivityId;
+    }
+
+    @NotNull
+    private Long userId;
+
+    @NotNull
+    private Long sportActivityId;
 
     private Duration duration;
 
@@ -29,21 +48,7 @@ public class ActivityRecordCreateDTO {
     @DateTimeFormat(pattern = "dd.MM.YYYY HH:mm")
     private LocalDateTime endTime;
 
-    public UserDTO getUser() {
-        return user;
-    }
 
-    public void setUser(UserDTO user) {
-        this.user = user;
-    }
-
-    public SportActivityDTO getSportActivity() {
-        return sportActivity;
-    }
-
-    public void setSportActivity(SportActivityDTO sportActivity) {
-        this.sportActivity = sportActivity;
-    }
 
     public Duration getDuration() {
         return duration;
@@ -92,8 +97,8 @@ public class ActivityRecordCreateDTO {
         ActivityRecordCreateDTO that = (ActivityRecordCreateDTO) o;
         return getDistance() == that.getDistance() &&
                 Double.compare(that.getAverageSpeed(), getAverageSpeed()) == 0 &&
-                getUser().equals(that.getUser()) &&
-                getSportActivity().equals(that.getSportActivity()) &&
+                getUserId().equals(that.getUserId()) &&
+                getSportActivityId().equals(that.getSportActivityId()) &&
                 getDuration().equals(that.getDuration()) &&
                 getStartTime().equals(that.getStartTime()) &&
                 getEndTime().equals(that.getEndTime());
@@ -101,6 +106,6 @@ public class ActivityRecordCreateDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getSportActivity(), getDuration(), getDistance(), getAverageSpeed(), getStartTime(), getEndTime());
+        return Objects.hash(getUserId(), getSportActivityId(), getDuration(), getDistance(), getAverageSpeed(), getStartTime(), getEndTime());
     }
 }

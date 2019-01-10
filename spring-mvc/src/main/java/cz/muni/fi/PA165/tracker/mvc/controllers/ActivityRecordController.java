@@ -58,12 +58,18 @@ public class ActivityRecordController extends MainController{
         ActivityRecordDTO recordDTO = activityRecordFacade.getById(id);
         List<SportActivityDTO> activityDTOS = sportActivityFacade.getAll();
         //model.addAttribute("id", id);
+        ActivityRecordUpdateDTO updateDTO = new ActivityRecordUpdateDTO();
+        updateDTO.setId(recordDTO.getId());
+        updateDTO.setEndTime(recordDTO.getEndTime());
+        updateDTO.setStartTime(recordDTO.getStartTime());
+        updateDTO.setSportActivityId(recordDTO.getSportActivity().getId());
+
         model.addAttribute("activities", activityDTOS);
-        model.addAttribute("record", recordDTO);
+        model.addAttribute("record", updateDTO);
         if(getLoggedUser().equals(recordDTO.getUser())){
             return "activityrecord/edit";
         }else{
-            redirectAttributes.addFlashAttribute("alert_danger", "You are not allowed to remove activities of other users.");
+            redirectAttributes.addFlashAttribute("alert_danger", "You are not allowed to edit activities of other users.");
             return "redirect:activityrecord/index";
         }
 
@@ -71,16 +77,20 @@ public class ActivityRecordController extends MainController{
 
     @RequestMapping(value = {"/edit", "/edit/"}, method = RequestMethod.POST)
     public String edit(
-            @Valid @ModelAttribute("record") ActivityRecordDTO formData,
+            @Valid @ModelAttribute("record") ActivityRecordUpdateDTO formData,
             BindingResult bindingResult,
             UriComponentsBuilder uriBuilder,
             Model model,
             RedirectAttributes redirectAttributes) {
+
         if (bindingResult.hasErrors()) {
             addValidationErrors(bindingResult, model);
-            model.addAttribute("activities", activityRecordFacade.getAll());
+            //? why would we do this?
+            //model.addAttribute("activities", activityRecordFacade.getAll());
             return "activityrecord/edit";
         }
+
+        model.addAttribute("activities", activityRecordFacade.getAll());
         try{
             activityRecordFacade.update(formData);
             redirectAttributes.addFlashAttribute("alert_success", "Activity Record with id " + formData.getId() + " has been updated");
@@ -114,7 +124,6 @@ public class ActivityRecordController extends MainController{
             return "activityrecord/create";
         }
         try{
-            formData.setUser(getLoggedUser());
             activityRecordFacade.create(formData);
             redirectAttributes.addFlashAttribute("alert_success", "Activity Record was created");
         } catch (DataAccessException e) {

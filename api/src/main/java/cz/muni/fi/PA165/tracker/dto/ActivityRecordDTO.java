@@ -2,6 +2,7 @@ package cz.muni.fi.PA165.tracker.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -15,8 +16,10 @@ public class ActivityRecordDTO {
 
     private Long id;
 
+    @NotNull
     private UserDTO user;
 
+    @NotNull
     private SportActivityDTO sportActivity;
 
     private Duration duration;
@@ -25,9 +28,11 @@ public class ActivityRecordDTO {
 
     private double averageSpeed;
 
+    @NotNull
     @DateTimeFormat(pattern = "dd.MM.YYYY HH:mm")
     private LocalDateTime startTime;
 
+    @NotNull
     @DateTimeFormat(pattern = "dd.MM.YYYY HH:mm")
     private LocalDateTime endTime;
 
