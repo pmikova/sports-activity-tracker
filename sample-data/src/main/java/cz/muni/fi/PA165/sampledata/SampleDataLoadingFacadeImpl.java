@@ -42,13 +42,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     @Override
     public void loadData(){
-        SportActivity football = activity("Football", 1.2, 200);
-        SportActivity running = activity("Running", 1.3, 400);
-        SportActivity snowboarding = activity("Snowboarding", 1.1, 150);
-        SportActivity weightlifting = activity("WeightLifting", 1.3, 450);
-        SportActivity skiing = activity("Skiing", 1.2, 150);
-        SportActivity powerwalking = activity("PowerWalking", 1.0, 100);
-        SportActivity cycling = activity("Cycling", 1.2, 190);
+        SportActivity football = activity("Football", 1.2, 10);
+        SportActivity running = activity("Running", 1.3, 13.5);
+        SportActivity snowboarding = activity("Snowboarding", 1.1, 8);
+        SportActivity weightlifting = activity("WeightLifting", 1.3, 3.5);
+        SportActivity skiing = activity("Skiing", 1.2, 8);
+        SportActivity powerwalking = activity("PowerWalking", 1.0, 5);
+        SportActivity cycling = activity("Cycling", 1.2, 4);
 
         log.info("All activities loaded!");
 
