@@ -1,7 +1,9 @@
 package cz.muni.fi.PA165.tracker.service;
 
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
+import cz.muni.fi.PA165.tracker.dao.BurnedCaloriesDAO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
 import cz.muni.fi.PA165.tracker.entities.User;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
 
     @Inject
     private ActivityRecordDAO activityRecordDAO;
+
+    @Inject
+    private BurnedCaloriesDAO bcd;
 
 
     @Override
@@ -74,6 +79,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     @Override
     public void delete(ActivityRecord activityRecord) {
         if(activityRecord == null) throw new IllegalArgumentException("ActivityRecord cannot be null.");
+        // assure that associated burned calories are destroyed too
+        BurnedCalories bc  = bcd.getByActivityRecordId(activityRecord.getId());
+        bcd.delete(bc);
         activityRecordDAO.delete(activityRecord);
     }
 

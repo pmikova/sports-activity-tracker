@@ -66,8 +66,7 @@ public class BurnedCaloriesFacadeImpl implements BurnedCaloriesFacade {
     }
 
     @Override
-    public List<BurnedCaloriesDTO> getByActivity(ActivityRecordDTO activityRecordDTO) {
-        ActivityRecord activityRecord = mappingService.mapTo(activityRecordDTO, ActivityRecord.class);
-        return mappingService.mapTo(burnedCaloriesService.getByActivity(activityRecord), BurnedCaloriesDTO.class);
+    public BurnedCaloriesDTO getByActivityId(Long activityRecordId) {
+        return mappingService.mapTo(burnedCaloriesService.getByActivityId(activityRecordId), BurnedCaloriesDTO.class);
     }
 }

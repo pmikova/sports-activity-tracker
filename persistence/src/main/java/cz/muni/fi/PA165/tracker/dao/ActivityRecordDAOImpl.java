@@ -53,8 +53,7 @@ public class ActivityRecordDAOImpl implements ActivityRecordDAO{
             throw new IllegalArgumentException("Activity record can not be null!");
         }
         // ensure the entity is associated with persistence context before removing it
-        entityManager.find(ActivityRecord.class, activityRecord.getId());
-        entityManager.remove(activityRecord);
+        entityManager.remove(entityManager.contains(activityRecord) ? activityRecord : entityManager.merge(activityRecord));
     }
 
     @Override

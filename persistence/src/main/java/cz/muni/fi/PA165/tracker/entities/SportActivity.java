@@ -36,14 +36,9 @@ public class SportActivity {
     @Min(0)
     private double weightCoefficient;
 
-    @NotNull
-    @OneToMany(mappedBy = "sportActivity")
-    private List<ActivityRecord> activityRecordList = new ArrayList<>();
-
     public String getActivityName() {
         return activityName;
     }
-
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;

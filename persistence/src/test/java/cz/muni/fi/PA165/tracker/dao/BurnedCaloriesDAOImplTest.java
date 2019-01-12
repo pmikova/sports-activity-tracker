@@ -86,7 +86,7 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
 
     private BurnedCalories prepareBurnedCalories(ActivityRecord activityRecord, User user, double actualWeight, int burnedCaloriesAmount) {
         BurnedCalories burnedCalories = new BurnedCalories();
-        burnedCalories.setActivityRecord(activityRecord);
+        burnedCalories.setActivityRecordId(activityRecord.getId());
         burnedCalories.setUser(user);
         burnedCalories.setActualWeight(actualWeight);
         burnedCalories.setBurnedCalories(burnedCaloriesAmount);
@@ -203,7 +203,7 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateWithNullActivityRecord() {
-        burnedCalories4.setActivityRecord(null);
+        burnedCalories4.setActivityRecordId(null);
         burnedCaloriesDAO.create(burnedCalories4);
     }
 
@@ -239,8 +239,7 @@ public class BurnedCaloriesDAOImplTest extends AbstractTestNGSpringContextTests 
         entityManager.persist(burnedCalories3);
         entityManager.persist(burnedCalories4);
         entityManager.flush();
-        List<BurnedCalories> result = burnedCaloriesDAO.getByActivity(activityRecord1);
-        Assert.assertEquals(result.size(), 1);
-        Assert.assertTrue(result.contains(burnedCalories1));
+        BurnedCalories result = burnedCaloriesDAO.getByActivityRecordId(activityRecord1.getId());
+        Assert.assertTrue(result.equals(burnedCalories1));
     }
 }

@@ -1,6 +1,7 @@
 package cz.muni.fi.PA165.tracker.facade;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordCreateDTO;
 import cz.muni.fi.PA165.tracker.dto.ActivityRecordDTO;
+import cz.muni.fi.PA165.tracker.dto.ActivityRecordUpdateDTO;
 import cz.muni.fi.PA165.tracker.dto.UserDTO;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface ActivityRecordFacade {
      *
      * @param activityRecordDTO to update
      */
-    void update(ActivityRecordDTO activityRecordDTO);
+    void update(ActivityRecordUpdateDTO activityRecordDTO);
 
     /**
      * Delete ActivityRecord.
