@@ -63,7 +63,15 @@ public interface BurnedCaloriesDAO {
      */
     List<BurnedCalories> getByUser(User user);
 
+    /**
+     * Get a list of BurnedCalories objects by Activity type.
+     *
+     * @param activityRecordId to find by
+     * @return list of BurnedCalories objects
+     */
     BurnedCalories getByActivityRecordId(Long activityRecordId);
+
+
 }
 
 

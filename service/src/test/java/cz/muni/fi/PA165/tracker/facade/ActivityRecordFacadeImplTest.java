@@ -7,6 +7,8 @@ import cz.muni.fi.PA165.tracker.dto.ActivityRecordUpdateDTO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
 import cz.muni.fi.PA165.tracker.entities.SportActivity;
 import cz.muni.fi.PA165.tracker.entities.User;
+import cz.muni.fi.PA165.tracker.enums.Gender;
+import cz.muni.fi.PA165.tracker.enums.UserType;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
 import cz.muni.fi.PA165.tracker.service.ActivityRecordService;
 import cz.muni.fi.PA165.tracker.service.ActivityRecordServiceImpl;
@@ -21,6 +23,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
@@ -55,12 +58,24 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
     private ActivityRecord record1;
     private ActivityRecord record2;
     private ActivityRecord record3;
-
+    private User user;
     @BeforeMethod
     public void setUp(){
+
+
+        user = new User(1L);
+        user.setWeight(50);
+        user.setEmail("email@gmail.com");
+        user.setUserType(UserType.USER);
+        user.setGender(Gender.FEMALE);
+        user.setName("Lucy");
+        user.setSurname("Strewn");
+        user.setPasswordHash("password");
+        user.setBirthdate(LocalDate.of(1999, 10, 15));
+
         record1 = new ActivityRecord();
         record1.setSportActivity(new SportActivity());
-        record1.setUser(new User());
+        record1.setUser(user);
         record1.setDuration(Duration.of(1, HOURS));
         record1.setStartTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 00, 00));
         record1.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 11, 00, 00));
@@ -68,15 +83,16 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
 
         record2 = new ActivityRecord();
         record2.setSportActivity(new SportActivity());
-        record2.setUser(new User());
+        record2.setUser(user);
         record2.setDuration(Duration.of(1, HOURS));
         record2.setStartTime(LocalDateTime.of(2018, Month.NOVEMBER, 11, 13, 00, 00));
         record2.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 11, 14, 00, 00));
         record2.setDistance(15900);
+        record2.setId(9L);
 
         record3 = new ActivityRecord();
         record3.setSportActivity(new SportActivity());
-        record3.setUser(new User());
+        record3.setUser(user);
         record3.setDuration(Duration.of(1, HOURS));
         record3.setStartTime(LocalDateTime.of(2018, Month.NOVEMBER, 12, 10, 00, 00));
         record3.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 13, 10, 00, 00));
@@ -85,22 +101,22 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
 
         MockitoAnnotations.initMocks(this);
     }
-/**
-    @Test
-    public void testCreate(){
-        ActivityRecordCreateDTO activityRecordCreateDTO = mappingService.mapTo(record1, ActivityRecordCreateDTO.class);
-        activityRecordFacade.create(activityRecordCreateDTO);
-        verify(activityRecordService).create(any(ActivityRecord.class));
-    }
-    */
-/*
-    @Test
-    public void testUpdate(){
-        ActivityRecordUpdateDTO activityRecordDTO = mappingService.mapTo(record1, ActivityRecordDTO.class);
-        activityRecordDTO.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 30, 00));
-        activityRecordFacade.update(activityRecordDTO);
-        verify(activityRecordService).update(any(ActivityRecord.class));
-    }*/
+
+//    @Test
+//    public void testCreate(){
+//        ActivityRecordCreateDTO activityRecordCreateDTO = mappingService.mapTo(record1, ActivityRecordCreateDTO.class);
+//        activityRecordFacade.create(activityRecordCreateDTO);
+//        verify(activityRecordService).create(any(ActivityRecord.class));
+//    }
+//
+//    @Test
+//    public void testUpdate(){
+//        when(activityRecordService.getById(9L)).thenReturn(record2);
+//        ActivityRecordUpdateDTO activityRecordDTO = mappingService.mapTo(record2, ActivityRecordUpdateDTO.class);
+//        activityRecordDTO.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 30, 00));
+//        activityRecordFacade.update(activityRecordDTO);
+//        verify(activityRecordService).update(any(ActivityRecord.class));
+//    }
 
     @Test
     public void testDelete(){
@@ -119,7 +135,6 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
     }
     @Test
     public void testGetAll(){
-
         when(activityRecordService.getAll()).thenReturn(Arrays.asList(record1, record2, record3));
         List<ActivityRecordDTO> ansDTO = activityRecordFacade.getAll();
         verify(activityRecordService).getAll();
@@ -130,6 +145,4 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
         assertTrue(ans.contains(record2));
         assertTrue(ans.contains(record3));
     }
-
-
 }

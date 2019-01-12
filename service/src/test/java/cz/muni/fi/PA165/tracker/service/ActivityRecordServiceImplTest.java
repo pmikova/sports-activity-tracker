@@ -90,11 +90,11 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
 //        activityRecordService.create(record1);
 //        verify(activityRecordDAO).create(record1);
 //    }
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void testCreateNull(){
-//        activityRecordService.create(null);
-//
-//    }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateNull(){
+        activityRecordService.create(null);
+
+    }
 
 
     @Test
@@ -108,13 +108,13 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
     public void testUpdateNull(){
        activityRecordService.update(null);
     }
-/*
-    @Test
-    public void testDelete(){
-        activityRecordService.delete(record1);
-        verify(activityRecordDAO).delete(record1);
-    }
-*/
+
+//    @Test
+//    public void testDelete(){
+//        activityRecordService.delete(record1);
+//        verify(activityRecordDAO).delete(record1);
+//    }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testDeleteNull(){
         activityRecordService.delete(null);
