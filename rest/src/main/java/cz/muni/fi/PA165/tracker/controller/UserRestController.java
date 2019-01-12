@@ -78,6 +78,9 @@ public class UserRestController {
         } catch (DataAccessException e) {
             logger.error("Constraints violated:", e);
             throw new ConstraintViolationException(e);
+        } catch (Exception e) {
+            logger.error("Unknown exception", e);
+            throw new ResourceNotModifiedException(e);
         }
     }
 
