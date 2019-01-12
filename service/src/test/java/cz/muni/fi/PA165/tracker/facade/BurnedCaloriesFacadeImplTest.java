@@ -120,7 +120,7 @@ public class BurnedCaloriesFacadeImplTest extends AbstractTestNGSpringContextTes
         burnedCaloriesFacade.delete(burnedCaloriesDTO);
         verify(burnedCaloriesService).delete(any(BurnedCalories.class));
     }
-/*
+
     @Test
     public void testGetById() {
         when(burnedCaloriesService.getById(burnedCalories2.getId())).thenReturn(burnedCalories2);
@@ -140,7 +140,7 @@ public class BurnedCaloriesFacadeImplTest extends AbstractTestNGSpringContextTes
         assertTrue(burnedCalories.contains(burnedCalories1));
         assertTrue(burnedCalories.contains(burnedCalories2));
     }
-*/
+
     @Test
     public void testGetByUser() {
         when(burnedCaloriesService.getByUser(user)).thenReturn(Arrays.asList(burnedCalories1));
@@ -152,16 +152,14 @@ public class BurnedCaloriesFacadeImplTest extends AbstractTestNGSpringContextTes
         assertEquals(1, burnedCalories.size());
         assertTrue(burnedCalories.contains(burnedCalories1));
     }
-/*
+
     @Test
-    public void testGetByActivity() {
-        when(burnedCaloriesService.getByActivity(activityRecord)).thenReturn(Arrays.asList(burnedCalories1));
+    public void testGetByActivityId() {
+        when(burnedCaloriesService.getByActivityId(999L)).thenReturn(burnedCalories2);
         ActivityRecordDTO activityRecordDTO = mappingService.mapTo(activityRecord, ActivityRecordDTO.class);
-        List<BurnedCaloriesDTO> burnedCaloriesDTOs = burnedCaloriesFacade.getByActivity(activityRecordDTO);
-        verify(burnedCaloriesService).getByActivity(activityRecord);
-        assertEquals(1, burnedCaloriesDTOs.size());
-        List<BurnedCalories> burnedCalories = mappingService.mapTo(burnedCaloriesDTOs, BurnedCalories.class);
-        assertEquals(1, burnedCalories.size());
-        assertTrue(burnedCalories.contains(burnedCalories1));
-    }*/
+        BurnedCaloriesDTO burnedCaloriesDTO = burnedCaloriesFacade.getByActivityId(burnedCalories2.getActivityRecordId());
+        verify(burnedCaloriesService).getByActivityId(999L);
+        BurnedCalories burnedCalories = mappingService.mapTo(burnedCaloriesDTO, BurnedCalories.class);
+        assertEquals(burnedCalories, burnedCalories2);
+    }
 }

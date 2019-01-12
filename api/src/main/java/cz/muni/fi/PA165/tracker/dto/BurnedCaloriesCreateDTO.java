@@ -10,7 +10,7 @@ public class BurnedCaloriesCreateDTO {
 
     private UserDTO user;
 
-    private ActivityRecordDTO activityRecord;
+    private Long activityRecordId;
 
     private int burnedCalories;
 
@@ -24,12 +24,12 @@ public class BurnedCaloriesCreateDTO {
         this.user = user;
     }
 
-    public ActivityRecordDTO getActivityRecord() {
-        return activityRecord;
+    public Long getActivityRecordId() {
+        return activityRecordId;
     }
 
-    public void setActivityRecord(ActivityRecordDTO activityRecord) {
-        this.activityRecord = activityRecord;
+    public void setActivityRecordId(Long activityRecordId) {
+        this.activityRecordId = activityRecordId;
     }
 
     public int getBurnedCalories() {
@@ -56,11 +56,11 @@ public class BurnedCaloriesCreateDTO {
         return getBurnedCalories() == that.getBurnedCalories() &&
                 Double.compare(that.getActualWeight(), getActualWeight()) == 0 &&
                 Objects.equals(getUser(), that.getUser()) &&
-                Objects.equals(getActivityRecord(), that.getActivityRecord());
+                Objects.equals(getActivityRecordId(), that.getActivityRecordId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getActivityRecord(), getBurnedCalories(), getActualWeight());
+        return Objects.hash(getUser(), getActivityRecordId(), getBurnedCalories(), getActualWeight());
     }
 }

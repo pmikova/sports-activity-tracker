@@ -11,7 +11,6 @@ import cz.muni.fi.PA165.tracker.enums.Gender;
 import cz.muni.fi.PA165.tracker.enums.UserType;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
 import cz.muni.fi.PA165.tracker.service.ActivityRecordService;
-import cz.muni.fi.PA165.tracker.service.ActivityRecordServiceImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -104,6 +103,7 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
 
 //    @Test
 //    public void testCreate(){
+//
 //        ActivityRecordCreateDTO activityRecordCreateDTO = mappingService.mapTo(record1, ActivityRecordCreateDTO.class);
 //        activityRecordFacade.create(activityRecordCreateDTO);
 //        verify(activityRecordService).create(any(ActivityRecord.class));

@@ -84,7 +84,7 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
 
         MockitoAnnotations.initMocks(this);
     }
-
+//
 //    @Test
 //    public void testCreate(){
 //        activityRecordService.create(record1);
@@ -96,7 +96,7 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
 
     }
 
-
+//
 //    @Test
 //    public void testUpdate(){
 //        record1.setDistance(30);

@@ -45,8 +45,6 @@ public class SportActivityServiceImplTest extends AbstractTestNGSpringContextTes
     private SportActivity activity1;
     private SportActivity activity2;
     private SportActivity activity3;
-    private BurnedCalories bc;
-
     @BeforeMethod
     public void setup(){
         activity1 = new SportActivity();
@@ -54,7 +52,6 @@ public class SportActivityServiceImplTest extends AbstractTestNGSpringContextTes
         activity1.setWeightCoefficient(2.0);
         activity1.setBurnedCaloriesPerHour(400.0);
         activity1.setId(1L);
-        bc = new BurnedCalories();
 
         activity2 = new SportActivity();
         activity2.setActivityName("Dumpster diving");

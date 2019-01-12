@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 /**
  * BurnedCalories service tests.
+ *
  * @author HonzaOstrava
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
@@ -171,6 +172,7 @@ public class BurnedCaloriesServiceImplTest extends AbstractTestNGSpringContextTe
     public void testDeleteNull() {
         burnedCaloriesService.delete(null);
     }
+
     @Test
     public void testGetById() {
         when(burnedCaloriesDAO.getById(1L)).thenReturn(burnedCalories2);
@@ -223,59 +225,50 @@ public class BurnedCaloriesServiceImplTest extends AbstractTestNGSpringContextTe
     public void testGetByUserNull() {
         burnedCaloriesService.getByUser(null);
     }
-    /*
-        @Test
-        public void testGetByActivity() {
-            when(burnedCaloriesService.getByActivityId(activityRecord1.getId())).thenReturn(burnedCalories1);
-            List<BurnedCalories> burnedCalories = burnedCaloriesService.getByActivityId(activityRecord1.getId());
-            verify(burnedCaloriesDAO).getByActivityId(activityRecord1.getId());
-            Assert.assertEquals(1, burnedCalories.size());
-            Assert.assertTrue(burnedCalories.contains(burnedCalories1));
-        }
 
-        @Test
-        public void testGetByActivityNonexistent() {
-            ActivityRecord notExisting = new ActivityRecord();
-            when(burnedCaloriesService.getByActivity(notExisting)).thenReturn(Collections.emptyList());
-            Assert.assertTrue(burnedCaloriesService.getByActivity(notExisting).isEmpty());
-            verify(burnedCaloriesDAO).getByActivity(notExisting);
-        }
-
-        @Test(expectedExceptions = IllegalArgumentException.class)
-        public void testGetByActivityNull() {
-            burnedCaloriesService.getByActivity(null);
-        }
-    */
-    /*
     @Test
-    public void testComputeBurnedCalories() {
-        when(userService.getAge(user)).thenReturn(19);
-        burnedCaloriesService.computeBurnedCalories(burnedCalories1);
-        Assert.assertEquals(533480, burnedCalories1.getBurnedCalories());
+    public void testGetByActivity() {
+        when(burnedCaloriesService.getByActivityId(activityRecord1.getId())).thenReturn(burnedCalories1);
+        BurnedCalories burnedCalories = burnedCaloriesService.getByActivityId(activityRecord1.getId());
+        verify(burnedCaloriesDAO).getByActivityRecordId(activityRecord1.getId());
+        Assert.assertEquals(burnedCalories, burnedCalories1);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testComputeBurnedCaloriesNull() {
-        burnedCaloriesService.computeBurnedCalories(null);
+    public void testGetByActivityNull() {
+        burnedCaloriesService.getByActivityId(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testComputeBurnedCaloriesNullUser() {
-        burnedCaloriesService.computeBurnedCalories(burnedCalories3);
-    }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testComputeBurnedCaloriesNullActivityRecord() {
-        burnedCaloriesService.computeBurnedCalories(burnedCalories4);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testComputeBurnedCaloriesNullSportActivity() {
-        burnedCaloriesService.computeBurnedCalories(burnedCalories5);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testComputeBurnedCaloriesNullDuration() {
-        burnedCaloriesService.computeBurnedCalories(burnedCalories6);
-    }*/
+//    @Test
+//    public void testComputeBurnedCalories() {
+//        when(userService.getAge(user)).thenReturn(19);
+//        burnedCaloriesService.computeBurnedCalories(burnedCalories1);
+//        Assert.assertEquals(533480, burnedCalories1.getBurnedCalories());
+//    }
+//
+//    @Test(expectedExceptions = IllegalArgumentException.class)
+//    public void testComputeBurnedCaloriesNull() {
+//        burnedCaloriesService.computeBurnedCalories(null);
+//    }
+//
+//    @Test(expectedExceptions = IllegalArgumentException.class)
+//    public void testComputeBurnedCaloriesNullUser() {
+//        burnedCaloriesService.computeBurnedCalories(burnedCalories3);
+//    }
+//
+//    @Test(expectedExceptions = IllegalArgumentException.class)
+//    public void testComputeBurnedCaloriesNullActivityRecord() {
+//        burnedCaloriesService.computeBurnedCalories(burnedCalories4);
+//    }
+//
+//    @Test(expectedExceptions = IllegalArgumentException.class)
+//    public void testComputeBurnedCaloriesNullSportActivity() {
+//        burnedCaloriesService.computeBurnedCalories(burnedCalories5);
+//    }
+//
+//    @Test(expectedExceptions = IllegalArgumentException.class)
+//    public void testComputeBurnedCaloriesNullDuration() {
+//        burnedCaloriesService.computeBurnedCalories(burnedCalories6);
+//    }
 }
