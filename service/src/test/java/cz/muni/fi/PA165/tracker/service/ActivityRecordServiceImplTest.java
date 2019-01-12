@@ -97,12 +97,12 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
     }
 
 
-    @Test
-    public void testUpdate(){
-        record1.setDistance(30);
-        activityRecordService.update(record1);
-        verify(activityRecordDAO).update(record1);
-    }
+//    @Test
+//    public void testUpdate(){
+//        record1.setDistance(30);
+//        activityRecordService.update(record1);
+//        verify(activityRecordDAO).update(record1);
+//    }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void testUpdateNull(){
