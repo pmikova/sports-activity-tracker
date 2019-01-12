@@ -118,26 +118,6 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
                 LocalDateTime.of(2018, 12, 9, 11, 10, 41), 0, admin1);
 
         log.info("All records loaded!");
-
-        BurnedCalories calsF1 = calories(450, footbal1.getUser(), 75, footbal1);
-        BurnedCalories calsF2 = calories(300, footbal2.getUser(), 80, footbal2);
-        BurnedCalories calsF3 = calories(660, footbal3.getUser(), 95, footbal3);
-        BurnedCalories calsF4 = calories(598, footbal4.getUser(), 75, footbal4);
-
-        BurnedCalories calsSK1 = calories(600, ski1.getUser(), 75, ski1);
-        BurnedCalories calsSK2 = calories(450, ski2.getUser(), 58, ski2);
-        BurnedCalories calsSK3 = calories(750, ski3.getUser(), 78, ski3);
-        BurnedCalories calsSK4 = calories(280, ski4.getUser(), 77, ski4);
-
-        BurnedCalories calsSN1 = calories(600, snow1.getUser(), 76, snow1);
-        BurnedCalories calsSN2 = calories(750, snow2.getUser(), 78, snow2);
-        BurnedCalories calsSN3 = calories(700, snow3.getUser(), 80, snow3);
-
-        BurnedCalories calsWL1 = calories(289, wl1.getUser(), 80, wl1);
-        BurnedCalories calsWL2 = calories(289, wl2.getUser(), 80, wl2);
-        BurnedCalories calsWL3 = calories(289, wl3.getUser(), 80, wl3);
-        BurnedCalories calsWL4 = calories(289, wl4.getUser(), 80, wl4);
-
         log.info("All calories loaded!");
     }
 

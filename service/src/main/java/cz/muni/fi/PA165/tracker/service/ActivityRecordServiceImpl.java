@@ -86,6 +86,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
         activityRecord.setDuration(calculateDuration(activityRecord));
         activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.update(activityRecord);
+        //recalculate burned calories
+        BurnedCalories bc = bcs.getByActivityId(activityRecord.getId());
+        bcs.computeBurnedCalories(bc);
     }
 
     @Override
