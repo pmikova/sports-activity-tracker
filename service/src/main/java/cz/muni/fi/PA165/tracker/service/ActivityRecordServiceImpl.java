@@ -27,6 +27,8 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
     @Inject
     private BurnedCaloriesDAO bcd;
 
+    @Inject
+    private BurnedCaloriesService bcs;
 
     @Override
     public Duration calculateDuration(ActivityRecord activityRecord) {
@@ -61,11 +63,21 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
         activityRecord.setDuration(calculateDuration(activityRecord));
         activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.create(activityRecord);
+
         User user = activityRecord.getUser();
         if(user == null){
             throw new IllegalArgumentException("User cannot be null.");
         }
         user.addActivityRecord(activityRecord);
+        //create BurnedCalories object
+
+        BurnedCalories burnedCalories = new BurnedCalories();
+        burnedCalories.setActualWeight(user.getWeight());
+        burnedCalories.setUser(user);
+        burnedCalories.setActivityRecordId(activityRecord.getId());
+        bcs.computeBurnedCalories(burnedCalories);
+        bcs.create(burnedCalories);
+
     }
 
     @Override
@@ -74,6 +86,9 @@ public class ActivityRecordServiceImpl implements ActivityRecordService {
         activityRecord.setDuration(calculateDuration(activityRecord));
         activityRecord.setAverageSpeed(calculateAverageSpeed(activityRecord));
         activityRecordDAO.update(activityRecord);
+        //recalculate burned calories
+        BurnedCalories bc = bcs.getByActivityId(activityRecord.getId());
+        bcs.computeBurnedCalories(bc);
     }
 
     @Override

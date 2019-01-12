@@ -66,15 +66,15 @@
                     </div>
                 </div>
 
-                      <%--<div class="form-group ${distance_error?'has-error':''}">--%>
-                          <%--<form:label path="distance" cssClass="col-sm-2 control-label">--%>
-                              <%--<fmt:message key="records.distance"/>--%>
-                          <%--</form:label>--%>
-                          <%--<div class="col-sm-10">--%>
-                              <%--<form:input path="distance" cssClass="form-control"/>--%>
-                              <%--<form:errors path="distance" cssClass="help-block"/>--%>
-                          <%--</div>--%>
-                      <%--</div>--%>
+                      <div class="form-group ${distance_error?'has-error':''}">
+                          <form:label path="distance" cssClass="col-sm-2 control-label">
+                              <fmt:message key="records.distance"/>
+                          </form:label>
+                          <div class="col-sm-10">
+                              <form:input path="distance" cssClass="form-control"/>
+                              <form:errors path="distance" cssClass="help-block"/>
+                          </div>
+                      </div>
 
             <button class="btn btn-primary createBtn center-block allow-vertical-space" type="submit"><fmt:message
                     key="submit"/></button>
