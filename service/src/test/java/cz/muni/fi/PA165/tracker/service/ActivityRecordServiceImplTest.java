@@ -3,6 +3,7 @@ package cz.muni.fi.PA165.tracker.service;
 import cz.muni.fi.PA165.tracker.config.ServiceConfiguration;
 import cz.muni.fi.PA165.tracker.dao.ActivityRecordDAO;
 import cz.muni.fi.PA165.tracker.entities.ActivityRecord;
+import cz.muni.fi.PA165.tracker.entities.BurnedCalories;
 import cz.muni.fi.PA165.tracker.entities.SportActivity;
 import cz.muni.fi.PA165.tracker.entities.User;
 import cz.muni.fi.PA165.tracker.mapping.MappingService;
@@ -40,6 +41,8 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
     @Mock
     private ActivityRecordDAO activityRecordDAO;
 
+    @Mock
+    private BurnedCaloriesService burnedCaloriesService;
     @Spy
     @Inject
     private MappingService mappingService;
@@ -47,11 +50,11 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
     @InjectMocks
     private ActivityRecordService activityRecordService = new ActivityRecordServiceImpl();
 
-
     private ActivityRecord record1;
     private ActivityRecord record2;
     private ActivityRecord record3;
     private ActivityRecord record4;
+    private BurnedCalories bc;
 
     @BeforeMethod
     public void setUp(){
@@ -61,6 +64,7 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
         record1.setStartTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 00, 00));
         record1.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 11, 30, 00));
         record1.setDistance(15900);
+        record1.setId(1L);
 
         record2 = new ActivityRecord();
         record2.setSportActivity(new SportActivity());
@@ -82,11 +86,15 @@ public class ActivityRecordServiceImplTest  extends AbstractTestNGSpringContextT
         record4.setStartTime(LocalDateTime.of(2018, Month.NOVEMBER, 12, 10, 00, 00));
         record4.setDistance(15900);
 
+        bc = new BurnedCalories();
+        bc.setActualWeight(100.0);
+        bc.setActivityRecordId(1L);
         MockitoAnnotations.initMocks(this);
     }
-//
+
 //    @Test
 //    public void testCreate(){
+//        when(burnedCaloriesService.computeBurnedCalories()).thenReturn(10);
 //        activityRecordService.create(record1);
 //        verify(activityRecordDAO).create(record1);
 //    }

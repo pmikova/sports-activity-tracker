@@ -1,5 +1,6 @@
 package cz.muni.fi.PA165.tracker.dto;
 
+import cz.muni.fi.PA165.tracker.entities.SportActivity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -13,27 +14,27 @@ import java.util.Objects;
  */
 public class ActivityRecordCreateDTO {
 
-    public Long getUserId() {
-        return userId;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(Long userId) {
+        this.user = user;
     }
 
-    public Long getSportActivityId() {
-        return sportActivityId;
+    public SportActivityDTO getSportActivity() {
+        return sportActivityDTO;
     }
 
-    public void setSportActivityId(Long sportActivityId) {
-        this.sportActivityId = sportActivityId;
+    public void setSportActivityId(SportActivity sportActivity) {
+        this.sportActivityDTO = sportActivityDTO;
     }
 
     @NotNull
-    private Long userId;
+    private UserDTO user;
 
     @NotNull
-    private Long sportActivityId;
+    private SportActivityDTO sportActivityDTO;
 
     private Duration duration;
 
@@ -97,8 +98,8 @@ public class ActivityRecordCreateDTO {
         ActivityRecordCreateDTO that = (ActivityRecordCreateDTO) o;
         return getDistance() == that.getDistance() &&
                 Double.compare(that.getAverageSpeed(), getAverageSpeed()) == 0 &&
-                getUserId().equals(that.getUserId()) &&
-                getSportActivityId().equals(that.getSportActivityId()) &&
+                getUser().equals(that.getUser()) &&
+                getSportActivity().equals(that.getSportActivity()) &&
                 getDuration().equals(that.getDuration()) &&
                 getStartTime().equals(that.getStartTime()) &&
                 getEndTime().equals(that.getEndTime());
@@ -106,6 +107,6 @@ public class ActivityRecordCreateDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getSportActivityId(), getDuration(), getDistance(), getAverageSpeed(), getStartTime(), getEndTime());
+        return Objects.hash(getUser(), getSportActivity(), getDuration(), getDistance(), getAverageSpeed(), getStartTime(), getEndTime());
     }
 }

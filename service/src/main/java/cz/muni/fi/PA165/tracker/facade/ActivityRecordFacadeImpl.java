@@ -50,10 +50,6 @@ public class ActivityRecordFacadeImpl implements  ActivityRecordFacade{
             throw new IllegalArgumentException("activity report cannot be null");
         }
         ActivityRecord activityRecord = mappingService.mapTo(activityRecordCreateDTO, ActivityRecord.class);
-
-        activityRecord.setUser(getUserById(activityRecordCreateDTO.getUserId()));
-        activityRecord.setSportActivity(getActivityById(activityRecordCreateDTO.getSportActivityId()));
-
         activityRecordService.create(activityRecord);
     }
 
@@ -89,9 +85,6 @@ public class ActivityRecordFacadeImpl implements  ActivityRecordFacade{
         if (activityRecordService.getById(activityRecord.getId()) == null) {
             throw new NotExistingEntityException("Can not update non existing activity report");
         }
-
-        activityRecord.setUser(getUserById(activityRecordDTO.getUserId()));
-        activityRecord.setSportActivity(getActivityById(activityRecordDTO.getSportActivityId()));
 
         activityRecordService.update(activityRecord);
     }

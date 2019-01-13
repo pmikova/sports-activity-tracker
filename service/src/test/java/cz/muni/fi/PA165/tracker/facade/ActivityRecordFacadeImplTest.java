@@ -101,22 +101,22 @@ public class ActivityRecordFacadeImplTest extends AbstractTestNGSpringContextTes
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//    public void testCreate(){
-//
-//        ActivityRecordCreateDTO activityRecordCreateDTO = mappingService.mapTo(record1, ActivityRecordCreateDTO.class);
-//        activityRecordFacade.create(activityRecordCreateDTO);
-//        verify(activityRecordService).create(any(ActivityRecord.class));
-//    }
-//
-//    @Test
-//    public void testUpdate(){
-//        when(activityRecordService.getById(9L)).thenReturn(record2);
-//        ActivityRecordUpdateDTO activityRecordDTO = mappingService.mapTo(record2, ActivityRecordUpdateDTO.class);
-//        activityRecordDTO.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 30, 00));
-//        activityRecordFacade.update(activityRecordDTO);
-//        verify(activityRecordService).update(any(ActivityRecord.class));
-//    }
+    @Test
+    public void testCreate(){
+
+        ActivityRecordCreateDTO activityRecordCreateDTO = mappingService.mapTo(record1, ActivityRecordCreateDTO.class);
+        activityRecordFacade.create(activityRecordCreateDTO);
+        verify(activityRecordService).create(any(ActivityRecord.class));
+    }
+
+    @Test
+    public void testUpdate(){
+        when(activityRecordService.getById(9L)).thenReturn(record2);
+        ActivityRecordUpdateDTO activityRecordDTO = mappingService.mapTo(record2, ActivityRecordUpdateDTO.class);
+        activityRecordDTO.setEndTime(LocalDateTime.of(2018, Month.NOVEMBER, 10, 10, 30, 00));
+        activityRecordFacade.update(activityRecordDTO);
+        verify(activityRecordService).update(any(ActivityRecord.class));
+    }
 
     @Test
     public void testDelete(){
