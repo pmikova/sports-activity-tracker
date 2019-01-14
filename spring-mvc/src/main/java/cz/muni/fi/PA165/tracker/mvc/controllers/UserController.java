@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.rmi.ServerError;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -100,8 +101,12 @@ public class UserController extends MainController {
             addValidationErrors(bindingResult, model);
             return "user/register";
         }
-
-        userFacade.create(formData);
+        try{
+        userFacade.create(formData);}
+        catch (Exception ex){
+            redirectAttributes.addFlashAttribute("alert_danger", "User could not be created!");
+            return "redirect:/register";
+        }
         redirectAttributes.addFlashAttribute("alert_success", "User was created");
 
         return "redirect:/login";

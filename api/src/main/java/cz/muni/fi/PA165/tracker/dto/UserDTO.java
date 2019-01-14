@@ -4,7 +4,7 @@ package cz.muni.fi.PA165.tracker.dto;
  * DTO for User.
  * @author pmikova 433345
  */
-public class UserDTO extends UserCreateDTO{
+public class UserDTO extends UserUpdateDTO {
 
     private Long id;
 

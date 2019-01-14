@@ -63,6 +63,8 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
     User noid;
     UserDTO noidDTO;
     UserAuthenticationDTO authDTO;
+    UserCreateDTO cruserDTO;
+    UserCreateDTO cradminDTO;
 
 
     @BeforeMethod
@@ -100,6 +102,17 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         userDTO.setPasswordHash(user.getPasswordHash());
         userDTO.setBirthdate(user.getBirthdate());
 
+
+        cruserDTO = new UserCreateDTO();
+        cruserDTO.setWeight(user.getWeight());
+        cruserDTO.setEmail(user.getEmail());
+        cruserDTO.setUserType(user.getUserType());
+        cruserDTO.setGender(user.getGender());
+        cruserDTO.setName(user.getName());
+        cruserDTO.setSurname(user.getSurname());
+        cruserDTO.setPasswordHash(user.getPasswordHash());
+        cruserDTO.setBirthdate(user.getBirthdate());
+
         adminDTO = new UserDTO();
         adminDTO.setId(admin.getId());
         adminDTO.setWeight(admin.getWeight());
@@ -110,6 +123,17 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
         adminDTO.setSurname(admin.getSurname());
         adminDTO.setPasswordHash(admin.getPasswordHash());
         adminDTO.setBirthdate(admin.getBirthdate());
+
+        cradminDTO = new UserCreateDTO();
+        //cradminDTO.setId(admin.getId());
+        cradminDTO.setWeight(admin.getWeight());
+        cradminDTO.setEmail(admin.getEmail());
+        cradminDTO.setUserType(admin.getUserType());
+        cradminDTO.setGender(admin.getGender());
+        cradminDTO.setName(admin.getName());
+        cradminDTO.setSurname(admin.getSurname());
+        cradminDTO.setPasswordHash(admin.getPasswordHash());
+        cradminDTO.setBirthdate(admin.getBirthdate());
 
         noid = new User();
         noid.setWeight(30);
@@ -173,16 +197,16 @@ public class UserFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void createTest() {
-        userFacade.create(userDTO);
+        userFacade.create(cruserDTO);
         verify(userService).register(userCaptor.capture(), strCaptor.capture());
         assertEquals(userCaptor.getValue(), user);
-        assertEquals(strCaptor.getValue(), userDTO.getPasswordHash());
+        assertEquals(strCaptor.getValue(), cruserDTO.getPasswordHash());
     }
 
 
     @Test
     public void createAdminTest() {
-        userFacade.create(adminDTO);
+        userFacade.create(cradminDTO);
         verify(userService).register(userCaptor.capture(), strCaptor.capture());
         assertEquals(userCaptor.getValue(), admin);
         assertEquals(strCaptor.getValue(), adminDTO.getPasswordHash());

@@ -11,11 +11,11 @@
     <jsp:attribute name="body">
 
         <div class="jumbotron homepage">
+        <h1><fmt:message key="application_name"/></h1>
+        <p class="lead"><fmt:message key="index_welcome"/></p>
             <c:choose>
                 <c:when test="${empty loggedUser}">
-                    <h1><fmt:message key="application_name"/></h1>
-                    <p class="lead"><fmt:message key="index_welcome"/></p>
-                    <p><fmt:message key="index_text"/></p>
+                <p><fmt:message key="index_text"/></p>
                     <p align="right">
                         <a class="btn btn-lg btn-success btn-jumbotron" href="${pageContext.request.contextPath}/login" role="button">
                             <fmt:message key="sign_in"/>
